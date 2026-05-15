@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Soul Player — Offline</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0D0402;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+    padding-top: env(safe-area-inset-top);
+  }
+  .icon { font-size: 56px; margin-bottom: 24px; opacity: 0.4; }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #8B0000;
+    margin-bottom: 12px;
+  }
+  p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 280px; margin-bottom: 32px; }
+  button {
+    background: linear-gradient(145deg, #6B0000, #3D0000);
+    border: 1.5px solid #8B0000;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border-radius: 60px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <div class="icon">📡</div>
+  <h1>No Connection</h1>
+  <p>Soul Player needs an internet connection to stream live Gospel music. Please check your connection and try again.</p>
+  <button onclick="window.location.reload()">Try Again</button>
+</body>
+</html>
