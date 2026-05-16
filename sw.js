@@ -2,7 +2,7 @@
 // Caches the app shell for offline use
 // The live audio stream itself always requires a connection
 
-const CACHE_NAME   = 'soul-player-v202605151831';
+const CACHE_NAME = 'soul-player-v202605162200';
 const OFFLINE_URL  = '/offline.html';
 
 // Files to cache for offline app shell
@@ -12,7 +12,7 @@ const SHELL_FILES = [
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png',
-  'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap'
+  'https://fonts.googleapis.com/css2?family=Playfair+Display:wght400;700&family=Montserrat:wght@300;400;600;700&display=swap'
 ];
 
 // ── INSTALL — cache app shell ──
