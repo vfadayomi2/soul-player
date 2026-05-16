@@ -1,4 +1,4 @@
-<!-- Soul Player v202605152200 -->
+<!-- Soul Player v202605162300 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +9,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Soul Player">
 <meta name="description" content="Live 24/7 Gospel music from Soul Food Gospel Radio">
-<meta property="og:title" content="Soul Player — Soul Food Gospel Radio">
+<meta property="og:title" content="Soul Player â Soul Food Gospel Radio">
 <meta property="og:description" content="Listen to live 24/7 Gospel music. Install as an app on your phone or desktop.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="icon-512.png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<title>Soul Player — Soul Food Gospel Radio</title>
+<title>Soul Player â Soul Food Gospel Radio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -57,7 +57,7 @@ body {
   overflow: hidden;
 }
 
-/* ── BACKGROUND ── */
+/* ââ BACKGROUND ââ */
 .bg-layer {
   position: fixed; inset: 0; z-index: 0;
   transition: background 1.5s ease;
@@ -102,7 +102,7 @@ body {
   50%     { transform: translate(-20px,25px) scale(1.08); }
 }
 
-/* ── APP SHELL ── */
+/* ââ APP SHELL ââ */
 .app {
   position: relative; z-index: 1;
   width: 100%; max-width: 390px;
@@ -112,7 +112,7 @@ body {
   overflow: hidden;
 }
 
-/* ── TOP BAR ── */
+/* ââ TOP BAR ââ */
 .top-bar {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 20px 8px;
@@ -144,7 +144,7 @@ body {
 .top-sleep-btn:hover, .top-install-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
 .top-sleep-btn.active { background: var(--red-bg); border-color: var(--red-bdr); color: #fff; }
 
-/* ── TAB NAV ── */
+/* ââ TAB NAV ââ */
 .tab-nav {
   display: flex; flex-shrink: 0;
   border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -167,7 +167,7 @@ body {
 .tab-btn.active { color: #fff; border-bottom-color: var(--accent); }
 .tab-btn:hover  { color: rgba(255,255,255,0.8); }
 
-/* ── TAB PANELS ── */
+/* ââ TAB PANELS ââ */
 .tab-panel { display: none; flex: 1; overflow-y: auto; flex-direction: column; }
 .tab-panel.active { display: flex; }
 
@@ -176,9 +176,9 @@ body {
 .tab-panel::-webkit-scrollbar-track { background: transparent; }
 .tab-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
 
-/* ════════════════════════════════════════
-   TAB 1 — PLAYER
-════════════════════════════════════════ */
+/* ââââââââââââââââââââââââââââââââââââââââ
+   TAB 1 â PLAYER
+ââââââââââââââââââââââââââââââââââââââââ */
 .player-tab { padding-bottom: max(var(--safe-bottom), 16px); }
 
 /* Station hero */
@@ -332,12 +332,12 @@ body {
 .history-num { font-size:9px;color:var(--faint);width:14px;flex-shrink:0; }
 .history-text { font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
 
-/* ════════════════════════════════════════
-   TAB 2 — SCHEDULE
-════════════════════════════════════════ */
+/* ââââââââââââââââââââââââââââââââââââââââ
+   TAB 2 â SCHEDULE
+ââââââââââââââââââââââââââââââââââââââââ */
 .schedule-tab { padding:0 0 max(var(--safe-bottom),16px); gap:0; }
 
-/* ── FEATURED ON AIR CARD ── */
+/* ââ FEATURED ON AIR CARD ââ */
 .on-air-card {
   margin:16px 16px 0;
   background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
@@ -464,7 +464,7 @@ body {
 
 .show-row:last-child { border-bottom:none; }
 
-/* ── LIVE ROW HIGHLIGHT ── */
+/* ââ LIVE ROW HIGHLIGHT ââ */
 .show-row.live-row {
   background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(255,255,255,0.03) 100%);
   border: 1px solid var(--accent-bdr) !important;
@@ -527,9 +527,9 @@ body {
   transition:background 1.2s;
 }
 
-/* ════════════════════════════════════════
-   TAB 3 — ABOUT / SOCIAL
-════════════════════════════════════════ */
+/* ââââââââââââââââââââââââââââââââââââââââ
+   TAB 3 â ABOUT / SOCIAL
+ââââââââââââââââââââââââââââââââââââââââ */
 .about-tab { padding:20px 20px; padding-bottom:max(var(--safe-bottom),16px); gap:16px; }
 
 .about-logo {
@@ -608,7 +608,7 @@ body {
 
 .website-link:hover { color:#fff; }
 
-/* ── SLEEP TIMER MODAL ── */
+/* ââ SLEEP TIMER MODAL ââ */
 .sleep-modal {
   display:none;position:fixed;inset:0;z-index:200;
   align-items:flex-end;justify-content:center;
@@ -662,7 +662,7 @@ body {
 
 .sleep-cancel:hover { background:rgba(255,255,255,0.08); }
 
-/* ── INSTALL BANNER ── */
+/* ââ INSTALL BANNER ââ */
 .install-banner {
   display:none;position:fixed;
   bottom:max(var(--safe-bottom),20px);
@@ -687,7 +687,7 @@ body {
 .install-btn { flex:1;background:linear-gradient(135deg,#B22222,#8B0000);border:none;border-radius:8px;padding:10px;color:#fff;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;cursor:pointer; }
 .dismiss-btn { background:rgba(255,255,255,0.06);border:none;border-radius:8px;padding:10px 14px;color:var(--muted);font-family:'Montserrat',sans-serif;font-size:12px;cursor:pointer; }
 
-/* ── ERROR TOAST ── */
+/* ââ ERROR TOAST ââ */
 .error-toast {
   display:none;position:fixed;
   top:max(var(--safe-top),20px);
@@ -699,11 +699,11 @@ body {
 }
 .error-toast.visible { display:block; }
 
-/* ── KEYFRAMES ── */
+/* ââ KEYFRAMES ââ */
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)} }
 @keyframes spin   { to{transform:rotate(360deg)} }
 
-/* ── DESKTOP ── */
+/* ââ DESKTOP ââ */
 @media (min-width:500px) {
   body { background:#050100;overflow:auto;padding:40px 24px; }
   .bg-layer { display:none; }
@@ -746,10 +746,10 @@ body {
 <!-- Install banner -->
 <div class="install-banner" id="installBanner">
   <div class="install-inner">
-    <div class="install-icon"><img src="icon-192.png" alt="Soul Player" onerror="this.parentElement.textContent='🎵'"></div>
+    <div class="install-icon"><img src="icon-192.png" alt="Soul Player" onerror="this.parentElement.textContent='ðµ'"></div>
     <div>
       <div class="install-title">Install Soul Player</div>
-      <div class="install-sub">Add to your home screen — listen anytime</div>
+      <div class="install-sub">Add to your home screen â listen anytime</div>
     </div>
   </div>
   <div class="install-actions">
@@ -758,7 +758,7 @@ body {
   </div>
 </div>
 
-<!-- ── MAIN APP ── -->
+<!-- ââ MAIN APP ââ -->
 <div class="app">
 
   <!-- Top bar -->
@@ -766,22 +766,22 @@ body {
     <span class="top-logo">Soul Food Gospel Radio</span>
     <div class="top-right">
       <button class="top-sleep-btn visible" id="sleepBtn" onclick="openSleepModal()" aria-label="Sleep timer">
-        ⏱ Sleep
+        â± Sleep
       </button>
       <button class="top-install-btn" id="installTopBtn" onclick="triggerInstall()">
-        ⬇ Install
+        â¬ Install
       </button>
     </div>
   </div>
 
   <!-- Tab nav -->
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="showTab('player')" id="tab-player">▶ Player</button>
-    <button class="tab-btn" onclick="showTab('schedule')" id="tab-schedule">📅 Schedule</button>
-    <button class="tab-btn" onclick="showTab('about')" id="tab-about">ℹ About</button>
+    <button class="tab-btn active" onclick="showTab('player')" id="tab-player">â¶ Player</button>
+    <button class="tab-btn" onclick="showTab('schedule')" id="tab-schedule">ð Schedule</button>
+    <button class="tab-btn" onclick="showTab('about')" id="tab-about">â¹ About</button>
   </div>
 
-  <!-- ── PLAYER TAB ── -->
+  <!-- ââ PLAYER TAB ââ -->
   <div class="tab-panel active player-tab" id="panel-player">
 
     <div class="hero">
@@ -810,7 +810,7 @@ body {
       </div>
       <div>
         <div class="station-name">Soul Food Gospel</div>
-        <div class="station-tag">Radio Live · London, UK</div>
+        <div class="station-tag">Radio Live Â· London, UK</div>
       </div>
       <div class="on-air">
         <div class="on-air-dot"></div>
@@ -819,9 +819,9 @@ body {
     </div>
 
     <div class="daypart-strip">
-      <span class="dp-icon" id="dpIcon">🌅</span>
+      <span class="dp-icon" id="dpIcon">ð</span>
       <span class="dp-name" id="dpName">Morning</span>
-      <span class="dp-desc" id="dpDesc">6:00 am – 12:00 pm</span>
+      <span class="dp-desc" id="dpDesc">6:00 am â 12:00 pm</span>
     </div>
 
     <div class="now-playing">
@@ -858,9 +858,9 @@ body {
 
   </div>
 
-  <!-- ── SCHEDULE TAB ── -->
+  <!-- ââ SCHEDULE TAB ââ -->
   <div class="tab-panel schedule-tab" id="panel-schedule">
-    <!-- Featured on-air card — built by JS -->
+    <!-- Featured on-air card â built by JS -->
     <div id="onAirCard"></div>
     <!-- Schedule list -->
     <div class="schedule-list-wrap">
@@ -868,7 +868,7 @@ body {
     </div>
   </div>
 
-  <!-- ── ABOUT TAB ── -->
+  <!-- ââ ABOUT TAB ââ -->
   <div class="tab-panel about-tab" id="panel-about">
 
     <div class="about-logo">
@@ -901,31 +901,31 @@ body {
 
     <div class="social-grid">
       <a class="social-btn" href="https://www.facebook.com/soulfoodgospelradio" target="_blank" rel="noopener">
-        <span class="social-icon">📘</span>
+        <span class="social-icon">ð</span>
         <div><div class="social-name">Facebook</div><div class="social-handle">@soulfoodgospelradio</div></div>
       </a>
-      <a class="social-btn" href="https://www.instagram.com/soulfoodgospelradio" target="_blank" rel="noopener">
-        <span class="social-icon">📸</span>
-        <div><div class="social-name">Instagram</div><div class="social-handle">@soulfoodgospelradio</div></div>
+      <a class="social-btn" href="https://www.instagram.com/soulfoodgradio" target="_blank" rel="noopener">
+        <span class="social-icon">ð¸</span>
+        <div><div class="social-name">Instagram</div><div class="social-handle">@soulfoodgradio</div></div>
       </a>
-      <a class="social-btn" href="https://twitter.com/soulfoodgospel" target="_blank" rel="noopener">
-        <span class="social-icon">🐦</span>
-        <div><div class="social-name">X / Twitter</div><div class="social-handle">@soulfoodgospel</div></div>
+      <a class="social-btn" href="https://twitter.com/SoulFoodGRadio" target="_blank" rel="noopener">
+        <span class="social-icon">ð¦</span>
+        <div><div class="social-name">X / Twitter</div><div class="social-handle">@SoulFoodGRadio</div></div>
       </a>
-      <a class="social-btn" href="https://www.youtube.com/@soulfoodgospelradio" target="_blank" rel="noopener">
-        <span class="social-icon">▶️</span>
-        <div><div class="social-name">YouTube</div><div class="social-handle">Soul Food Gospel</div></div>
+      <a class="social-btn" href="https://www.youtube.com/@SoulFoodGospel" target="_blank" rel="noopener">
+        <span class="social-icon">â¶ï¸</span>
+        <div><div class="social-name">YouTube</div><div class="social-handle">@SoulFoodGospel</div></div>
       </a>
     </div>
 
     <div class="about-divider"></div>
 
     <button class="share-btn" onclick="shareApp()">
-      ↗ Share Soul Player with a Friend
+      â Share Soul Player with a Friend
     </button>
 
     <a class="website-link" href="https://www.soulfoodgospel.com" target="_blank" rel="noopener">
-      🌐 soulfoodgospel.com
+      ð soulfoodgospel.com
     </a>
 
   </div>
@@ -938,7 +938,7 @@ body {
 if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(s){s.unregister();});});}
 (function() {
 
-  // ── CONFIG ──────────────────────────────────
+  // ââ CONFIG ââââââââââââââââââââââââââââââââââ
   var STREAM    = 'https://phoebe.streamerr.co:3555/stream';
   var META_URLS = [
     'https://phoebe.streamerr.co:3555/status-json.xsl',
@@ -947,9 +947,9 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   var META_INT  = 12000;
   var STATION   = 'Soul Food Gospel Radio';
   var STATION_S = 'Live 24/7 Gospel Music';
-  // ─────────────────────────────────────────────
+  // âââââââââââââââââââââââââââââââââââââââââââââ
 
-  // ── SCHEDULE DATA — from StationPlaylist ──
+  // ââ SCHEDULE DATA â from StationPlaylist ââ
   var SCHEDULE = [
     { day:'Monday', shows:[
       { time:'12:00 AM', name:'Soul Food Overnight',            host:'Soul Player',                 photo:'' },
@@ -1069,7 +1069,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
     ]}
   ];
 
-  // ── BUILD SCHEDULE ──
+  // ââ BUILD SCHEDULE ââ
   var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
   function getLondonTime() {
@@ -1078,7 +1078,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
       var lon = new Date(n.toLocaleString('en-US', { timeZone: 'Europe/London' }));
       return lon;
     } catch(e) {
-      // Fallback — add BST offset manually (UTC+1 in summer)
+      // Fallback â add BST offset manually (UTC+1 in summer)
       var n = new Date();
       var utc = n.getTime() + (n.getTimezoneOffset() * 60000);
       var bst = new Date(utc + (3600000)); // UTC+1
@@ -1135,7 +1135,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
       + '<div class="on-air-card-badge"><div class="on-air-card-badge-dot"></div><span class="on-air-card-badge-txt">On Air Now</span></div>'
       + '<div class="on-air-card-show">'+liveShow.name+'</div>'
       + '<div class="on-air-card-host">'+liveShow.host+'</div>'
-      + '<div class="on-air-card-time">'+liveShow.time+' · '+todayName+'</div>'
+      + '<div class="on-air-card-time">'+liveShow.time+' Â· '+todayName+'</div>'
       + '</div></div>';
   }
   document.getElementById('onAirCard').innerHTML = cardHTML;
@@ -1149,7 +1149,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   var schedHTML = '';
   orderedDays.forEach(function(dayObj,di) {
     schedHTML += '<div class="schedule-day">';
-    schedHTML += '<div class="schedule-day-label">'+(di===0?'Today — ':'')+dayObj.day+'</div>';
+    schedHTML += '<div class="schedule-day-label">'+(di===0?'Today â ':'')+dayObj.day+'</div>';
 
     dayObj.shows.forEach(function(show,si) {
       var showMins = timeToMins(show.time);
@@ -1175,18 +1175,18 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   document.getElementById('scheduleContent').innerHTML = schedHTML;
   } // end buildSchedule()
 
-  // ── DAYPARTS ──
+  // ââ DAYPARTS ââ
   var DAYPARTS = [
-    { name:'Morning',   desc:'6:00 am – 12:00 pm', icon:'🌅', start:6,  end:12,
+    { name:'Morning',   desc:'6:00 am â 12:00 pm', icon:'ð', start:6,  end:12,
       accent:'#E8941A', accentL:'#F5B040', glow:'rgba(232,148,26,0.38)',
       bg:'rgba(232,148,26,0.13)', bdr:'rgba(232,148,26,0.32)', str:'rgba(232,148,26,0.50)' },
-    { name:'Afternoon', desc:'12:00 pm – 5:00 pm',  icon:'☀️', start:12, end:17,
+    { name:'Afternoon', desc:'12:00 pm â 5:00 pm',  icon:'âï¸', start:12, end:17,
       accent:'#2E86C1', accentL:'#55B0DF', glow:'rgba(46,134,193,0.38)',
       bg:'rgba(46,134,193,0.13)', bdr:'rgba(46,134,193,0.32)', str:'rgba(46,134,193,0.50)' },
-    { name:'Evening',   desc:'5:00 pm – 9:00 pm',   icon:'🌆', start:17, end:21,
+    { name:'Evening',   desc:'5:00 pm â 9:00 pm',   icon:'ð', start:17, end:21,
       accent:'#6C3483', accentL:'#9B59B6', glow:'rgba(108,52,131,0.38)',
       bg:'rgba(108,52,131,0.13)', bdr:'rgba(108,52,131,0.32)', str:'rgba(108,52,131,0.50)' },
-    { name:'Night',     desc:'9:00 pm – 6:00 am',   icon:'🌙', start:21, end:6,
+    { name:'Night',     desc:'9:00 pm â 6:00 am',   icon:'ð', start:21, end:6,
       accent:'#1A237E', accentL:'#3F51B5', glow:'rgba(26,35,126,0.38)',
       bg:'rgba(26,35,126,0.15)', bdr:'rgba(26,35,126,0.34)', str:'rgba(26,35,126,0.52)' }
   ];
@@ -1228,7 +1228,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   buildSchedule();
   setInterval(buildSchedule, 60000);
 
-  // ── TABS ──
+  // ââ TABS ââ
   window.showTab = function(name) {
     document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
     document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
@@ -1236,7 +1236,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
     document.getElementById('tab-'+name).classList.add('active');
   };
 
-  // ── AUDIO ──
+  // ââ AUDIO ââ
   var audio     = document.getElementById('audio');
   var playBtn   = document.getElementById('playBtn');
   var iconPlay  = document.getElementById('iconPlay');
@@ -1271,7 +1271,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
         showToast('Tap play again to start listening');
       } else {
         setUI('error');
-        showToast('Stream unavailable — please try again');
+        showToast('Stream unavailable â please try again');
       }
     });}
   }
@@ -1303,11 +1303,11 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
       iconPlay.style.display='none';iconPause.style.display='none';
       playBtn.classList.add('buffering');
       playBtn.setAttribute('aria-label','Connecting');
-      statusEl.textContent='Connecting to stream…'; waveOff();
+      statusEl.textContent='Connecting to streamâ¦'; waveOff();
     } else if(s==='error') {
       iconPlay.style.display='block';iconPause.style.display='none';
       playBtn.setAttribute('aria-label','Play');
-      statusEl.textContent='Stream unavailable — tap to retry';
+      statusEl.textContent='Stream unavailable â tap to retry';
       showToast('Stream unavailable. Please check your connection.'); waveOff();
     }
   }
@@ -1318,7 +1318,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
       'linear-gradient(90deg,'+curDp.accent+' '+val+'%,rgba(255,255,255,0.1) '+val+'%)';
   };
 
-  // ── METADATA ──
+  // ââ METADATA ââ
   var trackHistory=[]; var lastRaw=''; var metaIdx=0;
 
   function fetchMeta(){tryMeta(metaIdx);}
@@ -1370,7 +1370,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
     var dot=document.getElementById('metaDot');
     dot.classList.add('flash');
     setTimeout(function(){dot.classList.remove('flash');},800);
-    document.title=(artist?artist+' – '+title:title)+' | Soul Player';
+    document.title=(artist?artist+' â '+title:title)+' | Soul Player';
     updateMediaSession(title,artist);
   }
 
@@ -1382,12 +1382,12 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
       var row=document.createElement('div');row.className='history-item';
       var num=document.createElement('span');num.className='history-num';num.textContent=i+1;
       var txt=document.createElement('span');txt.className='history-text';
-      txt.textContent=t.artist?t.artist+' – '+t.title:t.title;
+      txt.textContent=t.artist?t.artist+' â '+t.title:t.title;
       row.appendChild(num);row.appendChild(txt);list.appendChild(row);
     });
   }
 
-  // ── SLEEP TIMER ──
+  // ââ SLEEP TIMER ââ
   var sleepTimer=null; var sleepMinsLeft=0; var sleepInterval=null;
 
   window.openSleepModal  = function(){document.getElementById('sleepModal').classList.add('visible');};
@@ -1407,14 +1407,14 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
     sleepInterval=setInterval(function(){
       sleepMinsLeft--;
       updateSleepDisplay();
-      if(sleepMinsLeft<=0){clearSleepTimer();doPause();showToast('Sleep timer — stream stopped.');}
+      if(sleepMinsLeft<=0){clearSleepTimer();doPause();showToast('Sleep timer â stream stopped.');}
     },60000);
   };
 
   function updateSleepDisplay(){
     var el=document.getElementById('sleepDisplay');
     el.classList.add('visible');
-    el.textContent='⏱ Stops in '+sleepMinsLeft+' min'+(sleepMinsLeft!==1?'s':'');
+    el.textContent='â± Stops in '+sleepMinsLeft+' min'+(sleepMinsLeft!==1?'s':'');
   }
 
   function clearSleepTimer(){
@@ -1423,14 +1423,14 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
     document.getElementById('sleepBtn').classList.remove('active');
   }
 
-  // ── SHARE ──
+  // ââ SHARE ââ
   window.shareApp = function(){
-    var data={title:'Soul Player — Soul Food Gospel Radio',text:'Listen to live 24/7 Gospel music — install it as a free app!',url:window.location.href};
+    var data={title:'Soul Player â Soul Food Gospel Radio',text:'Listen to live 24/7 Gospel music â install it as a free app!',url:window.location.href};
     if(navigator.share){navigator.share(data).catch(function(){});}
     else if(navigator.clipboard){navigator.clipboard.writeText(window.location.href).then(function(){showToast('Link copied to clipboard!');});}
   };
 
-  // ── TOAST ──
+  // ââ TOAST ââ
   var toastTimer;
   function showToast(msg){
     var el=document.getElementById('errorToast');
@@ -1439,7 +1439,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
     toastTimer=setTimeout(function(){el.classList.remove('visible');},4000);
   }
 
-  // ── INSTALL ──
+  // ââ INSTALL ââ
   var deferredPrompt=null;
   window.addEventListener('beforeinstallprompt',function(e){
     e.preventDefault(); deferredPrompt=e;
@@ -1454,7 +1454,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   window.dismissInstall=function(){document.getElementById('installBanner').classList.remove('visible');localStorage.setItem('sp-install-dismissed','1');};
   window.addEventListener('appinstalled',function(){document.getElementById('installBanner').classList.remove('visible');document.getElementById('installTopBtn').classList.remove('visible');});
 
-  // ── MEDIA SESSION ──
+  // ââ MEDIA SESSION ââ
   function updateMediaSession(title,artist){
     if(!('mediaSession' in navigator))return;
     navigator.mediaSession.metadata=new MediaMetadata({
@@ -1470,7 +1470,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   audio.addEventListener('playing',function(){if('mediaSession' in navigator)navigator.mediaSession.playbackState='playing';});
   audio.addEventListener('pause',  function(){if('mediaSession' in navigator)navigator.mediaSession.playbackState='paused';});
 
-  // ── SERVICE WORKER ──
+  // ââ SERVICE WORKER ââ
 // Unregister any old service workers
 if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(s){s.unregister();});});}
 
