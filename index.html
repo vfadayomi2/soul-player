@@ -1,4 +1,4 @@
-<!-- Soul Player v202605152200 -->
+<!-- Soul Player v202605161300 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,1461 +18,751 @@
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <title>Soul Player — Soul Food Gospel Radio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --red:      #8B0000;
-  --red-mid:  #B22222;
-  --red-glow: rgba(139,0,0,0.4);
-  --red-bg:   rgba(139,0,0,0.12);
-  --red-bdr:  rgba(139,0,0,0.35);
-  --accent:     #E8941A;
-  --accent-l:   #F5B040;
-  --accent-glow:rgba(232,148,26,0.38);
-  --accent-bg:  rgba(232,148,26,0.13);
-  --accent-bdr: rgba(232,148,26,0.32);
-  --accent-str: rgba(232,148,26,0.50);
-  --dark:  #0D0402;
-  --text:  #FFFFFF;
-  --muted: rgba(255,255,255,0.50);
-  --faint: rgba(255,255,255,0.20);
-  --safe-top:    env(safe-area-inset-top,    0px);
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-html, body { height: 100%; overflow: hidden; background: var(--dark); }
-
-body {
-  font-family: 'Montserrat', sans-serif;
-  color: var(--text);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-  position: relative;
-  overflow: hidden;
-}
-
-/* ── BACKGROUND ── */
-.bg-layer {
-  position: fixed; inset: 0; z-index: 0;
-  transition: background 1.5s ease;
-}
-
-.bg-layer::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse at 20% 15%, rgba(139,0,0,0.22) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 85%, rgba(139,0,0,0.14) 0%, transparent 55%),
-    linear-gradient(180deg, #180404 0%, #0D0200 50%, #060100 100%);
-  transition: background 1.5s ease;
-}
-
-.bg-blob {
-  position: absolute;
-  width: 500px; height: 500px;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.06;
-  top: -150px; right: -150px;
-  filter: blur(90px);
-  transition: background 1.5s ease;
-  animation: blobFloat 10s ease-in-out infinite;
-}
-
-.bg-blob2 {
-  position: absolute;
-  width: 300px; height: 300px;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.04;
-  bottom: -80px; left: -80px;
-  filter: blur(60px);
-  transition: background 1.5s ease;
-  animation: blobFloat 14s ease-in-out infinite reverse;
-}
-
-@keyframes blobFloat {
-  0%,100% { transform: translate(0,0) scale(1); }
-  50%     { transform: translate(-20px,25px) scale(1.08); }
-}
-
-/* ── APP SHELL ── */
-.app {
-  position: relative; z-index: 1;
-  width: 100%; max-width: 390px;
-  height: 100vh;
-  height: -webkit-fill-available;
-  display: flex; flex-direction: column;
-  overflow: hidden;
-}
-
-/* ── TOP BAR ── */
-.top-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 20px 8px;
-  padding-top: max(var(--safe-top), 20px);
-  flex-shrink: 0;
-}
-
-.top-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 12px; color: var(--muted); letter-spacing: 0.04em;
-}
-
-.top-right { display: flex; align-items: center; gap: 8px; }
-
-.top-sleep-btn, .top-install-btn {
-  display: none;
-  align-items: center; gap: 5px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 20px; padding: 5px 10px;
-  cursor: pointer; font-family: 'Montserrat', sans-serif;
-  font-size: 10px; font-weight: 600; color: var(--muted);
-  letter-spacing: 0.08em; text-transform: uppercase;
-  white-space: nowrap;
-  transition: background 0.2s, color 0.2s;
-}
-
-.top-sleep-btn.visible, .top-install-btn.visible { display: flex; }
-.top-sleep-btn:hover, .top-install-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
-.top-sleep-btn.active { background: var(--red-bg); border-color: var(--red-bdr); color: #fff; }
-
-/* ── TAB NAV ── */
-.tab-nav {
-  display: flex; flex-shrink: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 0 20px;
-  gap: 4px;
-}
-
-.tab-btn {
-  flex: 1; background: none; border: none;
-  padding: 10px 4px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10px; font-weight: 600;
-  color: var(--muted); letter-spacing: 0.1em;
-  text-transform: uppercase; cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s, border-color 0.2s;
-  margin-bottom: -1px;
-}
-
-.tab-btn.active { color: #fff; border-bottom-color: var(--accent); }
-.tab-btn:hover  { color: rgba(255,255,255,0.8); }
-
-/* ── TAB PANELS ── */
-.tab-panel { display: none; flex: 1; overflow-y: auto; flex-direction: column; }
-.tab-panel.active { display: flex; }
-
-/* Scrollbar */
-.tab-panel::-webkit-scrollbar { width: 3px; }
-.tab-panel::-webkit-scrollbar-track { background: transparent; }
-.tab-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-
-/* ════════════════════════════════════════
-   TAB 1 — PLAYER
-════════════════════════════════════════ */
-.player-tab { padding-bottom: max(var(--safe-bottom), 16px); }
-
-/* Station hero */
-.hero {
-  display: flex; flex-direction: column;
-  align-items: center; text-align: center;
-  padding: 16px 24px 12px; gap: 12px; flex-shrink: 0;
-}
-
-.logo-ring {
-  width: 100px; height: 100px; border-radius: 50%;
-  background: linear-gradient(145deg, #2A0A04, #150402);
-  border: 3px solid var(--accent);
-  display: flex; align-items: center; justify-content: center;
-  position: relative;
-  box-shadow: 0 0 0 7px var(--accent-bg), 0 0 36px var(--accent-glow);
-  transition: border-color 1.2s, box-shadow 1.2s;
-  flex-shrink: 0;
-}
-
-.logo-ring img {
-  width: 100%; height: 100%;
-  object-fit: cover; border-radius: 50%;
-}
-
-.logo-ring-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 30px; font-weight: 700; color: #fff;
-}
-
-.logo-ring::before {
-  content: ''; position: absolute; inset: -10px; border-radius: 50%;
-  border: 1px solid var(--accent); opacity: 0.18; transition: border-color 1.2s;
-}
-
-.logo-ring::after {
-  content: ''; position: absolute; inset: -18px; border-radius: 50%;
-  border: 1px solid var(--accent); opacity: 0.08;
-  animation: ringPulse 3s ease-out infinite; transition: border-color 1.2s;
-}
-
-@keyframes ringPulse {
-  0%,100% { transform:scale(1); opacity:0.1; }
-  50%     { transform:scale(1.04); opacity:0.18; }
-}
-
-.station-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 22px; font-weight: 700; color: #fff; line-height: 1.2;
-}
-
-.station-tag { font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-top: -6px; }
-
-.on-air {
-  display: flex; align-items: center; gap: 6px;
-  background: var(--accent-bg); border: 1px solid var(--accent-bdr);
-  border-radius: 20px; padding: 5px 14px;
-  transition: background 1.2s, border-color 1.2s;
-}
-
-.on-air-dot { width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 1.8s ease-in-out infinite;transition:background 1.2s; }
-.on-air-txt { font-size:10px;font-weight:700;color:#fff;letter-spacing:0.18em;text-transform:uppercase; }
-
-/* Daypart strip */
-.daypart-strip {
-  display: flex; align-items: center; gap: 8px;
-  padding: 7px 20px;
-  background: var(--accent-bg);
-  border-top: 1px solid var(--accent-bdr);
-  border-bottom: 1px solid var(--accent-bdr);
-  transition: background 1.2s, border-color 1.2s;
-  flex-shrink: 0;
-}
-
-.dp-icon { font-size:13px;line-height:1; }
-.dp-name { font-size:10px;font-weight:700;color:#fff;letter-spacing:0.12em;text-transform:uppercase; }
-.dp-desc { font-size:10px;color:var(--muted);margin-left:auto; }
-
-/* Now Playing */
-.now-playing { padding:16px 24px 6px;text-align:center;flex-shrink:0; }
-
-.np-label {
-  font-size:9px;letter-spacing:0.2em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:8px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  transition:color 1.2s;
-}
-
-.meta-dot { width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:0;transition:opacity 0.3s,background 1.2s; }
-.meta-dot.flash { opacity:1; }
-
-.np-title-wrap { overflow:hidden;width:100%;margin-bottom:5px; }
-.np-title { font-family:'Playfair Display',serif;font-size:20px;color:#fff;font-weight:700;line-height:1.2;display:inline-block;white-space:nowrap; }
-.np-title.scroll { animation:marquee 14s linear infinite; }
-@keyframes marquee { 0%{transform:translateX(0)}15%{transform:translateX(0)}85%{transform:translateX(calc(-100% + 300px))}100%{transform:translateX(0)} }
-.np-artist { font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-
-/* Waveform */
-.viz { display:flex;align-items:flex-end;gap:2px;height:36px;padding:0 24px 3px;margin-top:10px;flex-shrink:0; }
-.bar { flex:1;background:var(--accent);border-radius:2px 2px 0 0;opacity:0.5;transform-origin:bottom;height:3px;transition:background 1.2s; }
-.bar.active { animation:wave var(--d,1s) ease-in-out infinite; }
-@keyframes wave { 0%,100%{transform:scaleY(1)}50%{transform:scaleY(var(--h,5))} }
-
-/* Controls */
-.controls { display:flex;flex-direction:column;align-items:center;gap:16px;padding:14px 24px 12px;flex-shrink:0; }
-
-.play-btn {
-  width:80px;height:80px;border-radius:50%;
-  background:linear-gradient(135deg,var(--accent-l),var(--accent));
-  border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 0 10px var(--accent-bg),0 8px 28px var(--accent-glow);
-  transition:transform 0.15s,background 1.2s,box-shadow 1.2s;
-  position:relative; -webkit-tap-highlight-color:transparent;
-}
-
-.play-btn:active { transform:scale(0.92); }
-
-.play-btn.buffering::after {
-  content:'';position:absolute;inset:-10px;border-radius:50%;
-  border:3px solid transparent;border-top-color:var(--accent-l);
-  animation:spin 0.9s linear infinite;
-}
-
-.vol-row { width:100%;display:flex;align-items:center;gap:10px; }
-.vol-icon { color:var(--faint);flex-shrink:0; }
-
-.vol-slider {
-  -webkit-appearance:none;appearance:none;flex:1;height:5px;border-radius:3px;
-  background:linear-gradient(90deg,var(--accent) 80%,rgba(255,255,255,0.1) 80%);
-  outline:none;cursor:pointer;border:none;transition:background 1.2s;
-}
-.vol-slider::-webkit-slider-thumb { -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;transition:background 1.2s; }
-.vol-slider::-moz-range-thumb { width:18px;height:18px;border-radius:50%;background:var(--accent);border:none;cursor:pointer; }
-
-/* Sleep timer display */
-.sleep-display {
-  font-size:11px;color:var(--accent);letter-spacing:0.06em;
-  font-weight:600;display:none;
-  transition:color 1.2s;
-}
-.sleep-display.visible { display:block; }
-
-.status-text { font-size:11px;color:var(--muted);letter-spacing:0.04em;text-align:center; }
-
-/* Recent tracks */
-.history { padding:8px 24px 4px;flex-shrink:0; }
-.history-label { font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;font-weight:700; }
-.history-item { display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04); }
-.history-item:last-child { border:none; }
-.history-num { font-size:9px;color:var(--faint);width:14px;flex-shrink:0; }
-.history-text { font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-
-/* ════════════════════════════════════════
-   TAB 2 — SCHEDULE
-════════════════════════════════════════ */
-.schedule-tab { padding:0 0 max(var(--safe-bottom),16px); gap:0; }
-
-/* ── FEATURED ON AIR CARD ── */
-.on-air-card {
-  margin:16px 16px 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-  border: 1px solid var(--accent-str);
-  border-radius: 18px;
-  padding: 16px;
-  display: flex;
-  gap: 14px;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 1.2s;
-  flex-shrink: 0;
-}
-
-/* Glowing accent bar on left */
-.on-air-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 4px;
-  background: var(--accent);
-  border-radius: 4px 0 0 4px;
-  transition: background 1.2s;
-}
-
-/* Subtle glow behind card */
-.on-air-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 10% 50%, var(--accent-bg) 0%, transparent 70%);
-  pointer-events: none;
-  transition: background 1.2s;
-}
-
-.on-air-card-photo {
-  width: 68px; height: 68px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2.5px solid var(--accent);
-  flex-shrink: 0;
-  position: relative; z-index: 1;
-  box-shadow: 0 0 0 4px var(--accent-bg), 0 0 16px var(--accent-glow);
-  transition: border-color 1.2s, box-shadow 1.2s;
-  background: #1a0804;
-}
-
-.on-air-card-photo-fallback {
-  width: 68px; height: 68px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #2A0A04, #150402);
-  border: 2.5px solid var(--accent);
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif;
-  font-size: 22px; font-weight: 700; color: #fff;
-  position: relative; z-index: 1;
-  box-shadow: 0 0 0 4px var(--accent-bg), 0 0 16px var(--accent-glow);
-  transition: border-color 1.2s, box-shadow 1.2s;
-}
-
-.on-air-card-info { flex: 1; min-width: 0; position: relative; z-index: 1; }
-
-.on-air-card-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: var(--accent-bg);
-  border: 1px solid var(--accent-bdr);
-  border-radius: 10px; padding: 2px 8px;
-  margin-bottom: 6px;
-  transition: background 1.2s, border-color 1.2s;
-}
-
-.on-air-card-badge-dot {
-  width: 6px; height: 6px;
-  background: var(--accent); border-radius: 50%;
-  animation: pulse 1.8s ease-in-out infinite;
-  transition: background 1.2s;
-}
-
-.on-air-card-badge-txt {
-  font-size: 8px; font-weight: 700;
-  color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase;
-  transition: color 1.2s;
-}
-
-.on-air-card-show {
-  font-family: 'Playfair Display', serif;
-  font-size: 16px; font-weight: 700; color: #fff;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  line-height: 1.2; margin-bottom: 3px;
-}
-
-.on-air-card-host {
-  font-size: 12px; color: var(--muted);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-
-.on-air-card-time {
-  font-size: 10px; color: var(--faint);
-  margin-top: 4px; letter-spacing: 0.04em;
-}
-
-/* Schedule list below */
-.schedule-list-wrap { padding: 16px 16px 0; }
-
-.schedule-day { margin-bottom: 20px; }
-
-.schedule-day-label {
-  font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:10px;padding-bottom:6px;
-  border-bottom:1px solid var(--accent-bdr);
-  transition:color 1.2s,border-color 1.2s;
-}
-
-.show-row {
-  display:flex;align-items:center;gap:10px;
-  padding:8px 10px;
-  border-radius:10px;
-  border-bottom:1px solid rgba(255,255,255,0.03);
-  transition:background 0.2s;
-  margin-bottom:2px;
-}
-
-.show-row:last-child { border-bottom:none; }
-
-/* ── LIVE ROW HIGHLIGHT ── */
-.show-row.live-row {
-  background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(255,255,255,0.03) 100%);
-  border: 1px solid var(--accent-bdr) !important;
-  border-radius: 10px;
-  margin-bottom: 2px;
-}
-
-.show-row-photo {
-  width: 36px; height: 36px;
-  border-radius: 50%; object-fit: cover;
-  border: 1.5px solid var(--accent-bdr);
-  flex-shrink: 0; background: #1a0804;
-  transition: border-color 1.2s;
-}
-
-.show-row-photo-fallback {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #2A0A04, #150402);
-  border: 1.5px solid var(--accent-bdr);
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700; color: var(--muted);
-  transition: border-color 1.2s;
-}
-
-.show-row.live-row .show-row-photo,
-.show-row.live-row .show-row-photo-fallback {
-  border-color: var(--accent);
-  box-shadow: 0 0 8px var(--accent-glow);
-}
-
-.show-time {
-  font-size:10px;font-weight:600;color:var(--muted);
-  white-space:nowrap;width:46px;flex-shrink:0;letter-spacing:0.02em;
-}
-
-.show-row.live-row .show-time { color: var(--accent); transition: color 1.2s; }
-
-.show-info { flex:1;min-width:0; }
-
-.show-name {
-  font-size:13px;font-weight:600;color:#fff;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
-
-.show-host { font-size:10px;color:var(--muted);margin-top:1px; }
-
-.show-live {
-  font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--accent);background:var(--accent-bg);border:1px solid var(--accent-bdr);
-  border-radius:10px;padding:3px 8px;flex-shrink:0;white-space:nowrap;
-  display:flex;align-items:center;gap:4px;
-  transition:color 1.2s,background 1.2s,border-color 1.2s;
-}
-
-.show-live-dot {
-  width:5px;height:5px;border-radius:50%;
-  background:var(--accent);animation:pulse 1.8s ease-in-out infinite;
-  transition:background 1.2s;
-}
-
-/* ════════════════════════════════════════
-   TAB 3 — ABOUT / SOCIAL
-════════════════════════════════════════ */
-.about-tab { padding:20px 20px; padding-bottom:max(var(--safe-bottom),16px); gap:16px; }
-
-.about-logo {
-  width:80px;height:80px;border-radius:16px;
-  background:linear-gradient(145deg,#2A0A04,#150402);
-  border:2px solid var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;
-  box-shadow:0 0 0 4px var(--accent-bg);
-  transition:border-color 1.2s,box-shadow 1.2s;
-  overflow:hidden; align-self:center;
-}
-
-.about-logo img { width:100%;height:100%;object-fit:cover;border-radius:14px; }
-
-.about-name {
-  font-family:'Playfair Display',serif;
-  font-size:20px;font-weight:700;color:#fff;text-align:center;
-}
-
-.about-desc {
-  font-size:13px;color:var(--muted);line-height:1.75;text-align:center;
-}
-
-.about-divider {
-  height:1px;background:rgba(255,255,255,0.06);width:100%;flex-shrink:0;
-}
-
-.social-label {
-  font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--faint);text-align:center;
-}
-
-.social-grid {
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
-}
-
-.social-btn {
-  display:flex;align-items:center;gap:10px;
-  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
-  border-radius:12px;padding:12px 14px;
-  text-decoration:none;color:#fff;
-  transition:background 0.2s,border-color 0.2s,transform 0.15s;
-  -webkit-tap-highlight-color:transparent;
-}
-
-.social-btn:hover { background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);transform:scale(1.02); }
-.social-btn:active { transform:scale(0.97); }
-
-.social-icon { font-size:20px;flex-shrink:0;line-height:1; }
-
-.social-name { font-size:11px;font-weight:600;letter-spacing:0.04em; }
-.social-handle { font-size:10px;color:var(--muted);margin-top:1px; }
-
-/* Share button */
-.share-btn {
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  background:linear-gradient(145deg,#3D0000,#200000);
-  border:1.5px solid var(--red);border-radius:12px;
-  padding:14px;color:#fff;cursor:pointer;
-  font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;
-  letter-spacing:0.06em;text-transform:uppercase;
-  transition:background 0.2s,transform 0.15s;
-  -webkit-tap-highlight-color:transparent;
-}
-
-.share-btn:hover { background:linear-gradient(145deg,#550000,#3D0000); }
-.share-btn:active { transform:scale(0.97); }
-
-.website-link {
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  padding:10px;
-  color:var(--muted);text-decoration:none;font-size:12px;
-  letter-spacing:0.06em;transition:color 0.2s;
-}
-
-.website-link:hover { color:#fff; }
-
-/* ── SLEEP TIMER MODAL ── */
-.sleep-modal {
-  display:none;position:fixed;inset:0;z-index:200;
-  align-items:flex-end;justify-content:center;
-  background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);
-  padding:0 0 max(var(--safe-bottom),16px);
-}
-
-.sleep-modal.visible { display:flex; }
-
-.sleep-sheet {
-  background:linear-gradient(180deg,#200A04,#0D0402);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:24px 24px 0 0;
-  padding:24px 24px 32px;
-  width:100%;max-width:390px;
-  animation:sheetUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
-}
-
-@keyframes sheetUp { from{transform:translateY(100%)}to{transform:translateY(0)} }
-
-.sleep-sheet-title {
-  font-family:'Playfair Display',serif;
-  font-size:18px;font-weight:700;color:#fff;
-  margin-bottom:6px;
-}
-
-.sleep-sheet-sub { font-size:12px;color:var(--muted);margin-bottom:20px;letter-spacing:0.02em; }
-
-.sleep-options { display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px; }
-
-.sleep-opt {
-  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);
-  border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;
-  font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;color:#fff;
-  transition:background 0.15s,border-color 0.15s,transform 0.1s;
-  -webkit-tap-highlight-color:transparent;
-}
-
-.sleep-opt:hover { background:rgba(255,255,255,0.09); }
-.sleep-opt:active { transform:scale(0.95); }
-.sleep-opt.selected { background:var(--red-bg);border-color:var(--red);color:#fff; }
-
-.sleep-opt-mins { font-size:20px;font-weight:700;display:block;line-height:1; }
-.sleep-opt-label { font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:3px;display:block; }
-
-.sleep-cancel {
-  width:100%;background:rgba(255,255,255,0.05);border:none;border-radius:12px;
-  padding:13px;color:var(--muted);font-family:'Montserrat',sans-serif;
-  font-size:13px;cursor:pointer;transition:background 0.15s;
-}
-
-.sleep-cancel:hover { background:rgba(255,255,255,0.08); }
-
-/* ── INSTALL BANNER ── */
-.install-banner {
-  display:none;position:fixed;
-  bottom:max(var(--safe-bottom),20px);
-  left:50%;transform:translateX(-50%);
-  width:calc(100% - 40px);max-width:360px;
-  background:linear-gradient(135deg,#1C0A04,#0D0402);
-  border:1px solid var(--red-bdr);border-radius:16px;
-  padding:16px 18px;z-index:100;
-  box-shadow:0 8px 32px rgba(0,0,0,0.6);
-  animation:bannerSlide 0.4s cubic-bezier(0.34,1.56,0.64,1);
-}
-
-.install-banner.visible { display:block; }
-@keyframes bannerSlide { from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)} }
-
-.install-inner { display:flex;align-items:center;gap:14px; }
-.install-icon { width:44px;height:44px;border-radius:10px;background:linear-gradient(145deg,#B22222,#8B0000);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px;overflow:hidden; }
-.install-icon img { width:100%;height:100%;object-fit:cover;border-radius:8px; }
-.install-title { font-size:13px;font-weight:700;color:#fff;margin-bottom:2px; }
-.install-sub { font-size:11px;color:var(--muted); }
-.install-actions { display:flex;gap:8px;margin-top:12px; }
-.install-btn { flex:1;background:linear-gradient(135deg,#B22222,#8B0000);border:none;border-radius:8px;padding:10px;color:#fff;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;cursor:pointer; }
-.dismiss-btn { background:rgba(255,255,255,0.06);border:none;border-radius:8px;padding:10px 14px;color:var(--muted);font-family:'Montserrat',sans-serif;font-size:12px;cursor:pointer; }
-
-/* ── ERROR TOAST ── */
-.error-toast {
-  display:none;position:fixed;
-  top:max(var(--safe-top),20px);
-  left:50%;transform:translateX(-50%);
-  background:rgba(139,0,0,0.92);border:1px solid rgba(139,0,0,0.6);
-  border-radius:10px;padding:10px 18px;
-  font-size:12px;color:#ffcccc;z-index:300;
-  white-space:nowrap;backdrop-filter:blur(10px);
-}
-.error-toast.visible { display:block; }
-
-/* ── KEYFRAMES ── */
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.8)} }
-@keyframes spin   { to{transform:rotate(360deg)} }
-
-/* ── DESKTOP ── */
-@media (min-width:500px) {
-  body { background:#050100;overflow:auto;padding:40px 24px; }
-  .bg-layer { display:none; }
-  .app {
-    height:auto;max-height:820px;min-height:auto;
-    border-radius:28px;overflow:hidden;
-    box-shadow:0 0 0 1px rgba(255,255,255,0.04),0 40px 100px rgba(0,0,0,0.8);
-    background:linear-gradient(180deg,#1C0A04 0%,#0D0402 50%,#060100 100%);
-    margin:auto;
-  }
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#8B0000;--red-mid:#B22222;--red-glow:rgba(139,0,0,0.4);
+  --red-bg:rgba(139,0,0,0.12);--red-bdr:rgba(139,0,0,0.35);
+  --accent:#E8941A;--accent-l:#F5B040;--accent-glow:rgba(232,148,26,0.38);
+  --accent-bg:rgba(232,148,26,0.13);--accent-bdr:rgba(232,148,26,0.32);
+  --dark:#0D0402;--text:#FFFFFF;--muted:rgba(255,255,255,0.50);--faint:rgba(255,255,255,0.20);
+  --safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);
+}
+html,body{height:100%;overflow:hidden;background:var(--dark)}
+body{font-family:'Montserrat',sans-serif;color:var(--text);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;min-height:100vh;min-height:-webkit-fill-available;
+  position:relative;overflow:hidden}
+
+/* BG */
+.bg-layer{position:fixed;inset:0;z-index:0}
+.bg-layer::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(ellipse at 20% 15%,rgba(139,0,0,0.22) 0%,transparent 55%),
+  radial-gradient(ellipse at 80% 85%,rgba(139,0,0,0.14) 0%,transparent 55%),
+  linear-gradient(180deg,#180404 0%,#0D0200 50%,#060100 100%)}
+.bg-blob{position:absolute;width:500px;height:500px;border-radius:50%;background:var(--accent);
+  opacity:0.06;top:-150px;right:-150px;filter:blur(90px);animation:blobFloat 10s ease-in-out infinite}
+.bg-blob2{position:absolute;width:300px;height:300px;border-radius:50%;background:var(--accent);
+  opacity:0.04;bottom:-80px;left:-80px;filter:blur(60px);animation:blobFloat 14s ease-in-out infinite reverse}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-20px,25px) scale(1.08)}}
+
+/* APP */
+.app{position:relative;z-index:1;width:100%;max-width:390px;height:100vh;
+  height:-webkit-fill-available;display:flex;flex-direction:column;overflow:hidden}
+
+/* TOP BAR */
+.top-bar{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px 8px;padding-top:max(var(--safe-top),20px);flex-shrink:0}
+.top-logo{font-family:'Playfair Display',serif;font-size:12px;color:var(--muted);letter-spacing:0.04em}
+.top-right{display:flex;align-items:center;gap:8px}
+.top-sleep-btn,.top-install-btn{display:none;align-items:center;gap:5px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
+  border-radius:20px;padding:5px 10px;cursor:pointer;font-family:'Montserrat',sans-serif;
+  font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.08em;
+  text-transform:uppercase;white-space:nowrap;transition:background 0.2s,color 0.2s}
+.top-sleep-btn.visible,.top-install-btn.visible{display:flex}
+.top-sleep-btn:hover,.top-install-btn:hover{background:rgba(255,255,255,0.1);color:#fff}
+.top-sleep-btn.active{background:var(--red-bg);border-color:var(--red-bdr);color:#fff}
+
+/* TAB NAV */
+.tab-nav{display:flex;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.06);padding:0 20px;gap:4px}
+.tab-btn{flex:1;background:none;border:none;padding:10px 4px;font-family:'Montserrat',sans-serif;
+  font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;
+  cursor:pointer;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;margin-bottom:-1px}
+.tab-btn.active{color:#fff;border-bottom-color:var(--accent)}
+.tab-btn:hover{color:rgba(255,255,255,0.8)}
+
+/* TAB PANELS */
+.tab-panel{display:none;flex:1;overflow-y:auto;flex-direction:column}
+.tab-panel.active{display:flex}
+.tab-panel::-webkit-scrollbar{width:3px}
+.tab-panel::-webkit-scrollbar-track{background:transparent}
+.tab-panel::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
+
+/* ── PLAYER TAB ── */
+.player-tab{padding:0 20px;padding-bottom:max(var(--safe-bottom),20px)}
+
+/* Artwork */
+.artwork-wrap{display:flex;justify-content:center;align-items:center;padding:20px 0 14px;position:relative}
+.artwork-ring{width:160px;height:160px;border-radius:50%;position:relative;flex-shrink:0}
+.artwork-ring::before{content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:2px solid var(--accent);opacity:0.8;animation:ringPulse 3s ease-in-out infinite}
+@keyframes ringPulse{0%,100%{opacity:0.5;transform:scale(1)}50%{opacity:1;transform:scale(1.03)}}
+.artwork-img{width:160px;height:160px;border-radius:50%;object-fit:cover;
+  background:radial-gradient(circle,#3D0000 0%,#1A0000 100%);
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.artwork-img img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.artwork-fallback{text-align:center}
+.artwork-fallback .af-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
+  letter-spacing:0.12em;color:#fff}
+.artwork-fallback .af-sub{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;
+  letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-top:4px}
+
+/* Station info */
+.station-info{text-align:center;padding:0 0 10px}
+.station-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1.2}
+.station-sub{font-size:9px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);margin-top:3px}
+.on-air-badge{display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+  background:rgba(232,148,26,0.12);border:1px solid rgba(232,148,26,0.3);
+  border-radius:20px;padding:5px 14px;font-size:10px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--accent-l)}
+.on-air-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);
+  animation:dotBlink 1.4s ease-in-out infinite}
+@keyframes dotBlink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* Show strip */
+.show-strip{display:flex;align-items:center;gap:10px;margin:10px 0;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);
+  border-radius:10px;padding:10px 12px}
+.show-thumb{width:36px;height:36px;border-radius:8px;object-fit:cover;flex-shrink:0;
+  background:var(--red-bg);border:1px solid var(--red-bdr)}
+.show-info{flex:1;min-width:0}
+.show-label{font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
+.show-title{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.show-host{font-size:10px;color:var(--muted);margin-top:1px}
+.show-time{font-size:10px;color:var(--muted);white-space:nowrap;flex-shrink:0}
+
+/* Now playing */
+.now-playing-wrap{text-align:center;padding:6px 0 14px}
+.now-playing-label{font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.now-playing-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;line-height:1.3}
+.now-playing-artist{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* Play button */
+.play-btn-wrap{display:flex;justify-content:center;padding:4px 0 16px}
+.play-btn{width:76px;height:76px;border-radius:50%;border:none;cursor:pointer;
+  background:radial-gradient(145deg,var(--accent-l),var(--accent));
+  box-shadow:0 0 0 0 var(--accent-glow);transition:transform 0.15s,box-shadow 0.3s;
+  display:flex;align-items:center;justify-content:center;position:relative;outline:none}
+.play-btn:hover{transform:scale(1.06)}
+.play-btn:active{transform:scale(0.96)}
+.play-btn.playing{box-shadow:0 0 30px 8px var(--accent-glow),0 0 60px 20px rgba(232,148,26,0.15);
+  animation:btnPulse 2s ease-in-out infinite}
+@keyframes btnPulse{0%,100%{box-shadow:0 0 30px 8px var(--accent-glow),0 0 60px 20px rgba(232,148,26,0.15)}
+  50%{box-shadow:0 0 40px 14px var(--accent-glow),0 0 80px 30px rgba(232,148,26,0.2)}}
+.play-icon,.pause-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transition:opacity 0.2s}
+.play-icon{opacity:1}.pause-icon{opacity:0}
+.play-btn.playing .play-icon{opacity:0}.play-btn.playing .pause-icon{opacity:1}
+
+/* Volume */
+.volume-wrap{display:flex;align-items:center;gap:10px;padding:0 4px 10px}
+.vol-icon{color:var(--muted);flex-shrink:0}
+.vol-slider{flex:1;-webkit-appearance:none;appearance:none;height:3px;border-radius:3px;outline:none;cursor:pointer;
+  background:linear-gradient(to right,var(--accent) var(--vol,80%),rgba(255,255,255,0.12) var(--vol,80%))}
+.vol-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+  background:var(--accent);cursor:pointer;box-shadow:0 0 6px rgba(232,148,26,0.5)}
+.vol-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--accent);
+  cursor:pointer;border:none;box-shadow:0 0 6px rgba(232,148,26,0.5)}
+
+/* Status */
+.status-text{text-align:center;font-size:11px;color:var(--muted);padding-bottom:10px;min-height:18px}
+.status-text.error{color:#ff6b6b}
+
+/* ── SCHEDULE TAB ── */
+.schedule-tab{padding:16px 20px;padding-bottom:max(var(--safe-bottom),20px)}
+.day-section{margin-bottom:20px}
+.day-heading{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;
+  color:var(--accent);border-bottom:1px solid rgba(232,148,26,0.2);padding-bottom:6px;margin-bottom:8px}
+.sched-row{display:flex;align-items:flex-start;gap:10px;padding:7px 0;
+  border-bottom:1px solid rgba(255,255,255,0.04)}
+.sched-row:last-child{border-bottom:none}
+.sched-time{font-size:11px;font-weight:600;color:var(--accent);white-space:nowrap;min-width:62px;padding-top:1px}
+.sched-info{flex:1;min-width:0}
+.sched-show{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sched-host{font-size:10px;color:var(--muted);margin-top:1px}
+.sched-row.now-on{background:rgba(232,148,26,0.07);border-radius:8px;padding:7px 8px;
+  border-bottom:none;margin:-2px -8px 0;width:calc(100% + 16px)}
+.sched-row.now-on .sched-show{color:var(--accent-l)}
+
+/* ── ABOUT TAB ── */
+.about-tab{padding:20px 20px;padding-bottom:max(var(--safe-bottom),20px)}
+.about-logo-wrap{display:flex;justify-content:center;padding:10px 0 20px}
+.about-logo-circle{width:90px;height:90px;border-radius:50%;
+  background:radial-gradient(circle,#3D0000 0%,#1A0000 100%);
+  border:2px solid var(--accent-bdr);display:flex;align-items:center;justify-content:center}
+.about-logo-circle img{width:80px;height:80px;border-radius:50%;object-fit:cover}
+.about-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;text-align:center;margin-bottom:4px}
+.about-tagline{font-size:11px;color:var(--muted);text-align:center;letter-spacing:0.08em;margin-bottom:20px}
+.about-section{margin-bottom:16px}
+.about-section h3{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:6px}
+.about-section p{font-size:13px;line-height:1.7;color:rgba(255,255,255,0.75)}
+.about-links{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.about-link{display:flex;align-items:center;gap:8px;padding:10px 14px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);
+  border-radius:10px;font-size:13px;color:var(--text);text-decoration:none;
+  transition:background 0.2s}
+.about-link:hover{background:rgba(255,255,255,0.09)}
+.about-link .link-icon{font-size:16px;flex-shrink:0}
+
+/* Sleep modal */
+.sleep-modal{display:none;position:fixed;inset:0;z-index:200;align-items:flex-end;
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(4px)}
+.sleep-modal.open{display:flex}
+.sleep-sheet{background:#1A0505;border-radius:20px 20px 0 0;padding:24px 24px;
+  padding-bottom:max(calc(var(--safe-bottom) + 24px),24px);width:100%;max-width:390px;margin:0 auto}
+.sleep-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px}
+.sleep-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.sleep-opt{padding:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;
+  color:#fff;cursor:pointer;transition:background 0.2s;text-align:center}
+.sleep-opt:hover,.sleep-opt.active{background:var(--red-bg);border-color:var(--red-bdr)}
+.sleep-cancel{width:100%;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;
+  color:var(--muted);cursor:pointer}
+.sleep-countdown{text-align:center;font-size:12px;color:var(--muted);margin-bottom:12px;min-height:20px}
 </style>
 </head>
 <body>
+<div class="bg-layer"><div class="bg-blob"></div><div class="bg-blob2"></div></div>
 
-<div class="bg-layer">
-  <div class="bg-blob" id="bgBlob"></div>
-  <div class="bg-blob2" id="bgBlob2"></div>
-</div>
-
-<div class="error-toast" id="errorToast"></div>
-
-<!-- Sleep timer modal -->
-<div class="sleep-modal" id="sleepModal" onclick="closeSleepModal(event)">
-  <div class="sleep-sheet">
-    <div class="sleep-sheet-title">Sleep Timer</div>
-    <div class="sleep-sheet-sub">Stream will stop playing after the selected time</div>
-    <div class="sleep-options">
-      <div class="sleep-opt" onclick="setSleep(15)"><span class="sleep-opt-mins">15</span><span class="sleep-opt-label">mins</span></div>
-      <div class="sleep-opt" onclick="setSleep(30)"><span class="sleep-opt-mins">30</span><span class="sleep-opt-label">mins</span></div>
-      <div class="sleep-opt" onclick="setSleep(45)"><span class="sleep-opt-mins">45</span><span class="sleep-opt-label">mins</span></div>
-      <div class="sleep-opt" onclick="setSleep(60)"><span class="sleep-opt-mins">60</span><span class="sleep-opt-label">mins</span></div>
-      <div class="sleep-opt" onclick="setSleep(90)"><span class="sleep-opt-mins">90</span><span class="sleep-opt-label">mins</span></div>
-      <div class="sleep-opt" onclick="setSleep(0)"><span class="sleep-opt-mins">Off</span><span class="sleep-opt-label">cancel</span></div>
-    </div>
-    <button class="sleep-cancel" onclick="closeSleepModal()">Cancel</button>
-  </div>
-</div>
-
-<!-- Install banner -->
-<div class="install-banner" id="installBanner">
-  <div class="install-inner">
-    <div class="install-icon"><img src="icon-192.png" alt="Soul Player" onerror="this.parentElement.textContent='🎵'"></div>
-    <div>
-      <div class="install-title">Install Soul Player</div>
-      <div class="install-sub">Add to your home screen — listen anytime</div>
-    </div>
-  </div>
-  <div class="install-actions">
-    <button class="install-btn" onclick="triggerInstall()">Install Free App</button>
-    <button class="dismiss-btn" onclick="dismissInstall()">Not Now</button>
-  </div>
-</div>
-
-<!-- ── MAIN APP ── -->
 <div class="app">
-
-  <!-- Top bar -->
+  <!-- TOP BAR -->
   <div class="top-bar">
-    <span class="top-logo">Soul Food Gospel Radio</span>
+    <div class="top-logo">Soul Food Gospel Radio</div>
     <div class="top-right">
-      <button class="top-sleep-btn visible" id="sleepBtn" onclick="openSleepModal()" aria-label="Sleep timer">
-        ⏱ Sleep
+      <button class="top-sleep-btn visible" id="sleepBtn" aria-label="Sleep timer">⏰ SLEEP</button>
+      <button class="top-install-btn" id="installBtn" aria-label="Install app">⬇ INSTALL</button>
+    </div>
+  </div>
+
+  <!-- TAB NAV -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" role="tab" data-tab="player" aria-selected="true">▶ Player</button>
+    <button class="tab-btn" role="tab" data-tab="schedule" aria-selected="false">📅 Schedule</button>
+    <button class="tab-btn" role="tab" data-tab="about" aria-selected="false">ℹ About</button>
+  </nav>
+
+  <!-- PLAYER TAB -->
+  <div class="tab-panel active player-tab" id="tab-player" role="tabpanel">
+    <div class="artwork-wrap">
+      <div class="artwork-ring">
+        <div class="artwork-img" id="artworkImg">
+          <div class="artwork-fallback">
+            <div class="af-title">SOUL<br>PLAYER</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="station-info">
+      <div class="station-name">Soul Food Gospel</div>
+      <div class="station-sub">Radio Live · London, UK</div>
+      <div class="on-air-badge"><span class="on-air-dot"></span>ON AIR</div>
+    </div>
+
+    <div class="show-strip" id="showStrip">
+      <img class="show-thumb" id="showThumb" src="icon-192.png" alt="">
+      <div class="show-info">
+        <div class="show-label" id="showLabel">NOW PLAYING</div>
+        <div class="show-title" id="showTitle">Soul Food Gospel Radio</div>
+        <div class="show-host" id="showHost">Live 24/7 Gospel Music</div>
+      </div>
+      <div class="show-time" id="showTime"></div>
+    </div>
+
+    <div class="now-playing-wrap">
+      <div class="now-playing-label">NOW PLAYING</div>
+      <div class="now-playing-title" id="npTitle">Soul Food Gospel Radio</div>
+      <div class="now-playing-artist" id="npArtist">Live 24/7 Gospel Music</div>
+    </div>
+
+    <div class="play-btn-wrap">
+      <button class="play-btn" id="playBtn" aria-label="Play / Pause">
+        <svg class="play-icon" width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+        <svg class="pause-icon" width="28" height="28" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
       </button>
-      <button class="top-install-btn" id="installTopBtn" onclick="triggerInstall()">
-        ⬇ Install
-      </button>
-    </div>
-  </div>
-
-  <!-- Tab nav -->
-  <div class="tab-nav">
-    <button class="tab-btn active" onclick="showTab('player')" id="tab-player">▶ Player</button>
-    <button class="tab-btn" onclick="showTab('schedule')" id="tab-schedule">📅 Schedule</button>
-    <button class="tab-btn" onclick="showTab('about')" id="tab-about">ℹ About</button>
-  </div>
-
-  <!-- ── PLAYER TAB ── -->
-  <div class="tab-panel active player-tab" id="panel-player">
-
-    <div class="hero">
-      <div class="logo-ring">
-        <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Soul Player logo">
-          <!-- Inner subtle ring -->
-          <circle cx="50" cy="50" r="46" fill="none" stroke="#8B0000" stroke-width="0.5" opacity="0.3"/>
-          <!-- SOUL text -->
-          <text x="50" y="42" text-anchor="middle"
-            font-family="Georgia,'Times New Roman',serif"
-            font-size="18" font-weight="700"
-            fill="#FFFFFF" letter-spacing="2">SOUL</text>
-          <!-- Divider line -->
-          <line x1="22" y1="50" x2="78" y2="50" stroke="#8B0000" stroke-width="1"/>
-          <!-- Diamond -->
-          <polygon points="50,45 54,50 50,55 46,50" fill="#8B0000"/>
-          <!-- PLAYER text -->
-          <text x="50" y="65" text-anchor="middle"
-            font-family="Georgia,'Times New Roman',serif"
-            font-size="10" font-weight="400"
-            fill="#FFFFFF" letter-spacing="3">PLAYER</text>
-          <!-- Radio wave arcs -->
-          <path d="M36,74 Q50,68 64,74" fill="none" stroke="#8B0000" stroke-width="1.2" stroke-linecap="round"/>
-          <path d="M30,80 Q50,72 70,80" fill="none" stroke="#8B0000" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
-        </svg>
-      </div>
-      <div>
-        <div class="station-name">Soul Food Gospel</div>
-        <div class="station-tag">Radio Live · London, UK</div>
-      </div>
-      <div class="on-air">
-        <div class="on-air-dot"></div>
-        <span class="on-air-txt">On Air</span>
-      </div>
     </div>
 
-    <div class="daypart-strip">
-      <span class="dp-icon" id="dpIcon">🌅</span>
-      <span class="dp-name" id="dpName">Morning</span>
-      <span class="dp-desc" id="dpDesc">6:00 am – 12:00 pm</span>
-    </div>
-
-    <div class="now-playing">
-      <div class="np-label">Now Playing <span class="meta-dot" id="metaDot"></span></div>
-      <div class="np-title-wrap">
-        <span class="np-title" id="npTitle">Soul Food Gospel Radio</span>
-      </div>
-      <div class="np-artist" id="npArtist" aria-live="polite">Live 24/7 Gospel Music</div>
-    </div>
-
-    <div class="viz" id="viz" aria-hidden="true"></div>
-
-    <div class="controls">
-      <button class="play-btn" id="playBtn" aria-label="Play" onclick="togglePlay()">
-        <svg id="iconPlay"  width="32" height="32" viewBox="0 0 24 24" fill="#fff" style="margin-left:4px"><path d="M8 5v14l11-7z"/></svg>
-        <svg id="iconPause" width="32" height="32" viewBox="0 0 24 24" fill="#fff" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-      </button>
-
-      <div class="vol-row">
-        <span class="vol-icon" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-        </span>
-        <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="80" aria-label="Volume" oninput="setVolume(this.value)">
-      </div>
-
-      <div class="sleep-display" id="sleepDisplay"></div>
-      <div class="status-text" id="statusText">Tap play to listen live</div>
-    </div>
-
-    <div class="history" id="historySection" style="display:none">
-      <div class="history-label">Recent Tracks</div>
-      <div id="historyList"></div>
-    </div>
-
-  </div>
-
-  <!-- ── SCHEDULE TAB ── -->
-  <div class="tab-panel schedule-tab" id="panel-schedule">
-    <!-- Featured on-air card — built by JS -->
-    <div id="onAirCard"></div>
-    <!-- Schedule list -->
-    <div class="schedule-list-wrap">
-      <div id="scheduleContent"></div>
-    </div>
-  </div>
-
-  <!-- ── ABOUT TAB ── -->
-  <div class="tab-panel about-tab" id="panel-about">
-
-    <div class="about-logo">
-      <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Soul Player logo">
-        <circle cx="50" cy="50" r="46" fill="none" stroke="#8B0000" stroke-width="0.5" opacity="0.3"/>
-        <text x="50" y="42" text-anchor="middle"
-          font-family="Georgia,'Times New Roman',serif"
-          font-size="18" font-weight="700"
-          fill="#FFFFFF" letter-spacing="2">SOUL</text>
-        <line x1="22" y1="50" x2="78" y2="50" stroke="#8B0000" stroke-width="1"/>
-        <polygon points="50,45 54,50 50,55 46,50" fill="#8B0000"/>
-        <text x="50" y="65" text-anchor="middle"
-          font-family="Georgia,'Times New Roman',serif"
-          font-size="10" font-weight="400"
-          fill="#FFFFFF" letter-spacing="3">PLAYER</text>
-        <path d="M36,74 Q50,68 64,74" fill="none" stroke="#8B0000" stroke-width="1.2" stroke-linecap="round"/>
-        <path d="M30,80 Q50,72 70,80" fill="none" stroke="#8B0000" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
+    <div class="volume-wrap">
+      <svg class="vol-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
       </svg>
+      <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="80" aria-label="Volume">
     </div>
 
-    <div class="about-name">Soul Food Gospel Radio</div>
-
-    <div class="about-desc">
-      Soul Food Gospel Radio is a UK-based global internet radio station founded in 2013 by Elder Valentine Fadayomi (DJ Val). Broadcasting 24/7, the station delivers a powerful blend of gospel-inspired genres and faith-filled content to uplift, inspire, and connect listeners around the world.
-    </div>
-
-    <div class="about-divider"></div>
-
-    <div class="social-label">Follow Us</div>
-
-    <div class="social-grid">
-      <a class="social-btn" href="https://www.facebook.com/soulfoodgospelradio" target="_blank" rel="noopener">
-        <span class="social-icon">📘</span>
-        <div><div class="social-name">Facebook</div><div class="social-handle">@soulfoodgospelradio</div></div>
-      </a>
-      <a class="social-btn" href="https://www.instagram.com/soulfoodgospelradio" target="_blank" rel="noopener">
-        <span class="social-icon">📸</span>
-        <div><div class="social-name">Instagram</div><div class="social-handle">@soulfoodgospelradio</div></div>
-      </a>
-      <a class="social-btn" href="https://twitter.com/soulfoodgospel" target="_blank" rel="noopener">
-        <span class="social-icon">🐦</span>
-        <div><div class="social-name">X / Twitter</div><div class="social-handle">@soulfoodgospel</div></div>
-      </a>
-      <a class="social-btn" href="https://www.youtube.com/@soulfoodgospelradio" target="_blank" rel="noopener">
-        <span class="social-icon">▶️</span>
-        <div><div class="social-name">YouTube</div><div class="social-handle">Soul Food Gospel</div></div>
-      </a>
-    </div>
-
-    <div class="about-divider"></div>
-
-    <button class="share-btn" onclick="shareApp()">
-      ↗ Share Soul Player with a Friend
-    </button>
-
-    <a class="website-link" href="https://www.soulfoodgospel.com" target="_blank" rel="noopener">
-      🌐 soulfoodgospel.com
-    </a>
-
+    <div class="status-text" id="statusText">Tap play to listen live</div>
   </div>
 
-</div><!-- end .app -->
+  <!-- SCHEDULE TAB -->
+  <div class="tab-panel schedule-tab" id="tab-schedule" role="tabpanel"></div>
 
-<audio id="audio" preload="none"></audio>
+  <!-- ABOUT TAB -->
+  <div class="tab-panel about-tab" id="tab-about" role="tabpanel">
+    <div class="about-logo-wrap">
+      <div class="about-logo-circle">
+        <img src="icon-192.png" alt="Soul Food Gospel Radio">
+      </div>
+    </div>
+    <div class="about-title">Soul Food Gospel Radio</div>
+    <div class="about-tagline">LIVE 24/7 · LONDON, UK</div>
+    <div class="about-section">
+      <h3>About Us</h3>
+      <p>Soul Food Gospel Radio is London's home for 24/7 Gospel music — spanning Gospel Garage, House, Reggae, Dancehall, R&amp;B and more. Broadcasting live from the UK with a global reach.</p>
+    </div>
+    <div class="about-section">
+      <h3>Listen &amp; Connect</h3>
+      <div class="about-links">
+        <a class="about-link" href="https://www.soulfoodgospelradio.com" target="_blank" rel="noopener">
+          <span class="link-icon">🌐</span>soulfoodgospelradio.com
+        </a>
+        <a class="about-link" href="https://www.facebook.com/SoulFoodGospelRadio" target="_blank" rel="noopener">
+          <span class="link-icon">📘</span>Facebook
+        </a>
+      </div>
+    </div>
+    <div class="about-section">
+      <h3>Version</h3>
+      <p>Soul Player v202605161300</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLEEP MODAL -->
+<div class="sleep-modal" id="sleepModal" role="dialog" aria-modal="true" aria-label="Sleep timer">
+  <div class="sleep-sheet">
+    <div class="sleep-title">Sleep Timer</div>
+    <div class="sleep-countdown" id="sleepCountdown"></div>
+    <div class="sleep-options">
+      <button class="sleep-opt" data-mins="15">15 min</button>
+      <button class="sleep-opt" data-mins="30">30 min</button>
+      <button class="sleep-opt" data-mins="45">45 min</button>
+      <button class="sleep-opt" data-mins="60">60 min</button>
+      <button class="sleep-opt" data-mins="90">90 min</button>
+      <button class="sleep-opt" data-mins="0">Off</button>
+    </div>
+    <button class="sleep-cancel" id="sleepClose">Cancel</button>
+  </div>
+</div>
+
+<audio id="audioEl" preload="none"></audio>
 
 <script>
-(function() {
+(function () {
+  'use strict';
 
-  // ── CONFIG ──────────────────────────────────
-  var STREAM    = 'https://phoebe.streamerr.co:3555/stream';
-  var META_URLS = [
-    'https://phoebe.streamerr.co:3555/status-json.xsl',
-    'https://phoebe.streamerr.co:3555/7.html'
-  ];
-  var META_INT  = 12000;
-  var STATION   = 'Soul Food Gospel Radio';
-  var STATION_S = 'Live 24/7 Gospel Music';
-  // ─────────────────────────────────────────────
+  // ── CONFIG ──────────────────────────────────────────────
+  var STREAM_URL = 'https://streaming.streamerr.co/soulfoodgospel';
+  var META_URL   = 'https://streaming.streamerr.co/soulfoodgospel/status-json.xsl';
 
-  // ── SCHEDULE DATA — from StationPlaylist ──
-  var SCHEDULE = [
-    { day:'Monday', shows:[
-      { time:'12:00 AM', name:'Soul Food Overnight',            host:'Soul Player',                 photo:'' },
-      { time:'6:00 AM',  name:'Soul Food Breakfast',            host:'Soul Player',                 photo:'' },
-      { time:'9:00 AM',  name:'Soul Food Morning',              host:'Soul Player',                 photo:'' },
-      { time:'10:00 AM', name:'Nano Sermons',                   host:'Stephen Green',               photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/93cc0414-adc1-44dd-b990-48a7dafe6238/NANOSERMON+on+SFG+BQ.jpg' },
-      { time:'11:00 AM', name:'Shoggy Shoggz TV Show',          host:'Shoggy Shoggz',               photo:'shoggy.png' },
-      { time:'12:00 PM', name:'Soul Food Daytime',              host:'Soul Player',                 photo:'' },
-      { time:'3:00 PM',  name:'Soul Food Afternoon',            host:'Soul Player',                 photo:'' },
-      { time:'5:00 PM',  name:'The Shekinhah Miller Show',      host:'Shekinhah Miller with Spanna',photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/7de567f8-3411-4cb5-969b-056644cb7871/DSCN4918.JPG' },
-      { time:'7:00 PM',  name:'The RD Show',                    host:'DJ Jhyde',                    photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/bff778da-b350-4b6f-bc69-5f1511cc8186/image.png' },
-      { time:'8:00 PM',  name:'The RD Show',                    host:'DJ Jhyde',                    photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/bff778da-b350-4b6f-bc69-5f1511cc8186/image.png' },
-      { time:'9:00 PM',  name:'Soul Food Night',                host:'Soul Player',                 photo:'' }
-    ]},
-    { day:'Tuesday', shows:[
-      { time:'12:00 AM', name:'Soul Food Overnight',            host:'Soul Player',                 photo:'' },
-      { time:'6:00 AM',  name:'Soul Food Breakfast',            host:'Soul Player',                 photo:'' },
-      { time:'10:00 AM', name:"What's On Your Mind?",           host:'Olive & DJ Val',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/b90ff6b0-46d7-4e6a-af64-c7e348dc3f2c/DSC_2125.jpg' },
-      { time:'11:00 AM', name:'Soul Food Morning',              host:'Soul Player',                 photo:'' },
-      { time:'12:00 PM', name:'Nina Taylor Mix',                host:'Nina Taylor',                 photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/e22949ed-b8ec-4fb7-987d-713bca0a1fd7/Nina+HS.jpg' },
-      { time:'1:00 PM',  name:'Soul Food Daytime',              host:'Soul Player',                 photo:'' },
-      { time:'2:00 PM',  name:'Soul Food Afternoon',            host:'Soul Player',                 photo:'' },
-      { time:'3:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'4:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'5:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'6:00 PM',  name:'Gospel Garage & House',          host:'Pammy B',                     photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/b8ec7da4-7e7f-4794-8634-dafb26439162/Screenshot+2025-12-06+at+10.54.41.png' },
-      { time:'7:00 PM',  name:'Soul Food Gospel Show',          host:'DJ Val',                      photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/a3d2d6b2-2d05-4aaa-807f-7649ccfac166/IMG_0352+2.jpg' },
-      { time:'8:00 PM',  name:'Soul Food Gospel Show',          host:'DJ Val',                      photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/a3d2d6b2-2d05-4aaa-807f-7649ccfac166/IMG_0352+2.jpg' },
-      { time:'9:00 PM',  name:'Soul Food Night',                host:'Soul Player',                 photo:'' }
-    ]},
-    { day:'Wednesday', shows:[
-      { time:'12:00 AM', name:'Soul Food Overnight',            host:'Soul Player',                 photo:'' },
-      { time:'6:00 AM',  name:'Soul Food Breakfast',            host:'Soul Player',                 photo:'' },
-      { time:'7:00 AM',  name:'Soul Food Morning',              host:'Soul Player',                 photo:'' },
-      { time:'10:00 AM', name:'Nano Sermons',                   host:'Stephen Green',               photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/93cc0414-adc1-44dd-b990-48a7dafe6238/NANOSERMON+on+SFG+BQ.jpg' },
-      { time:'11:00 AM', name:'Soul Food Midmorning',           host:'Soul Player',                 photo:'' },
-      { time:'12:00 PM', name:'Be Inspired With Shoggy Shoggz', host:'Shoggy Shoggz',              photo:'shoggy.png' },
-      { time:'1:00 PM',  name:'Soul Food Daytime',              host:'Soul Player',                 photo:'' },
-      { time:'3:00 PM',  name:'Soul Food Afternoon',            host:'Soul Player',                 photo:'' },
-      { time:'5:00 PM',  name:'Soul Food Drive Time',           host:'Soul Player',                 photo:'' },
-      { time:'6:00 PM',  name:'Soul Food Evening',              host:'Soul Player',                 photo:'' },
-      { time:'8:00 PM',  name:'DJ Tinashe R&B Show',            host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'9:00 PM',  name:'Soul Food Night',                host:'Soul Player',                 photo:'' }
-    ]},
-    { day:'Thursday', shows:[
-      { time:'12:00 AM', name:'Soul Food Overnight',            host:'Soul Player',                 photo:'' },
-      { time:'7:00 AM',  name:'Soul Food Morning',              host:'Soul Player',                 photo:'' },
-      { time:'10:00 AM', name:'Shoggy Shoggz TV Show',          host:'Shoggy Shoggz',               photo:'shoggy.png' },
-      { time:'11:00 AM', name:'Soul Food Midmorning',           host:'Soul Player',                 photo:'' },
-      { time:'12:00 PM', name:'Soul Food Daytime',              host:'Soul Player',                 photo:'' },
-      { time:'3:00 PM',  name:'Soul Food Afternoon',            host:'Soul Player',                 photo:'' },
-      { time:'5:00 PM',  name:'Soul Food Drive Time',           host:'Soul Player',                 photo:'' },
-      { time:'6:00 PM',  name:'Soul Food Evening',              host:'Soul Player',                 photo:'' },
-      { time:'7:00 PM',  name:'Gospel Hip Hop Show',            host:'DJ Cass C',                   photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/9cd9b402-2491-49b6-b022-ae2b746b5581/Screenshot+2024-01-27+at+19.35.00.png' },
-      { time:'8:00 PM',  name:'Gospel Hip Hop Show',            host:'DJ Cass C',                   photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/9cd9b402-2491-49b6-b022-ae2b746b5581/Screenshot+2024-01-27+at+19.35.00.png' },
-      { time:'9:00 PM',  name:'Soul Food Night',                host:'Soul Player',                 photo:'' }
-    ]},
-    { day:'Friday', shows:[
-      { time:'12:00 AM', name:'Soul Food Overnight',            host:'Soul Player',                 photo:'' },
-      { time:'6:00 AM',  name:'Friday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
-      { time:'7:00 AM',  name:'Friday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
-      { time:'8:00 AM',  name:'Friday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
-      { time:'9:00 AM',  name:'Friday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
-      { time:'10:00 AM', name:'Soul Food Morning',              host:'Soul Player',                 photo:'' },
-      { time:'11:00 AM', name:'Soul Food Midmorning',           host:'Soul Player',                 photo:'' },
-      { time:'12:00 PM', name:'The Shekinhah Miller Show',      host:'Shekinhah Miller with Spanna',photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/7de567f8-3411-4cb5-969b-056644cb7871/DSCN4918.JPG' },
-      { time:'1:00 PM',  name:'The Shekinhah Miller Show',      host:'Shekinhah Miller with Spanna',photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/7de567f8-3411-4cb5-969b-056644cb7871/DSCN4918.JPG' },
-      { time:'2:00 PM',  name:'Soul Food Gospel Show',          host:'DJ Val',                      photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/a3d2d6b2-2d05-4aaa-807f-7649ccfac166/IMG_0352+2.jpg' },
-      { time:'3:00 PM',  name:'Soul Food Gospel Show',          host:'DJ Val',                      photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/a3d2d6b2-2d05-4aaa-807f-7649ccfac166/IMG_0352+2.jpg' },
-      { time:'4:00 PM',  name:'The RD Show Mixes',              host:'DJ Jhyde',                    photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/bff778da-b350-4b6f-bc69-5f1511cc8186/image.png' },
-      { time:'5:00 PM',  name:'The RD Show Mixes',              host:'DJ Jhyde',                    photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/bff778da-b350-4b6f-bc69-5f1511cc8186/image.png' },
-      { time:'6:00 PM',  name:'New Artist Profile',             host:'Tony D',                      photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/ea5201a4-87d0-43d9-9701-2f2a7a4628bd/Screenshot+2024-01-27+at+19.40.44.png' },
-      { time:'7:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'8:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'9:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'10:00 PM', name:'Soul Food Night',                host:'Soul Player',                 photo:'' }
-    ]},
-    { day:'Saturday', shows:[
-      { time:'12:00 AM', name:'Soul Food Overnight',            host:'Soul Player',                 photo:'' },
-      { time:'7:00 AM',  name:'Soul Food Morning',              host:'Soul Player',                 photo:'' },
-      { time:'9:00 AM',  name:"What's On Your Mind?",           host:'Olive & DJ Val',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/b90ff6b0-46d7-4e6a-af64-c7e348dc3f2c/DSC_2125.jpg' },
-      { time:'10:00 AM', name:'New Artist Profile',             host:'Tony D',                      photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/ea5201a4-87d0-43d9-9701-2f2a7a4628bd/Screenshot+2024-01-27+at+19.40.44.png' },
-      { time:'11:00 AM', name:'Soul Food Gospel Show',          host:'DJ Val',                      photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/a3d2d6b2-2d05-4aaa-807f-7649ccfac166/IMG_0352+2.jpg' },
-      { time:'12:00 PM', name:'Soul Food Gospel Show',          host:'DJ Val',                      photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/a3d2d6b2-2d05-4aaa-807f-7649ccfac166/IMG_0352+2.jpg' },
-      { time:'1:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'2:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'3:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'4:00 PM',  name:'The RD Show',                    host:'DJ Jhyde',                    photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/bff778da-b350-4b6f-bc69-5f1511cc8186/image.png' },
-      { time:'5:00 PM',  name:'The RD Show',                    host:'DJ Jhyde',                    photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/bff778da-b350-4b6f-bc69-5f1511cc8186/image.png' },
-      { time:'6:00 PM',  name:'Gospel Garage & House',          host:'Pammy B',                     photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/b8ec7da4-7e7f-4794-8634-dafb26439162/Screenshot+2025-12-06+at+10.54.41.png' },
-      { time:'7:00 PM',  name:'Gospel Hip Hop Show',            host:'DJ Cass C',                   photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/9cd9b402-2491-49b6-b022-ae2b746b5581/Screenshot+2024-01-27+at+19.35.00.png' },
-      { time:'8:00 PM',  name:'Prayze Party',                   host:'Shoggy Shoggz',               photo:'shoggy.png' },
-      { time:'9:00 PM',  name:'DJ Tinashe R&B Show',            host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'10:00 PM', name:'DJ Tinashe R&B Show',            host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'11:00 PM', name:'Soul Food Night',                host:'Soul Player',                 photo:'' }
-    ]},
-    { day:'Sunday', shows:[
-      { time:'12:00 AM', name:'Soul Food Overnight',            host:'Soul Player',                 photo:'' },
-      { time:'6:00 AM',  name:'Sunday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
-      { time:'7:00 AM',  name:'Sunday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
-      { time:'8:00 AM',  name:'Sunday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
-      { time:'9:00 AM',  name:'Sunday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
-      { time:'10:00 AM', name:'Nina Taylor Mix',                host:'Nina Taylor',                 photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/e22949ed-b8ec-4fb7-987d-713bca0a1fd7/Nina+HS.jpg' },
-      { time:'11:00 AM', name:'Soul Food Midmorning',           host:'Soul Player',                 photo:'' },
-      { time:'12:00 PM', name:'Soul Food Sunday',               host:'Soul Player',                 photo:'' },
-      { time:'1:00 PM',  name:'The RD Show',                    host:'DJ Jhyde',                    photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/bff778da-b350-4b6f-bc69-5f1511cc8186/image.png' },
-      { time:'2:00 PM',  name:'The RD Show',                    host:'DJ Jhyde',                    photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/bff778da-b350-4b6f-bc69-5f1511cc8186/image.png' },
-      { time:'3:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'4:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'5:00 PM',  name:'The Shekinhah Miller Show',      host:'Shekinhah Miller with Spanna',photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/7de567f8-3411-4cb5-969b-056644cb7871/DSCN4918.JPG' },
-      { time:'6:00 PM',  name:'The Shekinhah Miller Show',      host:'Shekinhah Miller with Spanna',photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/7de567f8-3411-4cb5-969b-056644cb7871/DSCN4918.JPG' },
-      { time:'7:00 PM',  name:'Prayze Party',                   host:'Shoggy Shoggz',               photo:'shoggy.png' },
-      { time:'8:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'9:00 PM',  name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'10:00 PM', name:'Afro Gospel Show',               host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
-      { time:'11:00 PM', name:'New Artist Profile',             host:'Tony D',                      photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/ea5201a4-87d0-43d9-9701-2f2a7a4628bd/Screenshot+2024-01-27+at+19.40.44.png' }
-    ]}
-  ];
+  // ── SCHEDULE DATA ───────────────────────────────────────
+  var SCHEDULE = {
+    Monday: [
+      {time:'12:00 AM',show:'Soul Food Overnight',host:'Soul Player'},
+      {time:'6:00 AM', show:'Soul Food Breakfast', host:'Soul Player'},
+      {time:'7:00 AM', show:'Soul Food Morning',   host:'Soul Player'},
+      {time:'10:00 AM',show:'Nano Sermons',         host:'Stephen Green'},
+      {time:'11:00 AM',show:'Soul Food Midmorning', host:'Soul Player'},
+      {time:'12:00 PM',show:'Soul Food Daytime',    host:'Soul Player'},
+      {time:'3:00 PM', show:'Soul Food Afternoon',  host:'Soul Player'},
+      {time:'5:00 PM', show:'Soul Food Drive Time', host:'Soul Player'},
+      {time:'6:00 PM', show:'Soul Food Evening',    host:'Soul Player'},
+      {time:'9:00 PM', show:'Soul Food Night',      host:'Soul Player'}
+    ],
+    Tuesday: [
+      {time:'12:00 AM',show:'Soul Food Overnight',    host:'Soul Player'},
+      {time:'7:00 AM', show:'Soul Food Morning',      host:'Soul Player'},
+      {time:'10:00 AM',show:'Nano Sermons',           host:'Stephen Green'},
+      {time:'11:00 AM',show:'Soul Food Midmorning',   host:'Soul Player'},
+      {time:'12:00 PM',show:'Soul Food Daytime',      host:'Soul Player'},
+      {time:'3:00 PM', show:'Soul Food Afternoon',    host:'Soul Player'},
+      {time:'5:00 PM', show:'Soul Food Drive Time',   host:'Soul Player'},
+      {time:'6:00 PM', show:'Soul Food Evening',      host:'Soul Player'},
+      {time:'7:00 PM', show:'Gospel Reggae & Dancehall', host:'Miller & Spanna'},
+      {time:'9:00 PM', show:'Soul Food Night',        host:'Soul Player'}
+    ],
+    Wednesday: [
+      {time:'12:00 AM',show:'Soul Food Overnight',         host:'Soul Player'},
+      {time:'6:00 AM', show:'Soul Food Breakfast',         host:'Soul Player'},
+      {time:'7:00 AM', show:'Soul Food Morning',           host:'Soul Player'},
+      {time:'10:00 AM',show:'Nano Sermons',                host:'Stephen Green'},
+      {time:'11:00 AM',show:'Soul Food Midmorning',        host:'Soul Player'},
+      {time:'12:00 PM',show:'Be Inspired With Shoggy Shoggz', host:'Shoggy Shoggz'},
+      {time:'1:00 PM', show:'Soul Food Daytime',           host:'Soul Player'},
+      {time:'3:00 PM', show:'Soul Food Afternoon',         host:'Soul Player'},
+      {time:'5:00 PM', show:'Soul Food Drive Time',        host:'Soul Player'},
+      {time:'6:00 PM', show:'Soul Food Evening',           host:'Soul Player'},
+      {time:'8:00 PM', show:'DJ Tinashe R&B Show',         host:'DJ Tinashe'},
+      {time:'9:00 PM', show:'Soul Food Night',             host:'Soul Player'}
+    ],
+    Thursday: [
+      {time:'12:00 AM',show:'Soul Food Overnight',      host:'Soul Player'},
+      {time:'7:00 AM', show:'Soul Food Morning',        host:'Soul Player'},
+      {time:'10:00 AM',show:'Shoggy Shoggz TV Show',   host:'Shoggy Shoggz'},
+      {time:'11:00 AM',show:'Soul Food Midmorning',     host:'Soul Player'},
+      {time:'12:00 PM',show:'Soul Food Daytime',        host:'Soul Player'},
+      {time:'3:00 PM', show:'Soul Food Afternoon',      host:'Soul Player'},
+      {time:'5:00 PM', show:'Soul Food Drive Time',     host:'Soul Player'},
+      {time:'6:00 PM', show:'Soul Food Evening',        host:'Soul Player'},
+      {time:'7:00 PM', show:'Gospel Hip Hop Show',      host:'DJ Cass C'},
+      {time:'9:00 PM', show:'Soul Food Night',          host:'Soul Player'}
+    ],
+    Friday: [
+      {time:'12:00 AM',show:'Soul Food Overnight',      host:'Soul Player'},
+      {time:'7:00 AM', show:'Soul Food Morning',        host:'Soul Player'},
+      {time:'10:00 AM',show:'Nano Sermons',             host:'Stephen Green'},
+      {time:'11:00 AM',show:'Soul Food Midmorning',     host:'Soul Player'},
+      {time:'12:00 PM',show:'Soul Food Daytime',        host:'Soul Player'},
+      {time:'3:00 PM', show:'Soul Food Afternoon',      host:'Soul Player'},
+      {time:'5:00 PM', show:'Soul Food Drive Time',     host:'Soul Player'},
+      {time:'6:00 PM', show:'Soul Food Evening',        host:'Soul Player'},
+      {time:'8:00 PM', show:'The RD Show',              host:'DJ Jhyde'},
+      {time:'9:00 PM', show:'Soul Food Night',          host:'Soul Player'}
+    ],
+    Saturday: [
+      {time:'12:00 AM',show:'Soul Food Overnight',      host:'Soul Player'},
+      {time:'7:00 AM', show:'Soul Food Morning',        host:'Soul Player'},
+      {time:'9:00 AM', show:"What's On Your Mind?",     host:'Olive & DJ Val'},
+      {time:'10:00 AM',show:'New Artist Profile',       host:'Tony D'},
+      {time:'11:00 AM',show:'Soul Food Gospel Show',    host:'DJ Val'},
+      {time:'1:00 PM', show:'The RD Show',              host:'DJ Jhyde'},
+      {time:'3:00 PM', show:'Afro Gospel Show',         host:'DJ Tinashe'},
+      {time:'4:00 PM', show:'Soul Food Afternoon',      host:'Soul Player'},
+      {time:'5:00 PM', show:'Soul Food Drive Time',     host:'Soul Player'},
+      {time:'6:00 PM', show:'Gospel Garage & House',    host:'Pammy B'},
+      {time:'7:00 PM', show:'Gospel Hip Hop Show',      host:'DJ Cass C'},
+      {time:'8:00 PM', show:'Prayze Party',             host:'Shoggy Shoggz'},
+      {time:'9:00 PM', show:'DJ Tinashe R&B Show',      host:'DJ Tinashe'},
+      {time:'11:00 PM',show:'Soul Food Night',          host:'Soul Player'}
+    ],
+    Sunday: [
+      {time:'12:00 AM',show:'Soul Food Overnight',      host:'Soul Player'},
+      {time:'7:00 AM', show:'Soul Food Morning',        host:'Soul Player'},
+      {time:'9:00 AM', show:'Sunday Gospel Breakfast',  host:'Soul Player'},
+      {time:'11:00 AM',show:'Soul Food Midmorning',     host:'Soul Player'},
+      {time:'12:00 PM',show:'Soul Food Daytime',        host:'Soul Player'},
+      {time:'2:00 PM', show:'Gospel Garage & House',    host:'Pammy B'},
+      {time:'4:00 PM', show:'Soul Food Afternoon',      host:'Soul Player'},
+      {time:'5:00 PM', show:'Soul Food Drive Time',     host:'Soul Player'},
+      {time:'6:00 PM', show:'Soul Food Evening',        host:'Soul Player'},
+      {time:'8:00 PM', show:'Prayze Party',             host:'Shoggy Shoggz'},
+      {time:'9:00 PM', show:'Soul Food Night',          host:'Soul Player'}
+    ]
+  };
 
-  // ── BUILD SCHEDULE ──
-  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  // ── DOM REFS ─────────────────────────────────────────────
+  var audio      = document.getElementById('audioEl');
+  var playBtn    = document.getElementById('playBtn');
+  var volSlider  = document.getElementById('volSlider');
+  var statusText = document.getElementById('statusText');
+  var npTitle    = document.getElementById('npTitle');
+  var npArtist   = document.getElementById('npArtist');
+  var showTitle  = document.getElementById('showTitle');
+  var showHost   = document.getElementById('showHost');
+  var showTime   = document.getElementById('showTime');
+  var showThumb  = document.getElementById('showThumb');
+  var showLabel  = document.getElementById('showLabel');
+  var artworkImg = document.getElementById('artworkImg');
+  var sleepBtn   = document.getElementById('sleepBtn');
+  var sleepModal = document.getElementById('sleepModal');
+  var sleepClose = document.getElementById('sleepClose');
+  var sleepCountdown = document.getElementById('sleepCountdown');
+  var installBtn = document.getElementById('installBtn');
 
-  function getLondonTime() {
-    try {
-      var n   = new Date();
-      var lon = new Date(n.toLocaleString('en-GB', { timeZone: 'Europe/London' }));
-      return lon;
-    } catch(e) {
-      // Fallback — add BST offset manually (UTC+1 in summer)
-      var n = new Date();
-      var utc = n.getTime() + (n.getTimezoneOffset() * 60000);
-      var bst = new Date(utc + (3600000)); // UTC+1
-      return bst;
+  // ── STATE ────────────────────────────────────────────────
+  var isPlaying    = false;
+  var sleepTimer   = null;
+  var sleepEnd     = null;
+  var countdownInt = null;
+  var metaInterval = null;
+  var deferredPrompt = null;
+
+  // ── AUDIO SETUP ──────────────────────────────────────────
+  audio.volume = 0.8;
+  audio.preload = 'none';
+
+  function setStatus(msg, isError) {
+    statusText.textContent = msg;
+    statusText.className = 'status-text' + (isError ? ' error' : '');
+  }
+
+  function play() {
+    setStatus('Connecting…');
+    audio.src = STREAM_URL + '?t=' + Date.now();
+    var p = audio.play();
+    if (p && p.catch) {
+      p.catch(function (e) {
+        setStatus('Tap play to listen live');
+        playBtn.classList.remove('playing');
+        isPlaying = false;
+      });
     }
   }
 
-  function getNow() {
-    var lon = getLondonTime();
-    var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    return { dayName: dayNames[lon.getDay()], mins: lon.getHours()*60 + lon.getMinutes() };
+  function pause() {
+    audio.pause();
+    audio.src = '';
+    isPlaying = false;
+    playBtn.classList.remove('playing');
+    setStatus('Paused');
+    if (metaInterval) { clearInterval(metaInterval); metaInterval = null; }
   }
 
-  function buildSchedule() {
-    var now      = getNow();
-    var todayName = now.dayName;
-    var nowMins   = now.mins;
+  playBtn.addEventListener('click', function () {
+    if (isPlaying) {
+      pause();
+    } else {
+      play();
+    }
+  });
+
+  audio.addEventListener('playing', function () {
+    isPlaying = true;
+    playBtn.classList.add('playing');
+    setStatus('Live · Soul Food Gospel Radio');
+    startMetaPoll();
+  });
+
+  audio.addEventListener('waiting', function () {
+    if (isPlaying) setStatus('Buffering…');
+  });
+
+  audio.addEventListener('error', function () {
+    isPlaying = false;
+    playBtn.classList.remove('playing');
+    setStatus('Connection error — tap to retry', true);
+  });
+
+  audio.addEventListener('stalled', function () {
+    if (isPlaying) setStatus('Reconnecting…');
+  });
+
+  // ── VOLUME ───────────────────────────────────────────────
+  volSlider.addEventListener('input', function () {
+    var v = volSlider.value;
+    audio.volume = v / 100;
+    volSlider.style.setProperty('--vol', v + '%');
+  });
+  volSlider.style.setProperty('--vol', '80%');
+
+  // ── METADATA ─────────────────────────────────────────────
+  function fetchMeta() {
+    fetch(META_URL, { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        try {
+          var src = data && data.icestats && data.icestats.source;
+          if (src) {
+            var title  = src.title || src.song || '';
+            var artist = src.artist || '';
+            if (title) {
+              npTitle.textContent  = title;
+              npArtist.textContent = artist || 'Soul Food Gospel Radio';
+            }
+          }
+        } catch (e) {}
+      })
+      .catch(function () {});
+  }
+
+  function startMetaPoll() {
+    fetchMeta();
+    if (!metaInterval) {
+      metaInterval = setInterval(fetchMeta, 20000);
+    }
+  }
+
+  // ── MEDIA SESSION ────────────────────────────────────────
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title:  'Soul Food Gospel Radio',
+      artist: 'Live 24/7 Gospel Music',
+      album:  'Soul Player',
+      artwork: [
+        { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
+        { src: 'icon-512.png', sizes: '512x512', type: 'image/png' }
+      ]
+    });
+    navigator.mediaSession.setActionHandler('play',  function () { play(); });
+    navigator.mediaSession.setActionHandler('pause', function () { pause(); });
+    navigator.mediaSession.setActionHandler('stop',  function () { pause(); });
+  }
+
+  // ── TABS ─────────────────────────────────────────────────
+  var tabBtns   = document.querySelectorAll('.tab-btn');
+  var tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = btn.getAttribute('data-tab');
+      tabBtns.forEach(function (b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      tabPanels.forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      var panel = document.getElementById('tab-' + target);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  // ── SCHEDULE RENDER ──────────────────────────────────────
+  var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
   function timeToMins(t) {
-    var m=t.match(/(\d+):(\d+)\s*(AM|PM)/i);
-    if(!m)return 0;
-    var h=parseInt(m[1]),mn=parseInt(m[2]),ap=m[3].toUpperCase();
-    if(ap==='PM'&&h!==12)h+=12;
-    if(ap==='AM'&&h===12)h=0;
-    return h*60+mn;
+    var m = t.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!m) return 0;
+    var h = parseInt(m[1]) % 12;
+    if (m[3].toUpperCase() === 'PM') h += 12;
+    return h * 60 + parseInt(m[2]);
   }
 
-  function getInitials(name) {
-    return name.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
-  }
-
-  // Find today's live show
-  var todaySchedule = SCHEDULE.find(function(d){return d.day===todayName;});
-  var liveShow = null;
-  if (todaySchedule) {
-    todaySchedule.shows.forEach(function(show,si) {
-      var showMins = timeToMins(show.time);
-      var nextMins = si+1<todaySchedule.shows.length ? timeToMins(todaySchedule.shows[si+1].time) : 1440;
-      if(nowMins>=showMins && nowMins<nextMins) liveShow = show;
-    });
-  }
-
-  // Build featured ON AIR card
-  var cardHTML = '';
-  if(liveShow) {
-    var photoHTML = liveShow.photo
-      ? '<img class="on-air-card-photo" src="'+liveShow.photo+'" alt="'+liveShow.host+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
-        + '<div class="on-air-card-photo-fallback" style="display:none">'+getInitials(liveShow.host)+'</div>'
-      : '<div class="on-air-card-photo-fallback">'+getInitials(liveShow.host)+'</div>';
-
-    cardHTML = '<div class="on-air-card">'
-      + photoHTML
-      + '<div class="on-air-card-info">'
-      + '<div class="on-air-card-badge"><div class="on-air-card-badge-dot"></div><span class="on-air-card-badge-txt">On Air Now</span></div>'
-      + '<div class="on-air-card-show">'+liveShow.name+'</div>'
-      + '<div class="on-air-card-host">'+liveShow.host+'</div>'
-      + '<div class="on-air-card-time">'+liveShow.time+' · '+todayName+'</div>'
-      + '</div></div>';
-  }
-  document.getElementById('onAirCard').innerHTML = cardHTML;
-
-  // Build schedule list
-  var todayIdx = SCHEDULE.findIndex(function(d){return d.day===todayName;});
-  var orderedDays = [];
-  for(var i=0;i<7;i++) orderedDays.push(SCHEDULE[(todayIdx+i)%7]);
-
-  var schedHTML = '';
-  orderedDays.forEach(function(dayObj,di) {
-    schedHTML += '<div class="schedule-day">';
-    schedHTML += '<div class="schedule-day-label">'+(di===0?'Today — ':'')+dayObj.day+'</div>';
-
-    dayObj.shows.forEach(function(show,si) {
-      var showMins = timeToMins(show.time);
-      var nextMins = si+1<dayObj.shows.length ? timeToMins(dayObj.shows[si+1].time) : 1440;
-      var isLive   = di===0 && nowMins>=showMins && nowMins<nextMins;
-
-      // Photo or initials
-      var rowPhoto = show.photo
-        ? '<img class="show-row-photo" src="'+show.photo+'" alt="'+show.host+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
-          + '<div class="show-row-photo-fallback" style="display:none">'+getInitials(show.host)+'</div>'
-        : '<div class="show-row-photo-fallback">'+getInitials(show.host)+'</div>';
-
-      schedHTML += '<div class="show-row'+(isLive?' live-row':'')+'">';
-      schedHTML += rowPhoto;
-      schedHTML += '<div class="show-time">'+show.time+'</div>';
-      schedHTML += '<div class="show-info"><div class="show-name">'+show.name+'</div><div class="show-host">'+show.host+'</div></div>';
-      if(isLive) schedHTML += '<div class="show-live"><div class="show-live-dot"></div>Live</div>';
-      schedHTML += '</div>';
-    });
-    schedHTML += '</div>';
-  });
-
-  document.getElementById('scheduleContent').innerHTML = schedHTML;
-  } // end buildSchedule()
-
-  // ── DAYPARTS ──
-  var DAYPARTS = [
-    { name:'Morning',   desc:'6:00 am – 12:00 pm', icon:'🌅', start:6,  end:12,
-      accent:'#E8941A', accentL:'#F5B040', glow:'rgba(232,148,26,0.38)',
-      bg:'rgba(232,148,26,0.13)', bdr:'rgba(232,148,26,0.32)', str:'rgba(232,148,26,0.50)' },
-    { name:'Afternoon', desc:'12:00 pm – 5:00 pm',  icon:'☀️', start:12, end:17,
-      accent:'#2E86C1', accentL:'#55B0DF', glow:'rgba(46,134,193,0.38)',
-      bg:'rgba(46,134,193,0.13)', bdr:'rgba(46,134,193,0.32)', str:'rgba(46,134,193,0.50)' },
-    { name:'Evening',   desc:'5:00 pm – 9:00 pm',   icon:'🌆', start:17, end:21,
-      accent:'#6C3483', accentL:'#9B59B6', glow:'rgba(108,52,131,0.38)',
-      bg:'rgba(108,52,131,0.13)', bdr:'rgba(108,52,131,0.32)', str:'rgba(108,52,131,0.50)' },
-    { name:'Night',     desc:'9:00 pm – 6:00 am',   icon:'🌙', start:21, end:6,
-      accent:'#1A237E', accentL:'#3F51B5', glow:'rgba(26,35,126,0.38)',
-      bg:'rgba(26,35,126,0.15)', bdr:'rgba(26,35,126,0.34)', str:'rgba(26,35,126,0.52)' }
-  ];
-
-  var root = document.documentElement;
-  var curDp;
-
-  function getDp() {
-    var lon = getLondonTime();
-    var h = lon.getHours();
-    for (var i=0;i<DAYPARTS.length;i++) {
-      var d=DAYPARTS[i];
-      if(d.start<d.end?(h>=d.start&&h<d.end):(h>=d.start||h<d.end)) return d;
+  function getCurrentShow(dayShows) {
+    var now  = new Date();
+    var mins = now.getHours() * 60 + now.getMinutes();
+    var cur  = null;
+    for (var i = 0; i < dayShows.length; i++) {
+      if (timeToMins(dayShows[i].time) <= mins) cur = i;
     }
-    return DAYPARTS[0];
+    return cur;
   }
 
-  function applyDp(dp) {
-    root.style.setProperty('--accent',     dp.accent);
-    root.style.setProperty('--accent-l',   dp.accentL);
-    root.style.setProperty('--accent-glow',dp.glow);
-    root.style.setProperty('--accent-bg',  dp.bg);
-    root.style.setProperty('--accent-bdr', dp.bdr);
-    root.style.setProperty('--accent-str', dp.str);
-    document.getElementById('dpIcon').textContent = dp.icon;
-    document.getElementById('dpName').textContent = dp.name;
-    document.getElementById('dpDesc').textContent = dp.desc;
-    document.getElementById('bgBlob').style.background  = dp.accent;
-    document.getElementById('bgBlob2').style.background = dp.accent;
-    var vol=document.getElementById('volSlider');
-    if(vol) vol.style.background='linear-gradient(90deg,'+dp.accent+' '+vol.value+'%,rgba(255,255,255,0.1) '+vol.value+'%)';
-    curDp=dp;
+  function renderSchedule() {
+    var panel = document.getElementById('tab-schedule');
+    panel.innerHTML = '';
+    var now     = new Date();
+    var todayIdx = now.getDay();
+
+    DAYS.forEach(function (day, di) {
+      var shows = SCHEDULE[day];
+      if (!shows) return;
+      var section = document.createElement('div');
+      section.className = 'day-section';
+      var heading = document.createElement('div');
+      heading.className = 'day-heading';
+      heading.textContent = day + (di === todayIdx ? ' — Today' : '');
+      section.appendChild(heading);
+
+      var curIdx = (di === todayIdx) ? getCurrentShow(shows) : -1;
+
+      shows.forEach(function (s, si) {
+        var row = document.createElement('div');
+        row.className = 'sched-row' + (si === curIdx ? ' now-on' : '');
+        row.innerHTML =
+          '<div class="sched-time">' + s.time + '</div>' +
+          '<div class="sched-info">' +
+            '<div class="sched-show">' + s.show + '</div>' +
+            '<div class="sched-host">' + s.host + '</div>' +
+          '</div>';
+        section.appendChild(row);
+      });
+
+      panel.appendChild(section);
+    });
   }
 
-  curDp=getDp(); applyDp(curDp);
-  setInterval(function(){var nd=getDp();if(nd.name!==curDp.name)applyDp(nd);},5*60*1000);
+  renderSchedule();
 
-  // Build schedule now that getDp is defined, refresh every 60 seconds
-  buildSchedule();
-  setInterval(buildSchedule, 60000);
+  // ── UPDATE CURRENT SHOW STRIP ────────────────────────────
+  function updateShowStrip() {
+    var now     = new Date();
+    var dayName = DAYS[now.getDay()];
+    var shows   = SCHEDULE[dayName];
+    if (!shows) return;
+    var idx = getCurrentShow(shows);
+    if (idx === null) return;
+    var s = shows[idx];
+    showTitle.textContent = s.show;
+    showHost.textContent  = s.host;
+    showLabel.textContent = 'ON NOW';
 
-  // ── TABS ──
-  window.showTab = function(name) {
-    document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
-    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
-    document.getElementById('panel-'+name).classList.add('active');
-    document.getElementById('tab-'+name).classList.add('active');
-  };
+    var next = shows[idx + 1];
+    showTime.textContent = next ? 'Until ' + next.time : '';
 
-  // ── AUDIO ──
-  var audio     = document.getElementById('audio');
-  var playBtn   = document.getElementById('playBtn');
-  var iconPlay  = document.getElementById('iconPlay');
-  var iconPause = document.getElementById('iconPause');
-  var statusEl  = document.getElementById('statusText');
-  var viz       = document.getElementById('viz');
-  var playing   = false;
-  var metaTimer = null;
+    // Swap artwork for Shoggy Shoggz shows
+    if (s.host === 'Shoggy Shoggz') {
+      showThumb.src = 'shoggy.png';
+      // Also update big artwork
+      artworkImg.innerHTML = '<img src="shoggy.png" alt="Shoggy Shoggz">';
+    } else {
+      showThumb.src = 'icon-192.png';
+      artworkImg.innerHTML = '<div class="artwork-fallback"><div class="af-title">SOUL<br>PLAYER</div></div>';
+    }
+  }
 
-  // Waveform
-  [2,4,6,3,8,5,4,9,6,4,7,5,3,8,5,6,3,7,4,8,5,3,6,4,7,5,3,6,4,5,2,4].forEach(function(h,i){
-    var b=document.createElement('div'); b.className='bar';
-    b.style.setProperty('--h',h);
-    b.style.setProperty('--d',(0.5+Math.random()*1.4).toFixed(2)+'s');
-    b.style.animationDelay=(i*0.03).toFixed(2)+'s';
-    viz.appendChild(b);
+  updateShowStrip();
+  setInterval(updateShowStrip, 60000);
+  setInterval(renderSchedule, 60000);
+
+  // ── SLEEP TIMER ──────────────────────────────────────────
+  sleepBtn.addEventListener('click', function () {
+    sleepModal.classList.add('open');
   });
 
-  function waveOn()  {viz.querySelectorAll('.bar').forEach(function(b){b.classList.add('active');});}
-  function waveOff() {viz.querySelectorAll('.bar').forEach(function(b){b.classList.remove('active');});}
+  sleepClose.addEventListener('click', function () {
+    sleepModal.classList.remove('open');
+  });
 
-  window.togglePlay = function() { playing ? doPause() : doPlay(); };
+  sleepModal.addEventListener('click', function (e) {
+    if (e.target === sleepModal) sleepModal.classList.remove('open');
+  });
 
-  function doPlay() {
-    setUI('buffering');
-    audio.src=STREAM; audio.load();
-    var p=audio.play();
-    if(p&&p.catch){p.catch(function(err){
-      console.warn('Stream error:', err);
-      if(err.name==='NotAllowedError'){
-        setUI('paused');
-        showToast('Tap play again to start listening');
+  document.querySelectorAll('.sleep-opt').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var mins = parseInt(btn.getAttribute('data-mins'));
+      document.querySelectorAll('.sleep-opt').forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      if (sleepTimer) { clearTimeout(sleepTimer); sleepTimer = null; }
+      if (countdownInt) { clearInterval(countdownInt); countdownInt = null; }
+
+      if (mins === 0) {
+        sleepEnd = null;
+        sleepCountdown.textContent = '';
+        sleepBtn.classList.remove('active');
       } else {
-        setUI('error');
-        showToast('Stream unavailable — please try again');
+        sleepEnd = Date.now() + mins * 60000;
+        sleepTimer = setTimeout(function () {
+          pause();
+          sleepBtn.classList.remove('active');
+          sleepCountdown.textContent = '';
+        }, mins * 60000);
+        sleepBtn.classList.add('active');
+        countdownInt = setInterval(function () {
+          if (!sleepEnd) return;
+          var left = Math.max(0, sleepEnd - Date.now());
+          var m = Math.floor(left / 60000);
+          var s = Math.floor((left % 60000) / 1000);
+          sleepCountdown.textContent = 'Stops in ' + m + ':' + (s < 10 ? '0' : '') + s;
+          if (left === 0) {
+            clearInterval(countdownInt);
+            sleepCountdown.textContent = '';
+          }
+        }, 1000);
       }
-    });}
-  }
 
-  function doPause() {
-    audio.pause(); audio.src='';
-    playing=false; clearInterval(metaTimer);
-    setUI('paused');
-    clearSleepTimer();
-  }
-
-  audio.addEventListener('playing',  function(){playing=true;setUI('playing');fetchMeta();metaTimer=setInterval(fetchMeta,META_INT);updateMediaSession();});
-  audio.addEventListener('waiting',  function(){if(playing)setUI('buffering');});
-  audio.addEventListener('stalled',  function(){if(playing)setUI('buffering');});
-  audio.addEventListener('error',    function(){playing=false;setUI('error');});
-  audio.addEventListener('pause',    function(){if(!playing)setUI('paused');});
-
-  function setUI(s) {
-    playBtn.classList.remove('buffering');
-    if(s==='playing') {
-      iconPlay.style.display='none';iconPause.style.display='block';
-      playBtn.setAttribute('aria-label','Pause');
-      statusEl.textContent='Streaming live now'; waveOn();
-    } else if(s==='paused') {
-      iconPlay.style.display='block';iconPause.style.display='none';
-      playBtn.setAttribute('aria-label','Play');
-      statusEl.textContent='Tap play to listen live'; waveOff();
-    } else if(s==='buffering') {
-      iconPlay.style.display='none';iconPause.style.display='none';
-      playBtn.classList.add('buffering');
-      playBtn.setAttribute('aria-label','Connecting');
-      statusEl.textContent='Connecting to stream…'; waveOff();
-    } else if(s==='error') {
-      iconPlay.style.display='block';iconPause.style.display='none';
-      playBtn.setAttribute('aria-label','Play');
-      statusEl.textContent='Stream unavailable — tap to retry';
-      showToast('Stream unavailable. Please check your connection.'); waveOff();
-    }
-  }
-
-  window.setVolume = function(val) {
-    audio.volume=val/100;
-    document.getElementById('volSlider').style.background=
-      'linear-gradient(90deg,'+curDp.accent+' '+val+'%,rgba(255,255,255,0.1) '+val+'%)';
-  };
-
-  // ── METADATA ──
-  var trackHistory=[]; var lastRaw=''; var metaIdx=0;
-
-  function fetchMeta(){tryMeta(metaIdx);}
-
-  function tryMeta(idx){
-    if(idx>=META_URLS.length)return;
-    fetch(META_URLS[idx],{cache:'no-store',mode:'cors'})
-      .then(function(r){
-        if(!r.ok)throw new Error('bad');
-        var ct=r.headers.get('content-type')||'';
-        if(ct.indexOf('json')>-1||META_URLS[idx].indexOf('.xsl')>-1) return r.json().then(parseIcecast);
-        return r.text().then(parseShoutcast);
-      })
-      .then(function(){metaIdx=idx;})
-      .catch(function(){tryMeta(idx+1);});
-  }
-
-  function parseIcecast(data){
-    var src=data&&data.icestats&&data.icestats.source;
-    if(!src)return;
-    if(Array.isArray(src))src=src[0];
-    var raw=src.title||src.song||'';
-    var artist=src.artist||''; var title=src.title||'';
-    if(!artist&&raw.indexOf(' - ')>-1){var p=raw.split(' - ');artist=p[0].trim();title=p.slice(1).join(' - ').trim();}
-    updateNP(title||raw||STATION,artist||STATION_S,raw);
-  }
-
-  function parseShoutcast(html){
-    var body=html.replace(/<[^>]+>/g,''); var parts=body.split(',');
-    if(parts.length>=7){
-      var raw=parts.slice(6).join(',').trim();
-      var artist='',title=raw;
-      if(raw.indexOf(' - ')>-1){var p=raw.split(' - ');artist=p[0].trim();title=p.slice(1).join(' - ').trim();}
-      updateNP(title||STATION,artist||STATION_S,raw);
-    }
-  }
-
-  function updateNP(title,artist,raw){
-    if(raw===lastRaw)return; lastRaw=raw;
-    if(raw&&raw!==STATION){
-      trackHistory.unshift({title:title,artist:artist});
-      if(trackHistory.length>3)trackHistory.pop();
-      renderHistory();
-    }
-    var te=document.getElementById('npTitle'),ae=document.getElementById('npArtist');
-    te.textContent=title; ae.textContent=artist;
-    te.classList.remove('scroll');
-    if(title.length>20){void te.offsetWidth;te.classList.add('scroll');}
-    var dot=document.getElementById('metaDot');
-    dot.classList.add('flash');
-    setTimeout(function(){dot.classList.remove('flash');},800);
-    document.title=(artist?artist+' – '+title:title)+' | Soul Player';
-    updateMediaSession(title,artist);
-  }
-
-  function renderHistory(){
-    var sec=document.getElementById('historySection'),list=document.getElementById('historyList');
-    if(!trackHistory.length)return;
-    sec.style.display='block'; list.innerHTML='';
-    trackHistory.forEach(function(t,i){
-      var row=document.createElement('div');row.className='history-item';
-      var num=document.createElement('span');num.className='history-num';num.textContent=i+1;
-      var txt=document.createElement('span');txt.className='history-text';
-      txt.textContent=t.artist?t.artist+' – '+t.title:t.title;
-      row.appendChild(num);row.appendChild(txt);list.appendChild(row);
+      setTimeout(function () { sleepModal.classList.remove('open'); }, 400);
     });
-  }
-
-  // ── SLEEP TIMER ──
-  var sleepTimer=null; var sleepMinsLeft=0; var sleepInterval=null;
-
-  window.openSleepModal  = function(){document.getElementById('sleepModal').classList.add('visible');};
-  window.closeSleepModal = function(e){if(!e||e.target===document.getElementById('sleepModal'))document.getElementById('sleepModal').classList.remove('visible');};
-
-  window.setSleep = function(mins) {
-    document.getElementById('sleepModal').classList.remove('visible');
-    clearSleepTimer();
-    if(mins===0){
-      document.getElementById('sleepDisplay').classList.remove('visible');
-      document.getElementById('sleepBtn').classList.remove('active');
-      return;
-    }
-    sleepMinsLeft=mins;
-    document.getElementById('sleepBtn').classList.add('active');
-    updateSleepDisplay();
-    sleepInterval=setInterval(function(){
-      sleepMinsLeft--;
-      updateSleepDisplay();
-      if(sleepMinsLeft<=0){clearSleepTimer();doPause();showToast('Sleep timer — stream stopped.');}
-    },60000);
-  };
-
-  function updateSleepDisplay(){
-    var el=document.getElementById('sleepDisplay');
-    el.classList.add('visible');
-    el.textContent='⏱ Stops in '+sleepMinsLeft+' min'+(sleepMinsLeft!==1?'s':'');
-  }
-
-  function clearSleepTimer(){
-    clearInterval(sleepInterval); sleepTimer=null;
-    document.getElementById('sleepDisplay').classList.remove('visible');
-    document.getElementById('sleepBtn').classList.remove('active');
-  }
-
-  // ── SHARE ──
-  window.shareApp = function(){
-    var data={title:'Soul Player — Soul Food Gospel Radio',text:'Listen to live 24/7 Gospel music — install it as a free app!',url:window.location.href};
-    if(navigator.share){navigator.share(data).catch(function(){});}
-    else if(navigator.clipboard){navigator.clipboard.writeText(window.location.href).then(function(){showToast('Link copied to clipboard!');});}
-  };
-
-  // ── TOAST ──
-  var toastTimer;
-  function showToast(msg){
-    var el=document.getElementById('errorToast');
-    el.textContent=msg; el.classList.add('visible');
-    clearTimeout(toastTimer);
-    toastTimer=setTimeout(function(){el.classList.remove('visible');},4000);
-  }
-
-  // ── INSTALL ──
-  var deferredPrompt=null;
-  window.addEventListener('beforeinstallprompt',function(e){
-    e.preventDefault(); deferredPrompt=e;
-    var dismissed=localStorage.getItem('sp-install-dismissed');
-    if(!dismissed){setTimeout(function(){document.getElementById('installBanner').classList.add('visible');document.getElementById('installTopBtn').classList.add('visible');},5000);}
-    else{document.getElementById('installTopBtn').classList.add('visible');}
   });
-  window.triggerInstall=function(){
-    document.getElementById('installBanner').classList.remove('visible');
-    if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(function(r){if(r.outcome==='accepted')document.getElementById('installTopBtn').classList.remove('visible');deferredPrompt=null;});}
-  };
-  window.dismissInstall=function(){document.getElementById('installBanner').classList.remove('visible');localStorage.setItem('sp-install-dismissed','1');};
-  window.addEventListener('appinstalled',function(){document.getElementById('installBanner').classList.remove('visible');document.getElementById('installTopBtn').classList.remove('visible');});
 
-  // ── MEDIA SESSION ──
-  function updateMediaSession(title,artist){
-    if(!('mediaSession' in navigator))return;
-    navigator.mediaSession.metadata=new MediaMetadata({
-      title:title||STATION, artist:artist||STATION_S,
-      album:'Soul Food Gospel Radio Live',
-      artwork:[{src:'icon-192.png',sizes:'192x192',type:'image/png'},{src:'icon-512.png',sizes:'512x512',type:'image/png'}]
+  // ── PWA INSTALL ──────────────────────────────────────────
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.classList.add('visible');
+  });
+
+  installBtn.addEventListener('click', function () {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function () {
+      deferredPrompt = null;
+      installBtn.classList.remove('visible');
     });
-    navigator.mediaSession.setActionHandler('play', function(){doPlay();});
-    navigator.mediaSession.setActionHandler('pause',function(){doPause();});
-    navigator.mediaSession.setActionHandler('stop', function(){doPause();});
+  });
+
+  // ── SERVICE WORKER ───────────────────────────────────────
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('./sw.js').catch(function () {});
+    });
   }
 
-  audio.addEventListener('playing',function(){if('mediaSession' in navigator)navigator.mediaSession.playbackState='playing';});
-  audio.addEventListener('pause',  function(){if('mediaSession' in navigator)navigator.mediaSession.playbackState='paused';});
-
-  // ── SERVICE WORKER ──
-  if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}
-
-  // ── AUTOPLAY ──
-  if(window.location.search.indexOf('autoplay=1')>-1){setTimeout(function(){doPlay();},800);}
+  // ── AUTOPLAY from URL param ──────────────────────────────
+  if (window.location.search.indexOf('autoplay=1') !== -1) {
+    setTimeout(function () { play(); }, 800);
+  }
 
 })();
 </script>
