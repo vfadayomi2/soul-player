@@ -1,4 +1,4 @@
-<!-- Soul Player v202605162303 -->
+<!-- Soul Player v202605162304 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -432,17 +432,25 @@ body {
 }
 
 .on-air-card-host {
-  font-size: 12px; color: var(--muted);
+  font-size: 12px; color: #fff;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
 .on-air-card-time {
-  font-size: 10px; color: var(--faint);
+  font-size: 10px; color: #fff;
   margin-top: 4px; letter-spacing: 0.04em;
 }
 
 /* Schedule list below */
 .schedule-list-wrap { padding: 16px 16px 0; }
+
+#onAirCard {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(180deg, #1C0A04 0%, #0D0402 100%);
+  padding-bottom: 4px;
+}
 
 .schedule-day { margin-bottom: 20px; }
 
