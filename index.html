@@ -935,6 +935,7 @@ body {
 <audio id="audio" preload="none"></audio>
 
 <script>
+if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(s){s.unregister();});});}
 (function() {
 
   // ── CONFIG ──────────────────────────────────
@@ -1469,9 +1470,10 @@ body {
   audio.addEventListener('pause',  function(){if('mediaSession' in navigator)navigator.mediaSession.playbackState='paused';});
 
   // ── SERVICE WORKER ──
-  if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){});}
+// Unregister any old service workers
+if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(s){s.unregister();});});}
 
-  // ── AUTOPLAY ──
+  if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(s){s.unregister();});});}
   if(window.location.search.indexOf('autoplay=1')>-1){setTimeout(function(){doPlay();},800);}
 
 })();
