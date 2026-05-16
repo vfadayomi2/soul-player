@@ -1075,7 +1075,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   function getLondonTime() {
     try {
       var n   = new Date();
-      var lon = new Date(n.toLocaleString('en-GB', { timeZone: 'Europe/London' }));
+      var lon = new Date(n.toLocaleString('en-US', { timeZone: 'Europe/London' }));
       return lon;
     } catch(e) {
       // Fallback — add BST offset manually (UTC+1 in summer)
@@ -1142,6 +1142,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
 
   // Build schedule list
   var todayIdx = SCHEDULE.findIndex(function(d){return d.day===todayName;});
+  if(todayIdx<0)todayIdx=0;
   var orderedDays = [];
   for(var i=0;i<7;i++) orderedDays.push(SCHEDULE[(todayIdx+i)%7]);
 
