@@ -1,4 +1,4 @@
-<!-- Soul Player v202605152000 -->
+<!-- Soul Player v202605152200 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1071,10 +1071,22 @@ body {
   // ── BUILD SCHEDULE ──
   var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
+  function getLondonTime() {
+    try {
+      var n   = new Date();
+      var lon = new Date(n.toLocaleString('en-GB', { timeZone: 'Europe/London' }));
+      return lon;
+    } catch(e) {
+      // Fallback — add BST offset manually (UTC+1 in summer)
+      var n = new Date();
+      var utc = n.getTime() + (n.getTimezoneOffset() * 60000);
+      var bst = new Date(utc + (3600000)); // UTC+1
+      return bst;
+    }
+  }
+
   function getNow() {
-    // Use London time (Europe/London) which handles GMT/BST automatically
-    var n    = new Date();
-    var lon  = new Date(n.toLocaleString('en-GB', { timeZone: 'Europe/London' }));
+    var lon = getLondonTime();
     var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     return { dayName: dayNames[lon.getDay()], mins: lon.getHours()*60 + lon.getMinutes() };
   }
@@ -1161,10 +1173,6 @@ body {
   document.getElementById('scheduleContent').innerHTML = schedHTML;
   } // end buildSchedule()
 
-  // Build on load then refresh every 60 seconds so Live Now badge stays accurate
-  buildSchedule();
-  setInterval(buildSchedule, 60000);
-
   // ── DAYPARTS ──
   var DAYPARTS = [
     { name:'Morning',   desc:'6:00 am – 12:00 pm', icon:'🌅', start:6,  end:12,
@@ -1185,7 +1193,7 @@ body {
   var curDp;
 
   function getDp() {
-    var lon = new Date(new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' }));
+    var lon = getLondonTime();
     var h = lon.getHours();
     for (var i=0;i<DAYPARTS.length;i++) {
       var d=DAYPARTS[i];
@@ -1213,6 +1221,10 @@ body {
 
   curDp=getDp(); applyDp(curDp);
   setInterval(function(){var nd=getDp();if(nd.name!==curDp.name)applyDp(nd);},5*60*1000);
+
+  // Build schedule now that getDp is defined, refresh every 60 seconds
+  buildSchedule();
+  setInterval(buildSchedule, 60000);
 
   // ── TABS ──
   window.showTab = function(name) {
@@ -1250,7 +1262,16 @@ body {
     setUI('buffering');
     audio.src=STREAM; audio.load();
     var p=audio.play();
-    if(p&&p.catch){p.catch(function(){setUI('error');});}
+    if(p&&p.catch){p.catch(function(err){
+      console.warn('Stream error:', err);
+      if(err.name==='NotAllowedError'){
+        setUI('paused');
+        showToast('Tap play again to start listening');
+      } else {
+        setUI('error');
+        showToast('Stream unavailable — please try again');
+      }
+    });}
   }
 
   function doPause() {
