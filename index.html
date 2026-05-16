@@ -1,4 +1,4 @@
-<!-- Soul Player v202605162305 -->
+<!-- Soul Player v202605162306 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -239,7 +239,7 @@ body {
   transition: background 1.2s, border-color 1.2s;
 }
 
-.on-air-dot { width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 1.8s ease-in-out infinite;transition:background 1.2s; }
+.on-air-dot { width:8px;height:8px;background:#FF2222;border-radius:50%;animation:redFlash 1s step-end infinite;box-shadow:0 0 7px #FF2222; }
 .on-air-txt { font-size:10px;font-weight:700;color:#fff;letter-spacing:0.18em;text-transform:uppercase; }
 
 /* Daypart strip */
@@ -818,6 +818,7 @@ body {
           <path d="M36,74 Q50,68 64,74" fill="none" stroke="#8B0000" stroke-width="1.2" stroke-linecap="round"/>
           <path d="M30,80 Q50,72 70,80" fill="none" stroke="#8B0000" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>
         </svg>
+        <img id="logoPresenterImg" src="" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;">
       </div>
       <div>
         <div class="station-name">Soul Food Gospel</div>
@@ -1184,10 +1185,28 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   });
 
   document.getElementById('scheduleContent').innerHTML = schedHTML;
+
+  // Update hero logo-ring with live presenter photo
+  updateLogoPresenter(liveShow);
   } // end buildSchedule()
 
   // ââ DAYPARTS ââ
-  var DAYPARTS = [
+  // HERO PRESENTER IMAGE
+function updateLogoPresenter(show) {
+  var img = document.getElementById('logoPresenterImg');
+  var svg = img ? img.previousElementSibling : null;
+  if(!img) return;
+  if(show && show.photo) {
+    img.src = show.photo;
+    img.onload = function() { img.style.display='block'; if(svg) svg.style.display='none'; };
+    img.onerror = function() { img.style.display='none'; if(svg) svg.style.display=''; };
+  } else {
+    img.style.display='none';
+    if(svg) svg.style.display='';
+  }
+}
+
+var DAYPARTS = [
     { name:'Morning',   desc:'6:00 am \u2013 12:00 pm', icon:'\uD83C\uDF05', start:6,  end:12,
       accent:'#E8941A', accentL:'#F5B040', glow:'rgba(232,148,26,0.38)',
       bg:'rgba(232,148,26,0.13)', bdr:'rgba(232,148,26,0.32)', str:'rgba(232,148,26,0.50)' },
