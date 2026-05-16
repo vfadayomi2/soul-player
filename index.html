@@ -1,4 +1,4 @@
-<!-- Soul Player v202605162300 -->
+<!-- Soul Player v202605162301 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +9,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Soul Player">
 <meta name="description" content="Live 24/7 Gospel music from Soul Food Gospel Radio">
-<meta property="og:title" content="Soul Player â Soul Food Gospel Radio">
+<meta property="og:title" content="Soul Player &mdash; Soul Food Gospel Radio">
 <meta property="og:description" content="Listen to live 24/7 Gospel music. Install as an app on your phone or desktop.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="icon-512.png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-<title>Soul Player â Soul Food Gospel Radio</title>
+<title>Soul Player &mdash; Soul Food Gospel Radio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -177,7 +177,7 @@ body {
 .tab-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
 
 /* ââââââââââââââââââââââââââââââââââââââââ
-   TAB 1 â PLAYER
+   TAB 1 &mdash; PLAYER
 ââââââââââââââââââââââââââââââââââââââââ */
 .player-tab { padding-bottom: max(var(--safe-bottom), 16px); }
 
@@ -278,7 +278,7 @@ body {
 
 /* Waveform */
 .viz { display:flex;align-items:flex-end;gap:2px;height:36px;padding:0 24px 3px;margin-top:10px;flex-shrink:0; }
-.bar { flex:1;background:var(--accent);border-radius:2px 2px 0 0;opacity:0.5;transform-origin:bottom;height:3px;transition:background 1.2s; }
+.bar { flex:1;background:var(--accent);border-radius:2px 2px 0 0;opacity:0.5;transform-origin:bottom;height:var(--bh,3px);transition:background 1.2s; }
 .bar.active { animation:wave var(--d,1s) ease-in-out infinite; }
 @keyframes wave { 0%,100%{transform:scaleY(1)}50%{transform:scaleY(var(--h,5))} }
 
@@ -333,7 +333,7 @@ body {
 .history-text { font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
 
 /* ââââââââââââââââââââââââââââââââââââââââ
-   TAB 2 â SCHEDULE
+   TAB 2 &mdash; SCHEDULE
 ââââââââââââââââââââââââââââââââââââââââ */
 .schedule-tab { padding:0 0 max(var(--safe-bottom),16px); gap:0; }
 
@@ -528,7 +528,7 @@ body {
 }
 
 /* ââââââââââââââââââââââââââââââââââââââââ
-   TAB 3 â ABOUT / SOCIAL
+   TAB 3 &mdash; ABOUT / SOCIAL
 ââââââââââââââââââââââââââââââââââââââââ */
 .about-tab { padding:20px 20px; padding-bottom:max(var(--safe-bottom),16px); gap:16px; }
 
@@ -746,10 +746,10 @@ body {
 <!-- Install banner -->
 <div class="install-banner" id="installBanner">
   <div class="install-inner">
-    <div class="install-icon"><img src="icon-192.png" alt="Soul Player" onerror="this.parentElement.textContent='ðµ'"></div>
+    <div class="install-icon"><img src="icon-192.png" alt="Soul Player" onerror="this.parentElement.textContent='&#127925;'"></div>
     <div>
       <div class="install-title">Install Soul Player</div>
-      <div class="install-sub">Add to your home screen â listen anytime</div>
+      <div class="install-sub">Add to your home screen &mdash; listen anytime</div>
     </div>
   </div>
   <div class="install-actions">
@@ -766,19 +766,19 @@ body {
     <span class="top-logo">Soul Food Gospel Radio</span>
     <div class="top-right">
       <button class="top-sleep-btn visible" id="sleepBtn" onclick="openSleepModal()" aria-label="Sleep timer">
-        â± Sleep
+        &#9201; Sleep
       </button>
       <button class="top-install-btn" id="installTopBtn" onclick="triggerInstall()">
-        â¬ Install
+        &#11015; Install
       </button>
     </div>
   </div>
 
   <!-- Tab nav -->
   <div class="tab-nav">
-    <button class="tab-btn active" onclick="showTab('player')" id="tab-player">â¶ Player</button>
-    <button class="tab-btn" onclick="showTab('schedule')" id="tab-schedule">ð Schedule</button>
-    <button class="tab-btn" onclick="showTab('about')" id="tab-about">â¹ About</button>
+    <button class="tab-btn active" onclick="showTab('player')" id="tab-player">&#9654; Player</button>
+    <button class="tab-btn" onclick="showTab('schedule')" id="tab-schedule">&#128197; Schedule</button>
+    <button class="tab-btn" onclick="showTab('about')" id="tab-about">&#8505; About</button>
   </div>
 
   <!-- ââ PLAYER TAB ââ -->
@@ -810,7 +810,7 @@ body {
       </div>
       <div>
         <div class="station-name">Soul Food Gospel</div>
-        <div class="station-tag">Radio Live Â· London, UK</div>
+        <div class="station-tag">Radio Live &middot; London, UK</div>
       </div>
       <div class="on-air">
         <div class="on-air-dot"></div>
@@ -819,9 +819,9 @@ body {
     </div>
 
     <div class="daypart-strip">
-      <span class="dp-icon" id="dpIcon">ð</span>
+      <span class="dp-icon" id="dpIcon">\uD83C\uDF05</span>
       <span class="dp-name" id="dpName">Morning</span>
-      <span class="dp-desc" id="dpDesc">6:00 am â 12:00 pm</span>
+      <span class="dp-desc" id="dpDesc">6:00 am \u2013 12:00 pm</span>
     </div>
 
     <div class="now-playing">
@@ -860,7 +860,7 @@ body {
 
   <!-- ââ SCHEDULE TAB ââ -->
   <div class="tab-panel schedule-tab" id="panel-schedule">
-    <!-- Featured on-air card â built by JS -->
+    <!-- Featured on-air card &mdash; built by JS -->
     <div id="onAirCard"></div>
     <!-- Schedule list -->
     <div class="schedule-list-wrap">
@@ -901,19 +901,19 @@ body {
 
     <div class="social-grid">
       <a class="social-btn" href="https://www.facebook.com/soulfoodgospelradio" target="_blank" rel="noopener">
-        <span class="social-icon">ð</span>
+        <span class="social-icon">&#128216;</span>
         <div><div class="social-name">Facebook</div><div class="social-handle">@soulfoodgospelradio</div></div>
       </a>
       <a class="social-btn" href="https://www.instagram.com/soulfoodgradio" target="_blank" rel="noopener">
-        <span class="social-icon">ð¸</span>
+        <span class="social-icon">&#128248;</span>
         <div><div class="social-name">Instagram</div><div class="social-handle">@soulfoodgradio</div></div>
       </a>
       <a class="social-btn" href="https://twitter.com/SoulFoodGRadio" target="_blank" rel="noopener">
-        <span class="social-icon">ð¦</span>
+        <span class="social-icon">&#128038;</span>
         <div><div class="social-name">X / Twitter</div><div class="social-handle">@SoulFoodGRadio</div></div>
       </a>
       <a class="social-btn" href="https://www.youtube.com/@SoulFoodGospel" target="_blank" rel="noopener">
-        <span class="social-icon">â¶ï¸</span>
+        <span class="social-icon">&#9654;</span>
         <div><div class="social-name">YouTube</div><div class="social-handle">@SoulFoodGospel</div></div>
       </a>
     </div>
@@ -921,11 +921,11 @@ body {
     <div class="about-divider"></div>
 
     <button class="share-btn" onclick="shareApp()">
-      â Share Soul Player with a Friend
+      &#8599; Share Soul Player with a Friend
     </button>
 
     <a class="website-link" href="https://www.soulfoodgospel.com" target="_blank" rel="noopener">
-      ð soulfoodgospel.com
+      &#127760; soulfoodgospel.com
     </a>
 
   </div>
@@ -949,7 +949,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   var STATION_S = 'Live 24/7 Gospel Music';
   // âââââââââââââââââââââââââââââââââââââââââââââ
 
-  // ââ SCHEDULE DATA â from StationPlaylist ââ
+  // ââ SCHEDULE DATA &mdash; from StationPlaylist ââ
   var SCHEDULE = [
     { day:'Monday', shows:[
       { time:'12:00 AM', name:'Soul Food Overnight',            host:'Soul Player',                 photo:'' },
@@ -1078,7 +1078,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
       var lon = new Date(n.toLocaleString('en-US', { timeZone: 'Europe/London' }));
       return lon;
     } catch(e) {
-      // Fallback â add BST offset manually (UTC+1 in summer)
+      // Fallback &mdash; add BST offset manually (UTC+1 in summer)
       var n = new Date();
       var utc = n.getTime() + (n.getTimezoneOffset() * 60000);
       var bst = new Date(utc + (3600000)); // UTC+1
@@ -1135,7 +1135,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
       + '<div class="on-air-card-badge"><div class="on-air-card-badge-dot"></div><span class="on-air-card-badge-txt">On Air Now</span></div>'
       + '<div class="on-air-card-show">'+liveShow.name+'</div>'
       + '<div class="on-air-card-host">'+liveShow.host+'</div>'
-      + '<div class="on-air-card-time">'+liveShow.time+' Â· '+todayName+'</div>'
+      + '<div class="on-air-card-time">'+liveShow.time+' &middot; '+todayName+'</div>'
       + '</div></div>';
   }
   document.getElementById('onAirCard').innerHTML = cardHTML;
@@ -1149,7 +1149,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   var schedHTML = '';
   orderedDays.forEach(function(dayObj,di) {
     schedHTML += '<div class="schedule-day">';
-    schedHTML += '<div class="schedule-day-label">'+(di===0?'Today â ':'')+dayObj.day+'</div>';
+    schedHTML += '<div class="schedule-day-label">'+(di===0?'Today &mdash; ':'')+dayObj.day+'</div>';
 
     dayObj.shows.forEach(function(show,si) {
       var showMins = timeToMins(show.time);
@@ -1177,16 +1177,16 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
 
   // ââ DAYPARTS ââ
   var DAYPARTS = [
-    { name:'Morning',   desc:'6:00 am â 12:00 pm', icon:'ð', start:6,  end:12,
+    { name:'Morning',   desc:'6:00 am \u2013 12:00 pm', icon:'\uD83C\uDF05', start:6,  end:12,
       accent:'#E8941A', accentL:'#F5B040', glow:'rgba(232,148,26,0.38)',
       bg:'rgba(232,148,26,0.13)', bdr:'rgba(232,148,26,0.32)', str:'rgba(232,148,26,0.50)' },
-    { name:'Afternoon', desc:'12:00 pm â 5:00 pm',  icon:'âï¸', start:12, end:17,
+    { name:'Afternoon', desc:'12:00 pm \u2013 5:00 pm',  icon:'\u2600', start:12, end:17,
       accent:'#2E86C1', accentL:'#55B0DF', glow:'rgba(46,134,193,0.38)',
       bg:'rgba(46,134,193,0.13)', bdr:'rgba(46,134,193,0.32)', str:'rgba(46,134,193,0.50)' },
-    { name:'Evening',   desc:'5:00 pm â 9:00 pm',   icon:'ð', start:17, end:21,
+    { name:'Evening',   desc:'5:00 pm \u2013 9:00 pm',   icon:'\uD83C\uDF06', start:17, end:21,
       accent:'#6C3483', accentL:'#9B59B6', glow:'rgba(108,52,131,0.38)',
       bg:'rgba(108,52,131,0.13)', bdr:'rgba(108,52,131,0.32)', str:'rgba(108,52,131,0.50)' },
-    { name:'Night',     desc:'9:00 pm â 6:00 am',   icon:'ð', start:21, end:6,
+    { name:'Night',     desc:'9:00 pm \u2013 6:00 am',   icon:'\uD83C\uDF19', start:21, end:6,
       accent:'#1A237E', accentL:'#3F51B5', glow:'rgba(26,35,126,0.38)',
       bg:'rgba(26,35,126,0.15)', bdr:'rgba(26,35,126,0.34)', str:'rgba(26,35,126,0.52)' }
   ];
@@ -1248,6 +1248,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
 
   // Waveform
   [2,4,6,3,8,5,4,9,6,4,7,5,3,8,5,6,3,7,4,8,5,3,6,4,7,5,3,6,4,5,2,4].forEach(function(h,i){
+var bh=Math.max(2,Math.round(h*0.5));
     var b=document.createElement('div'); b.className='bar';
     b.style.setProperty('--h',h);
     b.style.setProperty('--d',(0.5+Math.random()*1.4).toFixed(2)+'s');
@@ -1271,7 +1272,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
         showToast('Tap play again to start listening');
       } else {
         setUI('error');
-        showToast('Stream unavailable â please try again');
+        showToast('Stream unavailable &mdash; please try again');
       }
     });}
   }
@@ -1307,7 +1308,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
     } else if(s==='error') {
       iconPlay.style.display='block';iconPause.style.display='none';
       playBtn.setAttribute('aria-label','Play');
-      statusEl.textContent='Stream unavailable â tap to retry';
+      statusEl.textContent='Stream unavailable &mdash; tap to retry';
       showToast('Stream unavailable. Please check your connection.'); waveOff();
     }
   }
@@ -1370,7 +1371,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
     var dot=document.getElementById('metaDot');
     dot.classList.add('flash');
     setTimeout(function(){dot.classList.remove('flash');},800);
-    document.title=(artist?artist+' â '+title:title)+' | Soul Player';
+    document.title=(artist?artist+' \u2013 '+title:title)+' | Soul Player';
     updateMediaSession(title,artist);
   }
 
@@ -1382,7 +1383,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
       var row=document.createElement('div');row.className='history-item';
       var num=document.createElement('span');num.className='history-num';num.textContent=i+1;
       var txt=document.createElement('span');txt.className='history-text';
-      txt.textContent=t.artist?t.artist+' â '+t.title:t.title;
+      txt.textContent=t.artist?t.artist+' \u2013 '+t.title:t.title;
       row.appendChild(num);row.appendChild(txt);list.appendChild(row);
     });
   }
@@ -1407,14 +1408,14 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
     sleepInterval=setInterval(function(){
       sleepMinsLeft--;
       updateSleepDisplay();
-      if(sleepMinsLeft<=0){clearSleepTimer();doPause();showToast('Sleep timer â stream stopped.');}
+      if(sleepMinsLeft<=0){clearSleepTimer();doPause();showToast('Sleep timer &mdash; stream stopped.');}
     },60000);
   };
 
   function updateSleepDisplay(){
     var el=document.getElementById('sleepDisplay');
     el.classList.add('visible');
-    el.textContent='â± Stops in '+sleepMinsLeft+' min'+(sleepMinsLeft!==1?'s':'');
+    el.textContent='&#9201; Stops in '+sleepMinsLeft+' min'+(sleepMinsLeft!==1?'s':'');
   }
 
   function clearSleepTimer(){
@@ -1425,7 +1426,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
 
   // ââ SHARE ââ
   window.shareApp = function(){
-    var data={title:'Soul Player â Soul Food Gospel Radio',text:'Listen to live 24/7 Gospel music â install it as a free app!',url:window.location.href};
+    var data={title:'Soul Player &mdash; Soul Food Gospel Radio',text:'Listen to live 24/7 Gospel music &mdash; install it as a free app!',url:window.location.href};
     if(navigator.share){navigator.share(data).catch(function(){});}
     else if(navigator.clipboard){navigator.clipboard.writeText(window.location.href).then(function(){showToast('Link copied to clipboard!');});}
   };
