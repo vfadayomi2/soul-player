@@ -1,4 +1,4 @@
-<!-- Soul Player v202605162301 -->
+<!-- Soul Player v202605162302 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1252,6 +1252,7 @@ var bh=Math.max(2,Math.round(h*0.5));
     var b=document.createElement('div'); b.className='bar';
     b.style.setProperty('--h',h);
     b.style.setProperty('--d',(0.5+Math.random()*1.4).toFixed(2)+'s');
+b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
     b.style.animationDelay=(i*0.03).toFixed(2)+'s';
     viz.appendChild(b);
   });
