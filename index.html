@@ -1,4 +1,4 @@
-<!-- Soul Player v202605162308 -->
+<!-- Soul Player v202605162309 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -405,10 +405,11 @@ body {
 
 .on-air-card-badge {
   display: inline-flex; align-items: center; gap: 5px;
-  background: rgba(200,0,0,0.18);
-  border: 1px solid rgba(220,0,0,0.45);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-bdr);
   border-radius: 10px; padding: 2px 8px;
   margin-bottom: 6px;
+  transition: background 1.2s, border-color 1.2s;
 }
 
 .on-air-card-badge-dot {
@@ -420,7 +421,8 @@ body {
 
 .on-air-card-badge-txt {
   font-size: 8px; font-weight: 700;
-  color: #FF4444; letter-spacing: 0.15em; text-transform: uppercase;
+  color: #fff; letter-spacing: 0.15em; text-transform: uppercase;
+  transition: color 1.2s;
 }
 
 .on-air-card-show {
@@ -526,9 +528,10 @@ body {
 
 .show-live {
   font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-  color:#FF4444;background:rgba(200,0,0,0.18);border:1px solid rgba(220,0,0,0.45);
+  color:#fff;background:var(--accent-bg);border:1px solid var(--accent-bdr);
   border-radius:10px;padding:3px 8px;flex-shrink:0;white-space:nowrap;
   display:flex;align-items:center;gap:4px;
+  transition:color 1.2s,background 1.2s,border-color 1.2s;
 }
 
 .show-live-dot {
