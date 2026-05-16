@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soul Player Test</title>
+<style>
+body{background:#0D0402;color:#fff;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px;box-sizing:border-box}
+h2{color:#E8941A;margin-bottom:20px;text-align:center}
+button{background:#E8941A;color:#000;border:none;border-radius:50px;padding:18px 30px;font-size:17px;font-weight:bold;cursor:pointer;margin:8px;display:block;width:260px}
+#status{margin:20px 0;padding:15px;background:rgba(255,255,255,0.1);border-radius:10px;text-align:center;width:280px;font-size:14px;word-break:break-word}
+#log{background:rgba(255,255,255,0.05);border-radius:10px;padding:15px;width:100%;max-width:300px;font-size:11px;color:#aaa;max-height:180px;overflow-y:auto;margin-top:10px}
+.ok{color:#4CAF50}.err{color:#f44336}
+</style>
+</head>
+<body>
+<h2>Soul Player Test</h2>
+<div id="status">Tap a button to test</div>
+<button onclick="testClick()">1. Test Click Works</button>
+<button id="playBtn" onclick="togglePlay()">2. Test Stream</button>
+<button onclick="clearLog()">Clear Log</button>
+<div id="log"></div>
+<audio id="audio" preload="none"></audio>
+<script>
+var STREAM='https://phoebe.streamerr.co:3555/stream';
+var audio=document.getElementById('audio');
+var playing=false;
+function addLog(msg,ok){var el=document.getElementById('log');var cls=ok===true?'ok':ok===false?'err':'';el.innerHTML='<div class="'+cls+'">'+new Date().toLocaleTimeString()+' '+msg+'</div>'+el.innerHTML;}
+function setStatus(msg){document.getElementById('status').textContent=msg;addLog(msg);}
+function testClick(){setStatus('CLICKS WORK OK');}
+function clearLog(){document.getElementById('log').innerHTML='';}
+function togglePlay(){
+  if(playing){audio.pause();audio.src='';playing=false;document.getElementById('playBtn').textContent='2. Test Stream';setStatus('Stopped');}
+  else{setStatus('Connecting...');addLog('Trying: '+STREAM);audio.src=STREAM+'?t='+Date.now();var p=audio.play();if(p&&p.catch)p.catch(function(e){setStatus('BLOCKED: '+e.message);addLog('Blocked: '+e.message,false);playing=false;});}
+}
+audio.addEventListener('playing',function(){playing=true;document.getElementById('playBtn').textContent='PAUSE';setStatus('STREAM WORKS!');addLog('Audio playing!',true);});
+audio.addEventListener('error',function(){playing=false;document.getElementById('playBtn').textContent='2. Test Stream';var c=audio.error?audio.error.code:'?';var m=audio.error?audio.error.message:'';setStatus('STREAM ERROR code='+c);addLog('Error code='+c+' '+m,false);});
+audio.addEventListener('waiting',function(){setStatus('Buffering...');addLog('Buffering...');});
+addLog('Page loaded OK',true);
+addLog('JS running OK',true);
+if(navigator.serviceWorker){navigator.serviceWorker.getRegistrations().then(function(r){addLog('Service workers active: '+r.length,r.length>0?false:true);r.forEach(function(sw){sw.unregister().then(function(){addLog('Unregistered old SW',true);});});});}
+</script>
+</body>
+</html>
