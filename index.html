@@ -1,4 +1,4 @@
-<!-- Soul Player v202605162310 -->
+<!-- Soul Player v202605162311 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -621,6 +621,26 @@ body {
 
 .website-link:hover { color:#fff; }
 
+/* Contact */
+.contact-label {
+  font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--faint);text-align:center;
+}
+
+.contact-row {
+  display:flex;align-items:center;gap:12px;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px;padding:12px 14px;
+  text-decoration:none;color:#fff;
+  transition:background 0.2s,border-color 0.2s;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.contact-row:hover { background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15); }
+.contact-icon { font-size:20px;flex-shrink:0;line-height:1; }
+.contact-name { font-size:11px;font-weight:600;letter-spacing:0.04em; }
+.contact-value { font-size:10px;color:var(--muted);margin-top:1px; }
+
 /* ââ SLEEP TIMER MODAL ââ */
 .sleep-modal {
   display:none;position:fixed;inset:0;z-index:200;
@@ -932,6 +952,20 @@ body {
         <div><div class="social-name">YouTube</div><div class="social-handle">@SoulFoodGospel</div></div>
       </a>
     </div>
+
+    <div class="about-divider"></div>
+
+    <div class="contact-label">Contact Us</div>
+
+    <a class="contact-row" href="mailto:office@soulfoodgospel.com">
+      <span class="contact-icon">&#9993;</span>
+      <div><div class="contact-name">Email</div><div class="contact-value">office@soulfoodgospel.com</div></div>
+    </a>
+
+    <a class="contact-row" href="https://wa.me/447466115607" target="_blank" rel="noopener">
+      <span class="contact-icon">&#128241;</span>
+      <div><div class="contact-name">WhatsApp</div><div class="contact-value">+44 7466 115607</div></div>
+    </a>
 
     <div class="about-divider"></div>
 
