@@ -1,4 +1,4 @@
-<!-- Soul Player v202605170004 -->
+<!-- Soul Player v202605180001 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -308,12 +308,12 @@ body {
 .vol-icon { color:var(--faint);flex-shrink:0; }
 
 .vol-slider {
-  -webkit-appearance:none;appearance:none;flex:1;height:5px;border-radius:3px;
+  -webkit-appearance:none;appearance:none;flex:1;height:8px;border-radius:4px;
   background:linear-gradient(90deg,var(--accent) 80%,rgba(255,255,255,0.1) 80%);
   outline:none;cursor:pointer;border:none;transition:background 1.2s;
 }
-.vol-slider::-webkit-slider-thumb { -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;transition:background 1.2s; }
-.vol-slider::-moz-range-thumb { width:18px;height:18px;border-radius:50%;background:var(--accent);border:none;cursor:pointer; }
+.vol-slider::-webkit-slider-thumb { -webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--accent);cursor:pointer;transition:background 1.2s; }
+.vol-slider::-moz-range-thumb { width:28px;height:28px;border-radius:50%;background:var(--accent);border:none;cursor:pointer; }
 
 /* Sleep timer display */
 .sleep-display {
@@ -879,7 +879,7 @@ body {
         <span class="vol-icon" aria-hidden="true">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
         </span>
-        <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="80" aria-label="Volume" oninput="setVolume(this.value)">
+        <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="80" aria-label="Volume" oninput="setVolume(this.value)" onchange="setVolume(this.value)">
       </div>
 
       <div class="sleep-display" id="sleepDisplay"></div>
@@ -1336,7 +1336,7 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
       console.warn('Stream error:', err);
       if(err.name==='NotAllowedError'){
         setUI('paused');
-        showToast('Tap play again to start listening');
+        showToast('Tap play to reconnect');
       } else {
         setUI('error');
         showToast('Stream unavailable &mdash; please try again');
@@ -1375,8 +1375,8 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
     } else if(s==='error') {
       iconPlay.style.display='block';iconPause.style.display='none';
       playBtn.setAttribute('aria-label','Play');
-      statusEl.textContent='Stream unavailable &mdash; tap to retry';
-      showToast('Stream unavailable. Please check your connection.'); waveOff();
+      statusEl.textContent='Tap play to reconnect';
+      showToast('Tap play to reconnect'); waveOff();
     }
   }
 
