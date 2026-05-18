@@ -1,4 +1,4 @@
-<!-- Soul Player v202605180004 -->
+<!-- Soul Player v202605180005 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1557,6 +1557,8 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   if(window.location.search.indexOf('autoplay=1')>-1){setTimeout(function(){doPlay();},800);}
 
 
+
+})();
 // FIREBASE WALL + REQUEST
 (function(){
 var FB='https://soul-player-wall-default-rtdb.firebaseio.com';
@@ -1633,8 +1635,6 @@ window.showTab=function(n){
   if(n==='wall')loadPosts();
 };
 setInterval(function(){var w=document.getElementById('panel-wall');if(w&&w.classList.contains('active'))loadPosts();},30000);
-})();
-
 })();
 </script>
 </body>
