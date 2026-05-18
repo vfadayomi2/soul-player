@@ -1,4 +1,4 @@
-<!-- Soul Player v202605180002 -->
+<!-- Soul Player v202605180003 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -148,13 +148,17 @@ body {
 .tab-nav {
   display: flex; flex-shrink: 0;
   border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 0 20px;
-  gap: 4px;
+  padding: 0 6px;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.tab-nav::-webkit-scrollbar { display: none; }
 
 .tab-btn {
-  flex: 1; background: none; border: none;
-  padding: 10px 4px;
+  flex: 0 0 auto; background: none; border: none;
+  padding: 10px 8px;
+  white-space: nowrap;
   font-family: 'Montserrat', sans-serif;
   font-size: 10px; font-weight: 600;
   color: var(--muted); letter-spacing: 0.1em;
