@@ -1,4 +1,4 @@
-<!-- Soul Player v202605180001 -->
+<!-- Soul Player v202605180002 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -979,6 +979,11 @@ body {
 
   </div>
 
+
+<!-- REQUEST TAB -->
+<div class="tab-panel" id="panel-request"><div style="padding:16px 16px 24px;"><div style="height:3px;background:var(--accent);border-radius:3px;margin-bottom:14px;"></div><div style="background:var(--accent-bg);border:1px solid var(--accent-bdr);border-radius:12px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:center;gap:12px;"><div style="width:38px;height:38px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">&#128242;</div><div><div style="color:#fff;font-size:13px;font-weight:700;">Request via WhatsApp</div><div style="color:var(--accent);font-size:11px;margin-top:2px;">Opens WhatsApp with your request ready to send</div></div></div><div style="margin-bottom:11px;"><label style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;display:block;">YOUR NAME</label><input id="rq-name" type="text" placeholder="e.g. Sister Grace" style="width:100%;background:#161616;border:1px solid #272727;color:#fff;padding:11px 13px;border-radius:9px;font-size:13px;box-sizing:border-box;outline:none;font-family:inherit;"></div><div style="margin-bottom:11px;"><label style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;display:block;">YOUR LOCATION</label><input id="rq-loc" type="text" placeholder="e.g. London, UK" style="width:100%;background:#161616;border:1px solid #272727;color:#fff;padding:11px 13px;border-radius:9px;font-size:13px;box-sizing:border-box;outline:none;font-family:inherit;"></div><div style="margin-bottom:11px;"><label style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;display:block;">SONG TITLE *</label><input id="rq-song" type="text" placeholder="e.g. Total Praise" style="width:100%;background:#161616;border:1px solid #272727;color:#fff;padding:11px 13px;border-radius:9px;font-size:13px;box-sizing:border-box;outline:none;font-family:inherit;"></div><div style="margin-bottom:11px;"><label style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;display:block;">ARTIST / ARTISTE *</label><input id="rq-artist" type="text" placeholder="e.g. Richard Smallwood" style="width:100%;background:#161616;border:1px solid #272727;color:#fff;padding:11px 13px;border-radius:9px;font-size:13px;box-sizing:border-box;outline:none;font-family:inherit;"></div><div style="margin-bottom:11px;"><label style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;display:block;">DEDICATE TO (OPTIONAL)</label><input id="rq-ded" type="text" placeholder="e.g. Mum, my church family..." style="width:100%;background:#161616;border:1px solid #272727;color:#fff;padding:11px 13px;border-radius:9px;font-size:13px;box-sizing:border-box;outline:none;font-family:inherit;"></div><div style="margin-bottom:11px;"><label style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;display:block;">MESSAGE (OPTIONAL)</label><textarea id="rq-msg" placeholder="Any message for the DJ..." rows="3" style="width:100%;background:#161616;border:1px solid #272727;color:#fff;padding:11px 13px;border-radius:9px;font-size:13px;box-sizing:border-box;outline:none;resize:none;font-family:inherit;"></textarea></div><div style="margin-bottom:16px;"><label style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;display:block;">PREFERRED SHOW</label><select id="rq-show" style="width:100%;background:#161616;border:1px solid #272727;color:#fff;padding:11px 13px;border-radius:9px;font-size:13px;box-sizing:border-box;outline:none;font-family:inherit;"><option value="any">Any show</option><option>Soul Food Sunday</option><option>The RD Show</option><option>DJ Tinashe R&amp;B Show</option><option>The Shekinhah Miller Show</option><option>Prayze Party</option><option>Afro Gospel Show</option><option>New Artist Profile</option><option>Shoggy Shoggz Show</option><option>Gospel Hip Hop Show</option><option>Soul Food Gospel Show</option></select></div><div id="rq-err" style="color:#e74c3c;font-size:12px;margin-bottom:8px;min-height:16px;"></div><button onclick="sendRequest()" style="width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;letter-spacing:0.8px;cursor:pointer;text-transform:uppercase;font-family:inherit;">&#128242; Send Request via WhatsApp</button></div></div>
+<!-- WALL TAB -->
+<div class="tab-panel" id="panel-wall"><div style="padding:16px 16px 24px;"><div style="height:3px;background:var(--accent);border-radius:3px;margin-bottom:14px;"></div><div style="background:#111;border:1px solid var(--accent-bdr);border-radius:14px;padding:16px;margin-bottom:18px;position:relative;overflow:hidden;"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:3px 0 0 3px;"></div><div style="color:#fff;font-size:13px;font-weight:700;margin-bottom:12px;">Post a Shout Out &#128226;</div><div style="display:flex;gap:8px;margin-bottom:10px;"><div style="flex:1;"><label style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;display:block;">NAME *</label><input id="wl-name" type="text" placeholder="e.g. Sister Grace" style="width:100%;background:#161616;border:1px solid #272727;color:#fff;padding:10px 12px;border-radius:8px;font-size:12px;box-sizing:border-box;outline:none;font-family:inherit;"></div><div style="flex:1;"><label style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;display:block;">LOCATION</label><input id="wl-loc" type="text" placeholder="e.g. London" style="width:100%;background:#161616;border:1px solid #272727;color:#fff;padding:10px 12px;border-radius:8px;font-size:12px;box-sizing:border-box;outline:none;font-family:inherit;"></div></div><div style="margin-bottom:10px;"><label style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px;display:block;">YOUR MESSAGE *</label><textarea id="wl-msg" placeholder="Shout out a friend, share a message..." rows="3" style="width:100%;background:#161616;border:1px solid #272727;color:#fff;padding:10px 12px;border-radius:8px;font-size:12px;box-sizing:border-box;outline:none;resize:none;font-family:inherit;"></textarea></div><div id="wl-err" style="color:#e74c3c;font-size:12px;margin-bottom:8px;min-height:16px;"></div><div id="wl-ok" style="display:none;color:#27ae60;font-size:12px;font-weight:600;margin-bottom:8px;">&#10003; Posted!</div><button onclick="submitShout()" style="width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:0.8px;font-family:inherit;">&#128226; Post to Wall</button><div style="color:#555;font-size:10px;text-align:center;margin-top:10px;">&#128737;&#65039; Offensive language auto-filtered &middot; Admin can remove any post</div></div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="color:#666;font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;">Recent Shout Outs</div><div style="color:var(--accent);font-size:10px;font-weight:600;display:flex;align-items:center;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:#FF2222;animation:redFlash 1s step-end infinite;display:inline-block;"></span>Live</div></div><div id="wall-posts"><div style="color:#555;font-size:13px;text-align:center;padding:20px;">Loading...</div></div></div></div>
 </div><!-- end .app -->
 
 <audio id="audio" preload="none"></audio>
@@ -1544,6 +1549,85 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
 
   if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(s){s.unregister();});});}
   if(window.location.search.indexOf('autoplay=1')>-1){setTimeout(function(){doPlay();},800);}
+
+
+// FIREBASE WALL + REQUEST
+(function(){
+var FB='https://soul-player-wall-default-rtdb.firebaseio.com';
+var ADMIN='447466115607';
+var CMB_KEY='PENDING';
+var BW=['fuck','shit','bitch','cunt','damn','bastard','nigger','nigga','whore','slut','piss','cock','dick','pussy','crap','arse','bollocks','wanker','twat','hate','kill','die','murder'];
+var BP=['i hate you','hate you all','kill yourself','go to hell','drop dead','go die','i hope you die','you are trash','shut up'];
+function flt(t){var l=t.toLowerCase();for(var i=0;i<BP.length;i++){if(l.indexOf(BP[i])>-1)return null;}var c=t;BW.forEach(function(w){c=c.replace(new RegExp('\\b'+w+'\\b','gi'),'***');});return c;}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function ago(ts){var d=Math.floor((Date.now()-ts)/1000);if(d<60)return 'Just now';if(d<3600)return Math.floor(d/60)+' mins ago';if(d<86400)return Math.floor(d/3600)+' hrs ago';return Math.floor(d/86400)+' days ago';}
+function loadPosts(){
+  fetch(FB+'/posts.json?orderBy=%22ts%22&limitToLast=30',{cache:'no-store'})
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var posts=[];
+    if(data){Object.keys(data).forEach(function(k){var p=data[k];p._k=k;posts.push(p);});}
+    posts.sort(function(a,b){return b.ts-a.ts;});
+    var acc=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    var el=document.getElementById('wall-posts');
+    if(!el)return;
+    if(!posts.length){el.innerHTML='<div style="color:#555;text-align:center;padding:24px;font-size:13px;">No shout outs yet. Be the first!</div>';return;}
+    el.innerHTML=posts.map(function(p){return '<div style="background:#1a1a1a;border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid #262626;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div style="width:36px;height:36px;border-radius:50%;background:'+acc+';display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;">'+esc((p.name||'?').charAt(0).toUpperCase())+'</div><div style="flex:1;min-width:0;"><div style="color:#fff;font-size:13px;font-weight:600;">'+esc(p.name||'Listener')+'</div><div style="color:#666;font-size:11px;">'+(p.location?esc(p.location)+' &middot; ':'')+ago(p.ts)+'</div></div><button onclick="wDel(''+p._k+'')" style="background:none;border:none;color:#444;font-size:14px;cursor:pointer;padding:4px 6px;" title="Admin: Delete">&#x1F5D1;</button></div><div style="color:#ccc;font-size:13px;line-height:1.5;padding-left:46px;">'+esc(p.msg||'')+'</div></div>';}).join('');
+  }).catch(function(){var el=document.getElementById('wall-posts');if(el)el.innerHTML='<div style="color:#555;text-align:center;padding:20px;font-size:12px;">Could not load posts.</div>';});
+}
+window.wDel=function(k){if(!confirm('Delete this post?'))return;fetch(FB+'/posts/'+k+'.json',{method:'DELETE'}).then(loadPosts).catch(function(){alert('Could not delete.');});};
+function notify(name,loc,msg){
+  if(!CMB_KEY||CMB_KEY==='PENDING')return;
+  var txt=encodeURIComponent('📣 New Shout Out!\nFrom: '+name+(loc?' ('+loc+')':'')+' \nMsg: '+msg);
+  fetch('https://api.callmebot.com/whatsapp.php?phone='+ADMIN+'&text='+txt+'&apikey='+CMB_KEY).catch(function(){});
+}
+window.submitShout=function(){
+  var name=(document.getElementById('wl-name').value||'').trim();
+  var loc=(document.getElementById('wl-loc').value||'').trim();
+  var msg=(document.getElementById('wl-msg').value||'').trim();
+  var err=document.getElementById('wl-err');
+  if(!name){err.textContent='Please enter your name.';return;}
+  if(!msg){err.textContent='Please write a message.';return;}
+  var c=flt(msg);
+  if(c===null){err.textContent='⚠️ Message contains inappropriate language and cannot be posted.';return;}
+  err.textContent='';
+  fetch(FB+'/posts.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,location:loc||'Listener',msg:c,ts:Date.now()})})
+  .then(function(){document.getElementById('wl-name').value='';document.getElementById('wl-loc').value='';document.getElementById('wl-msg').value='';var ok=document.getElementById('wl-ok');ok.style.display='block';setTimeout(function(){ok.style.display='none';},3000);loadPosts();notify(name,loc,c);})
+  .catch(function(){err.textContent='Could not post. Please try again.';});
+};
+window.sendRequest=function(){
+  var song=(document.getElementById('rq-song').value||'').trim();
+  var art=(document.getElementById('rq-artist').value||'').trim();
+  var name=(document.getElementById('rq-name').value||'').trim();
+  var loc=(document.getElementById('rq-loc').value||'').trim();
+  var ded=(document.getElementById('rq-ded').value||'').trim();
+  var msg=(document.getElementById('rq-msg').value||'').trim();
+  var show=document.getElementById('rq-show').value;
+  var err=document.getElementById('rq-err');
+  if(!song){err.textContent='Please enter a song title.';return;}
+  if(!art){err.textContent='Please enter the artist name.';return;}
+  err.textContent='';
+  var t='Hi Soul Food Gospel Radio!%0A%0A%F0%9F%8E%B5+Song+Request%0A';
+  t+='Song: '+encodeURIComponent(song)+'%0A';
+  t+='Artist: '+encodeURIComponent(art)+'%0A';
+  if(name)t+='From: '+encodeURIComponent(name+(loc?' ('+loc+')':''))+'%0A';
+  if(ded)t+='Dedicated to: '+encodeURIComponent(ded)+'%0A';
+  if(msg)t+='Message: '+encodeURIComponent(msg)+'%0A';
+  if(show&&show!=='any')t+='Show: '+encodeURIComponent(show)+'%0A';
+  window.open('https://wa.me/447466115607?text='+t,'_blank');
+};
+var _ost=window.showTab;
+window.showTab=function(n){
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  var panel=document.getElementById('panel-'+n);
+  var btn=document.getElementById('tab-'+n);
+  if(panel)panel.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(n==='wall')loadPosts();
+};
+setInterval(function(){var w=document.getElementById('panel-wall');if(w&&w.classList.contains('active'))loadPosts();},30000);
+})();
 
 })();
 </script>
