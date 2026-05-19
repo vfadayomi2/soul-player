@@ -1,4 +1,4 @@
-<!-- Soul Player v202605180008 -->
+<!-- Soul Player v202605190001 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -755,7 +755,6 @@ body {
     margin:auto;
   }
 }
-#panel-request, #panel-wall { display:none; }
 .req-form { padding:16px; }
 .req-form h2 { font-size:18px; margin-bottom:12px; color:var(--accent); font-family:'Playfair Display',serif; }
 .req-form label { display:block; font-size:12px; color:var(--muted); margin-top:10px; margin-bottom:3px; }
@@ -1010,6 +1009,48 @@ body {
 
   </div>
 
+
+<!-- REQUEST TAB -->
+<div class="tab-panel" id="panel-request">
+  <div class="req-form">
+    <h2>🎵 Request a Track</h2>
+    <label>Your Name *</label><input type="text" id="req-name" placeholder="Your name">
+    <label>Your Location</label><input type="text" id="req-loc" placeholder="City / Country">
+    <label>Song Title *</label><input type="text" id="req-song" placeholder="Song title">
+    <label>Artist / Artiste *</label><input type="text" id="req-artist" placeholder="Artist name">
+    <label>Dedicate To (optional)</label><input type="text" id="req-dedicate" placeholder="Dedicate this to...">
+    <label>Message (optional)</label><textarea id="req-msg" placeholder="Add a message..."></textarea>
+    <label>Preferred Show</label>
+    <select id="req-show">
+      <option value="Any show">Any show</option>
+      <option value="Soul Food Sunday">Soul Food Sunday</option>
+      <option value="The RD Show">The RD Show</option>
+      <option value="DJ Tinashe RnB Show">DJ Tinashe RnB Show</option>
+      <option value="The Shekinah Miller Show">The Shekinah Miller Show</option>
+      <option value="Prayze Party">Prayze Party</option>
+      <option value="Afro Gospel Show">Afro Gospel Show</option>
+      <option value="New Artist Profile">New Artist Profile</option>
+      <option value="Shoggy Shoggz Show">Shoggy Shoggz Show</option>
+      <option value="Gospel Hip Hop Show">Gospel Hip Hop Show</option>
+      <option value="Soul Food Gospel Show">Soul Food Gospel Show</option>
+    </select>
+    <button class="req-btn" onclick="sendRequest()">&#9993; Send Request via Email</button>
+  </div>
+</div>
+
+<!-- WALL TAB -->
+<div class="tab-panel" id="panel-wall">
+  <div class="wall-header"><h2>&#128227; Shout Out Wall</h2></div>
+  <div class="wall-note">Offensive language is auto-filtered. Admin can remove any post.</div>
+  <div class="req-form" style="padding-top:0">
+    <label>Your Name *</label><input type="text" id="wall-name" placeholder="Your name" maxlength="40">
+    <label>Your Location</label><input type="text" id="wall-loc" placeholder="City / Country" maxlength="40">
+    <label>Your Message *</label><textarea id="wall-msg" placeholder="Share a shout out..." maxlength="280"></textarea>
+    <div class="wall-blocked" id="wall-blocked">&#9888; That message was blocked due to offensive content.</div>
+    <button class="req-btn" onclick="submitShout()">&#128226; Post to Wall</button>
+  </div>
+  <div class="wall-posts" id="wall-posts"><div class="wall-empty">Loading...</div></div>
+</div>
 </div><!-- end .app -->
 
 <audio id="audio" preload="none"></audio>
@@ -1578,7 +1619,6 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
 
 })();
 </script>
-<div id="panel-request"><div class="req-form"><h2>&#127925; Request a Track</h2><label>Your Name *</label><input type="text" id="req-name" placeholder="Your name"><label>Your Location</label><input type="text" id="req-loc" placeholder="City / Country"><label>Song Title *</label><input type="text" id="req-song" placeholder="Song title"><label>Artist / Artiste *</label><input type="text" id="req-artist" placeholder="Artist name"><label>Dedicate To (optional)</label><input type="text" id="req-dedicate" placeholder="Dedicate this to..."><label>Message (optional)</label><textarea id="req-msg" placeholder="Add a message..."></textarea><label>Preferred Show</label><select id="req-show"><option value="Any show">Any show</option><option value="Soul Food Sunday">Soul Food Sunday</option><option value="The RD Show">The RD Show</option><option value="DJ Tinashe RnB Show">DJ Tinashe RnB Show</option><option value="The Shekinah Miller Show">The Shekinah Miller Show</option><option value="Prayze Party">Prayze Party</option><option value="Afro Gospel Show">Afro Gospel Show</option><option value="New Artist Profile">New Artist Profile</option><option value="Shoggy Shoggz Show">Shoggy Shoggz Show</option><option value="Gospel Hip Hop Show">Gospel Hip Hop Show</option><option value="Soul Food Gospel Show">Soul Food Gospel Show</option></select><button class="req-btn" onclick="sendRequest()">&#128172; Send Request via WhatsApp</button></div></div><div id="panel-wall"><div class="wall-header"><h2>&#128227; Shout Out Wall</h2></div><div class="wall-note">Offensive language is auto-filtered. Admin can remove any post.</div><div class="req-form" style="padding-top:0"><label>Your Name *</label><input type="text" id="wall-name" placeholder="Your name" maxlength="40"><label>Your Location</label><input type="text" id="wall-loc" placeholder="City / Country" maxlength="40"><label>Your Message *</label><textarea id="wall-msg" placeholder="Share a shout out..." maxlength="280"></textarea><div class="wall-blocked" id="wall-blocked">&#9888; That message was blocked due to offensive content.</div><button class="req-btn" onclick="submitShout()">&#128226; Post to Wall</button></div><div class="wall-posts" id="wall-posts"><div class="wall-empty">Loading...</div></div></div>
 <!-- Soul Player Wall + Request Features -->
 <script>
 (function(){
@@ -1613,9 +1653,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   }
 
   function notify(name, loc, msg) {
-    if (!CMB || CMB === "PENDING") return;
-    var txt = encodeURIComponent("New Shout Out! From: " + name + (loc?" ("+loc+")":"") + " Msg: " + msg);
-    fetch("https://api.callmebot.com/whatsapp.php?phone="+ADMIN+"&text="+txt+"&apikey="+CMB).catch(function(){});
+    // Notification pending CallMeBot API setup
   }
 
   function loadPosts() {
@@ -1692,15 +1730,18 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
     var msg = (document.getElementById("req-msg")||{}).value||"";
     var show = (document.getElementById("req-show")||{}).value||"Any show";
     if (!song.trim()||!artist.trim()) { alert("Please enter the Song Title and Artist."); return; }
-    var text = "Track Request for Soul Food Gospel Radio" +
-      (name ? "%0AFrom: "+encodeURIComponent(name) : "") +
-      (loc ? " ("+encodeURIComponent(loc)+")" : "") +
-      "%0ASong: "+encodeURIComponent(song) +
-      "%0AArtist: "+encodeURIComponent(artist) +
-      (dedicate ? "%0ADedicate To: "+encodeURIComponent(dedicate) : "") +
-      (msg ? "%0AMessage: "+encodeURIComponent(msg) : "") +
-      "%0AShow: "+encodeURIComponent(show);
-    window.open("https://wa.me/"+ADMIN+"?text="+text,"_blank");
+    var subject = encodeURIComponent("Track Request: " + song + " by " + artist);
+    var body = encodeURIComponent(
+      "Track Request for Soul Food Gospel Radio\n" +
+      (name ? "From: " + name : "") +
+      (loc ? " (" + loc + ")" : "") + "\n" +
+      "Song: " + song + "\n" +
+      "Artist: " + artist + "\n" +
+      (dedicate ? "Dedicate To: " + dedicate + "\n" : "") +
+      (msg ? "Message: " + msg + "\n" : "") +
+      "Show: " + show
+    );
+    window.location.href = "mailto:office@soulfoodgospel.com?subject=" + subject + "&body=" + body;
   };
 
   // Override showTab to handle new tabs
