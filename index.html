@@ -1,4 +1,4 @@
-<!-- Soul Player v202605190001 -->
+<!-- Soul Player v202605190002 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1625,6 +1625,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   var DB = "https://soul-player-wall-default-rtdb.firebaseio.com";
   var CMB = "PENDING";
   var ADMIN = "447466115607";
+  var ADMIN_PASS = "sfgr2024admin";
 
   // Profanity filter - phrases (block whole post)
   var PHRASES = ["i hate you","hate you all","i hate everyone","kill yourself","kill your","go to hell","drop dead","go die","i hope you die","i wish you were dead","you are trash","you are worthless","shut up","shut your"];
@@ -1715,7 +1716,9 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   };
 
   window.wDel = function(key) {
-    if (!confirm("Delete this post?")) return;
+    var pw = prompt("Admin password required to delete:");
+    if (pw === null) return;
+    if (pw !== ADMIN_PASS) { alert("Incorrect password."); return; }
     fetch(DB+"/posts/"+key+".json",{method:"DELETE"})
       .then(loadPosts)
       .catch(function(){ alert("Could not delete post."); });
@@ -1747,17 +1750,16 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   // Override showTab to handle new tabs
   var _origShowTab = window.showTab;
   window.showTab = function(name) {
-    // Handle request/wall panels
     var allPanels = ["player","schedule","about","request","wall"];
     var allBtns = document.querySelectorAll(".tab-btn");
     allBtns.forEach(function(b){ b.classList.remove("active"); });
     allPanels.forEach(function(p){
       var el = document.getElementById("panel-"+p);
-      if (el) el.style.display = "none";
+      if (el) { el.classList.remove("active"); el.style.display = ""; }
     });
     var activePanel = document.getElementById("panel-"+name);
     var activeBtn = document.getElementById("tab-"+name);
-    if (activePanel) activePanel.style.display = "block";
+    if (activePanel) activePanel.classList.add("active");
     if (activeBtn) activeBtn.classList.add("active");
     if (name === "wall") {
       loadPosts();
