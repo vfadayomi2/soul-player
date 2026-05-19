@@ -1,4 +1,4 @@
-<!-- Soul Player v202605180006 -->
+<!-- Soul Player v202605180007 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1624,7 +1624,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
   function loadPosts() {
     var el = document.getElementById("wall-posts");
     if (!el) return;
-    fetch(DB+"/posts.json?orderBy=\"ts\"&limitToLast=30")
+    fetch(DB+"/posts.json")
       .then(function(r){ return r.json(); })
       .then(function(data){
         if (!data) { el.innerHTML = '<div class="wall-empty">No shout outs yet. Be the first!</div>'; return; }
