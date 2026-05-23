@@ -1,4 +1,4 @@
-<!-- Soul Player v202605190002 -->
+<!-- Soul Player v202605230001 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -627,6 +627,12 @@ body {
 
 .website-link:hover { color:#fff; }
 
+/* Copyright */
+.about-copyright {
+  font-size:11px;color:var(--faint);text-align:center;letter-spacing:0.04em;
+  padding:6px 0 10px;
+}
+
 /* Contact */
 .contact-label {
   font-size:9px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
@@ -909,7 +915,7 @@ body {
         <span class="vol-icon" aria-hidden="true">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
         </span>
-        <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="80" aria-label="Volume" oninput="setVolume(this.value)" onchange="setVolume(this.value)">
+        <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="80" aria-label="Volume" oninput="setVolume(this.value)" onchange="setVolume(this.value)" ontouchstart="setVolume(this.value)" ontouchmove="setVolume(this.value)" ontouchend="setVolume(this.value)">
       </div>
 
       <div class="sleep-display" id="sleepDisplay"></div>
@@ -1007,7 +1013,15 @@ body {
       &#127760; soulfoodgospel.com
     </a>
 
-  </div>
+  
+
+<div class="about-divider"></div>
+
+<div class="about-copyright">
+  &copy; 2025 Soul Food Gospel Radio. All rights reserved.
+</div>
+
+</div>
 
 
 <!-- REQUEST TAB -->
@@ -1401,6 +1415,7 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
   window.togglePlay = function() { playing ? doPause() : doPlay(); };
 
   function doPlay() {
+    ensureAudioGraph();
     setUI('buffering');
     audio.src=STREAM; audio.load();
     var p=audio.play();
@@ -1452,11 +1467,35 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
     }
   }
 
-  window.setVolume = function(val) {
-    audio.volume=val/100;
-    document.getElementById('volSlider').style.background=
-      'linear-gradient(90deg,'+curDp.accent+' '+val+'%,rgba(255,255,255,0.1) '+val+'%)';
-  };
+  var _audioCtx = null;
+var _gainNode = null;
+var _sourceNode = null;
+
+function ensureAudioGraph() {
+  try {
+    if (!_audioCtx) {
+      _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      _gainNode = _audioCtx.createGain();
+      _gainNode.connect(_audioCtx.destination);
+      _sourceNode = _audioCtx.createMediaElementSource(audio);
+      _sourceNode.connect(_gainNode);
+    }
+    if (_audioCtx.state === 'suspended') _audioCtx.resume();
+  } catch(e) {
+    // Web Audio not supported; fall back to audio.volume
+  }
+}
+
+window.setVolume = function(val) {
+  var v = val / 100;
+  try { audio.volume = v; } catch(e) {}
+  if (_gainNode) { _gainNode.gain.setTargetAtTime(v, _audioCtx.currentTime, 0.01); }
+  var sliderEl = document.getElementById('volSlider');
+  if (sliderEl) {
+    sliderEl.value = val;
+    sliderEl.style.background = 'linear-gradient(90deg,' + curDp.accent + ' ' + val + '%,rgba(255,255,255,0.1) ' + val + '%)';
+  }
+};
 
   // ââ METADATA ââ
   var trackHistory=[]; var lastRaw=''; var metaIdx=0;
