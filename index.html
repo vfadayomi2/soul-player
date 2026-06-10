@@ -15,7 +15,7 @@
 <meta property="og:image" content="icon-512.png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"
 <title>Soul Player &mdash; Soul Food Gospel Radio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -1026,7 +1026,7 @@ body {
 
 <!-- REQUEST TAB -->
 <div class="tab-panel" id="panel-request">
-  <div class="req-form">
+  <form class="req-form" data-netlify="true" name="track-request" method="POST">
     <h2>🎵 Request a Track</h2>
     <label>Your Name *</label><input type="text" id="req-name" placeholder="Your name">
     <label>Your Location</label><input type="text" id="req-loc" placeholder="City / Country">
@@ -1049,7 +1049,7 @@ body {
       <option value="Soul Food Gospel Show">Soul Food Gospel Show</option>
     </select>
     <button class="req-btn" onclick="sendRequest()">&#9993; Send Request via Email</button>
-  </div>
+  </form>
 </div>
 
 <!-- WALL TAB -->
