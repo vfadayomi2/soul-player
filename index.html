@@ -1820,5 +1820,35 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
 
 })();
 </script>
+<script>
+/* Soul Player — submit track requests to Netlify Forms via AJAX (avoids SW navigation issue) */
+(function(){
+  var form = document.querySelector('form[name="track-request"]');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var song=(document.getElementById('req-song')||{}).value||'';
+    var artist=(document.getElementById('req-artist')||{}).value||'';
+    if(!song.trim()||!artist.trim()){ alert('Please enter the Song Title and Artist.'); return; }
+    var data=new URLSearchParams();
+    new FormData(form).forEach(function(v,k){ data.append(k,v); });
+    if(!data.has('form-name')) data.append('form-name','track-request');
+    var btn=form.querySelector('button[type="submit"]');
+    var orig = btn ? btn.innerHTML : '';
+    if(btn){ btn.disabled=true; btn.textContent='Sending\u2026'; }
+    fetch(form.getAttribute('action'),{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data.toString()})
+      .then(function(){
+        form.reset();
+        if(btn){ btn.disabled=false; btn.innerHTML=orig||'\u2709 Submit Request'; }
+        alert('Thank you! Your track request has been sent. \uD83C\uDFB5');
+      })
+      .catch(function(){
+        if(btn){ btn.disabled=false; btn.innerHTML=orig||'\u2709 Submit Request'; }
+        alert('Sorry, your request could not be sent. Please try again.');
+      });
+  });
+})();
+</script>
+
 </body>
 </html>
