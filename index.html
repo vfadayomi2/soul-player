@@ -1467,7 +1467,7 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
       iconPlay.style.display='none';iconPause.style.display='none';
       playBtn.classList.add('buffering');
       playBtn.setAttribute('aria-label','Connecting');
-      statusEl.textContent='Connecting to streamÃÂ¢ÃÂÃÂ¦'; waveOff();
+      statusEl.textContent='Connecting to stream…'; waveOff();
     } else if(s==='error') {
       iconPlay.style.display='block';iconPause.style.display='none';
       playBtn.setAttribute('aria-label','Play');
@@ -1613,7 +1613,7 @@ window.setVolume = function(val) {
 
   // ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ SHARE ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
   window.shareApp = function(){
-    var data={title:'Soul Food Gospel Radio',text:'Listen to live 24/7 Gospel music Ã¢ÂÂ install it as a free app! https://player.soulfoodgospelradio.live',url:'https://player.soulfoodgospelradio.live'};
+    var data={title:'Soul Food Gospel Radio',text:'Listen to live 24/7 Gospel music — install it as a free app! https://player.soulfoodgospelradio.live',url:'https://player.soulfoodgospelradio.live'};
     if(navigator.share){navigator.share(data).catch(function(){});}
     else if(navigator.clipboard){navigator.clipboard.writeText(window.location.href).then(function(){showToast('Link copied to clipboard!');});}
   };
