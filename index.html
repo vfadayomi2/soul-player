@@ -1424,7 +1424,7 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
   window.togglePlay = function() { playing ? doPause() : doPlay(); };
 
   function doPlay() {
-    ensureAudioGraph();
+    primeAudioContext();
     setUI('buffering');
     audio.src=STREAM; audio.load();
     var p=audio.play();
@@ -1447,10 +1447,22 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
     clearSleepTimer();
   }
 
-  audio.addEventListener('playing',  function(){playing=true;setUI('playing');fetchMeta();metaTimer=setInterval(fetchMeta,META_INT);updateMediaSession();});
+  audio.addEventListener('playing',  function(){playing=true;attachAudioGraph();setUI('playing');fetchMeta();metaTimer=setInterval(fetchMeta,META_INT);updateMediaSession();});
   audio.addEventListener('waiting',  function(){if(playing)setUI('buffering');});
   audio.addEventListener('stalled',  function(){if(playing)setUI('buffering');});
-  audio.addEventListener('error',    function(){playing=false;setUI('error');});
+  audio.addEventListener('error',    function(){
+    if (audio.getAttribute('crossorigin') && !_graphOK && !_corsFallback) {
+      _corsFallback = true;                      // never silence the user: drop CORS, keep sound
+      audio.removeAttribute('crossorigin');
+      try { audio.volume = currentVol(); } catch(e) {}
+      setUI('buffering');
+      audio.src = STREAM; audio.load();
+      var rp = audio.play();
+      if (rp && rp.catch) { rp.catch(function(){ playing = false; setUI('error'); }); }
+      return;
+    }
+    playing = false; setUI('error');
+  });
   audio.addEventListener('pause',    function(){if(!playing)setUI('paused');});
 
   function setUI(s) {
@@ -1477,34 +1489,77 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
   }
 
   var _audioCtx = null;
-var _gainNode = null;
-var _sourceNode = null;
+  var _gainNode = null;
+  var _sourceNode = null;
+  var _graphOK = false;        // true once audio is routed through the Web Audio graph
+  var _corsFallback = false;   // true if CORS failed - graph must stay off
 
-function ensureAudioGraph() {
-  try {
-    if (!_audioCtx) {
-      _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      _gainNode = _audioCtx.createGain();
-      _gainNode.connect(_audioCtx.destination);
+  // Android/desktop honour audio.volume natively, so they never need Web Audio.
+  // Routing them through it risks TOTAL SILENCE: a CORS-tainted MediaElementSource
+  // outputs zeroes. iOS is the only platform that ignores audio.volume, so it is the
+  // only one we route through a gain node.
+  var NEEDS_WEBAUDIO = (function(){
+    var ua = navigator.userAgent || '';
+    return /iPad|iPhone|iPod/.test(ua) ||
+           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  })();
+
+  function currentVol() {
+    var sl = document.getElementById('volSlider');
+    var v = sl ? (parseFloat(sl.value) / 100) : 0.8;
+    if (isNaN(v)) v = 0.8;
+    return Math.min(1, Math.max(0, v));
+  }
+
+  // Runs inside the play gesture (required on mobile). iOS only.
+  function primeAudioContext() {
+    if (!NEEDS_WEBAUDIO || _corsFallback) return;
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      if (!audio.getAttribute('crossorigin')) audio.setAttribute('crossorigin','anonymous');
+      if (!_audioCtx) {
+        _audioCtx = new AC();
+        _gainNode = _audioCtx.createGain();
+        _gainNode.gain.value = currentVol();
+        _gainNode.connect(_audioCtx.destination);
+      }
+      if (_audioCtx.state === 'suspended') { try { _audioCtx.resume(); } catch(e){} }
+    } catch(e) { _audioCtx = null; _gainNode = null; }
+  }
+
+  // Attach only AFTER playback is confirmed: if it plays with crossorigin set, CORS
+  // succeeded, so the source cannot be tainted (tainted = pure silence).
+  function attachAudioGraph() {
+    if (!NEEDS_WEBAUDIO || _graphOK || _corsFallback) return;
+    if (!_audioCtx || !_gainNode) return;
+    if (!audio.getAttribute('crossorigin')) return;
+    try {
       _sourceNode = _audioCtx.createMediaElementSource(audio);
       _sourceNode.connect(_gainNode);
-    }
-    if (_audioCtx.state === 'suspended') _audioCtx.resume();
-  } catch(e) {
-    // Web Audio not supported; fall back to audio.volume
+      _graphOK = true;
+      audio.volume = 1;                 // graph owns the level; never attenuate twice
+      _gainNode.gain.value = currentVol();
+    } catch(e) { _graphOK = false; }
   }
-}
 
-window.setVolume = function(val) {
-  var v = val / 100;
-  try { audio.volume = v; } catch(e) {}
-  if (_gainNode) { _gainNode.gain.setTargetAtTime(v, _audioCtx.currentTime, 0.01); }
-  var sliderEl = document.getElementById('volSlider');
-  if (sliderEl) {
-    sliderEl.value = val;
-    sliderEl.style.background = 'linear-gradient(90deg,' + curDp.accent + ' ' + val + '%,rgba(255,255,255,0.1) ' + val + '%)';
-  }
-};
+  window.setVolume = function(val) {
+    var v = Math.min(1, Math.max(0, (parseFloat(val) || 0) / 100));
+    if (_graphOK && _gainNode && _audioCtx) {
+      audio.volume = 1;                 // avoid squaring the volume
+      try { _gainNode.gain.setTargetAtTime(v, _audioCtx.currentTime, 0.01); }
+      catch(e) { _gainNode.gain.value = v; }
+    } else {
+      try { audio.volume = v; } catch(e) {}   // Android + desktop path
+    }
+    var sliderEl = document.getElementById('volSlider');
+    if (sliderEl) {
+      sliderEl.value = val;
+      sliderEl.style.background = 'linear-gradient(90deg,' + curDp.accent + ' ' + val + '%,rgba(255,255,255,0.1) ' + val + '%)';
+    }
+  };
+
+  try { audio.volume = currentVol(); } catch(e) {}
 
   // ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ METADATA ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
   var trackHistory=[]; var lastRaw=''; var metaIdx=0;
