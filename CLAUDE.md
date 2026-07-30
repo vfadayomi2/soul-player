@@ -26,8 +26,19 @@ Hosted on **Netlify**, auto-deploying from `main` on GitHub
 player.soulfoodgospelradio.live. There is no staging environment — commits to
 `main` are production.
 
-The remote is HTTPS with no cached credentials, so `git push` from an agent
-session will fail; the user has to push themselves.
+Deploys land fast — the last one was live roughly 20 seconds after the push.
+
+The remote is HTTPS (`vfadayomi2/soul-player`) with **no credentials cached in
+the keychain**, and git cannot prompt for them anywhere inside Claude Code —
+there's no TTY, so it fails with either "could not read Username" or "Device not
+configured" even behind a `!` prefix. The user must authenticate from a real
+Terminal, or supply a token.
+
+If a fine-grained PAT is used, it needs **Contents: Read and write** *and* the
+repo selected under Repository access. A token with `Contents: Read` produces a
+403 on push that looks identical to a wrong password — `GET /user` and the repos
+API will both still succeed, so don't diagnose from those. There is no SSH key
+on this machine (`~/.ssh` does not exist) and Homebrew is not installed.
 
 ## Stream
 
@@ -61,7 +72,11 @@ weekday, mirroring the StationPlaylist rotation. Each show entry:
 - The key is `photo`, not `img`. Two entries still use `img:''` (Monday 10:00 AM,
   Tuesday 6:00 PM) — harmless today because both have no photo, but they'd
   silently drop an image if one were added.
-- Avoid spaces in local image filenames.
+- **Local image naming: lowercase, no spaces, named after the host** —
+  `grantly.jpg`, `shoggy.png`. Spaces have to be percent-encoded in a URL and
+  break silently on some hosts, so keep them out of filenames entirely. When
+  renaming an image, use `git mv` and update every `photo:` reference in
+  `SCHEDULE` in the same commit.
 
 Schedule rebuilds every 60s. All times are **Europe/London**, derived from
 `getLondonTime()` regardless of the visitor's timezone.
@@ -104,6 +119,29 @@ Schedule rebuilds every 60s. All times are **Europe/London**, derived from
   Cosmetic, but don't propagate it — and be careful with tooling that rewrites
   the file wholesale.
 - `sendRequest()`, `notify()`, `CMB`, `ADMIN` and `sleepTimer` are unused.
+
+## Fixed on 2026-07-30 (commit b9e877f)
+
+Five bugs, all verified against the deployed site afterwards:
+
+1. **`index.html:18` was missing its closing `>`.** The parser swallowed
+   `<title>` as an attribute of the `<link>`, so the page had no title element
+   at all and the title text leaked into the body as a stray text node.
+2. **Now Playing never showed an artist.** Added `cleanRaw()` to strip the
+   leading separator the encoder sends. Verified against the live title
+   `" - DarioDMusic - You Gatta Change - Single "`, which now resolves to
+   artist `DarioDMusic`, title `You Gatta Change - Single`.
+3. **HTML entities rendered literally in toasts** — `&mdash;` and `&#9201;`
+   assigned via `textContent` inside `<script>`. Replaced with the escapes
+   `\u2014` and `\u23F1`.
+4. **`Grantly4 Show.jpg` renamed to `grantly.jpg`**, dropping the space from the
+   URL; both `SCHEDULE` entries updated.
+5. **"Tha Grantly Show" added to the Request tab dropdown**, where it was
+   missing despite airing twice a week.
+
+Worth knowing: `index.html:817`'s `onerror="...textContent='&#127925;'"` was
+investigated and is **correct as-is** — attribute values are entity-decoded by
+the parser, so the handler receives a literal 🎵. Don't "fix" it.
 
 ## Known open issues
 
