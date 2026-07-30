@@ -15,7 +15,7 @@
 <meta property="og:image" content="icon-512.png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <title>Soul Player &mdash; Soul Food Gospel Radio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -1046,6 +1046,7 @@ body {
       <option value="The Shekinhah Miller Show">The Shekinhah Miller Show</option>
       <option value="Gospel Hip Hop Show">Gospel Hip Hop Show</option>
       <option value="Gospel Garage &amp; House">Gospel Garage &amp; House</option>
+      <option value="Tha Grantly Show">Tha Grantly Show</option>
       <option value="Prayze Party">Prayze Party</option>
       <option value="Shoggy Shoggz TV Show">Shoggy Shoggz TV Show</option>
       <option value="Be Inspired With Shoggy Shoggz">Be Inspired With Shoggy Shoggz</option>
@@ -1134,7 +1135,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
       { time:'1:00 PM',  name:'Soul Food Daytime',              host:'Soul Player',                 photo:'' },
       { time:'3:00 PM',  name:'Soul Food Afternoon',            host:'Soul Player',                 photo:'' },
       { time:'5:00 PM',  name:'Soul Food Drive Time',           host:'Soul Player',                 photo:'' },
-    { time:'6:00 PM',  name:'Tha Grantly Show',              host:'Grantly',                 photo:'Grantly4 Show.jpg', },
+    { time:'6:00 PM',  name:'Tha Grantly Show',              host:'Grantly',                 photo:'grantly.jpg', },
       { time:'8:00 PM',  name:'DJ Tinashe R&B Show',            host:'DJ Tinashe',                  photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/c48063be-11e0-4633-b477-184f4faa38a9/Tinashe+blank.jpg' },
       { time:'9:00 PM',  name:'Soul Food Night',                host:'Soul Player',                 photo:'' }
     ]},
@@ -1157,7 +1158,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then
       { time:'7:00 AM',  name:'Friday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
       { time:'8:00 AM',  name:'Friday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
       { time:'9:00 AM',  name:'Friday Morning Gospel Jamz',     host:'Brotha Charles',              photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/3447f861-848c-424e-922c-ab9178dd11cd/Screenshot+2025-02-21+at+07.42.35.png' },
-    { time:'10:00 AM', name:'Tha Grantly Show',              host:'Grantly',                 photo:'Grantly4 Show.jpg', },
+    { time:'10:00 AM', name:'Tha Grantly Show',              host:'Grantly',                 photo:'grantly.jpg', },
       { time:'11:00 AM', name:'Soul Food Midmorning',           host:'Soul Player',                 photo:'' },
       { time:'12:00 PM', name:'The Shekinhah Miller Show',      host:'Shekinhah Miller with Spanna',photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/7de567f8-3411-4cb5-969b-056644cb7871/DSCN4918.JPG' },
       { time:'1:00 PM',  name:'The Shekinhah Miller Show',      host:'Shekinhah Miller with Spanna',photo:'https://images.squarespace-cdn.com/content/v1/6464f1a1332bca0df99235a8/7de567f8-3411-4cb5-969b-056644cb7871/DSCN4918.JPG' },
@@ -1435,7 +1436,7 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
         showToast('Tap play to reconnect');
       } else {
         setUI('error');
-        showToast('Stream unavailable &mdash; please try again');
+        showToast('Stream unavailable \u2014 please try again');
       }
     });}
   }
@@ -1579,12 +1580,18 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
       .catch(function(){tryMeta(idx+1);});
   }
 
+  // Encoders often send an empty artist as a leading ' - ' (e.g. ' - Artist - Title ').
+  // Strip it, or the split below hands us a blank artist and a bloated title.
+  function cleanRaw(s){
+    return String(s||'').replace(/^[\s\-\u2013\u2014]+/,'').trim();
+  }
+
   function parseIcecast(data){
     var src=data&&data.icestats&&data.icestats.source;
     if(!src)return;
     if(Array.isArray(src))src=src[0];
-    var raw=src.title||src.song||'';
-    var artist=src.artist||''; var title=src.title||'';
+    var raw=cleanRaw(src.title||src.song||'');
+    var artist=(src.artist||'').trim(); var title=raw;
     if(!artist&&raw.indexOf(' - ')>-1){var p=raw.split(' - ');artist=p[0].trim();title=p.slice(1).join(' - ').trim();}
     updateNP(title||raw||STATION,artist||STATION_S,raw);
   }
@@ -1592,7 +1599,7 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
   function parseShoutcast(html){
     var body=html.replace(/<[^>]+>/g,''); var parts=body.split(',');
     if(parts.length>=7){
-      var raw=parts.slice(6).join(',').trim();
+      var raw=cleanRaw(parts.slice(6).join(','));
       var artist='',title=raw;
       if(raw.indexOf(' - ')>-1){var p=raw.split(' - ');artist=p[0].trim();title=p.slice(1).join(' - ').trim();}
       updateNP(title||STATION,artist||STATION_S,raw);
@@ -1650,14 +1657,14 @@ b.style.setProperty('--bh',Math.max(2,Math.round(h*0.5))+'px');
     sleepInterval=setInterval(function(){
       sleepMinsLeft--;
       updateSleepDisplay();
-      if(sleepMinsLeft<=0){clearSleepTimer();doPause();showToast('Sleep timer &mdash; stream stopped.');}
+      if(sleepMinsLeft<=0){clearSleepTimer();doPause();showToast('Sleep timer \u2014 stream stopped.');}
     },60000);
   };
 
   function updateSleepDisplay(){
     var el=document.getElementById('sleepDisplay');
     el.classList.add('visible');
-    el.textContent='&#9201; Stops in '+sleepMinsLeft+' min'+(sleepMinsLeft!==1?'s':'');
+    el.textContent='\u23F1 Stops in '+sleepMinsLeft+' min'+(sleepMinsLeft!==1?'s':'');
   }
 
   function clearSleepTimer(){
